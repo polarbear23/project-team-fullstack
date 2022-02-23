@@ -34,6 +34,8 @@ header{
     justify-content: space-between;
     align-items: center;
     padding-top: 1rem;
+    background-color: white;
+    box-shadow:0 0 0 1px rgba(255,255,255,.1), 0 2px 4px 0 rgba(14,30,37,.12);border:0;
 } 
 
 .navbar__lists{
@@ -47,15 +49,22 @@ header{
 
 .navbar__lists--item a{
     text-decoration: none;
-    color: #000;
+    color: black;
 }
 
 .navbar__logo,
 .footer__logo{
     cursor: pointer;
+    display: flex;
+    align-items: center;
     text-decoration: none;
     margin-left: 5rem;
-    color: #000;
+    color: black
+}
+
+.logo{
+    height: 3rem;
+    margin: 1rem;
 }
 
 /* footer styling*/
@@ -210,11 +219,11 @@ aside{
 }
 
 .pokemon-rating-img{
-    height: 200px;
-    margin-top: 20px;
+    height: 15rem;
+    margin-top: 1.5rem;
     background-color: #EFE9F4;
-    padding: 15px;
-    border-radius: 10px;
+    padding: 1rem;
+    border-radius: 1rem;
 }
 
 .categories-section{
@@ -251,7 +260,7 @@ section{
     background-size: cover;
     background-repeat: no-repeat;
     color: white;
-    height: 500px;
+    height: 30rem;
     padding: 2rem;
     border-radius: 1rem;
     margin-right: 4rem;
