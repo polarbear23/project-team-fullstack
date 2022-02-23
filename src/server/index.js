@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 //const axios = require('axios')
 
-const port = process.env.PORT || 4000;
+const port = 5000;
 
 const pokemonRouter = require('./routers/pokemon');
 

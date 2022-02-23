@@ -127,7 +127,7 @@ model Pokemon {
   specialDefense Int
   speed          Int
   ratings        RatingsOnPokemon[]
-  averageRating  Int
+  averageRating  Int?
   createdAt      DateTime           @default(now())
   updatedAt      DateTime           @updatedAt
 }
