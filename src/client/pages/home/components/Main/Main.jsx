@@ -25,13 +25,13 @@ const Main = () => {
         </section>
         <section className='rate-pokemon-section'>
             <div className='rate-your-pokemon-container'>
-                <h2>Rate your Own Pokemon</h2>
+                <h2 className='rate-your-pokemon-title'>Rate your Own Pokemon</h2>
                 
             </div>
         </section>
         <section className='start-your-own-topic-section'>
             <div className="start-your-own-post">
-                <h3>Start your own topic</h3>
+                <h3 className='start-your-own-post-title'>Start your own topic</h3>
                 
             </div>
         </section>

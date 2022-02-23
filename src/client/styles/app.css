@@ -201,7 +201,7 @@ aside{
 }
 
 .pokemon-rating-img{
-    height: 120px;
+    height: 200px;
     margin-top: 20px;
     background-color: #EFE9F4;
     padding: 15px;
@@ -213,18 +213,34 @@ section{
 }
 
 .rate-your-pokemon-container{
-    background-color: gray;
+    color: white;
+    background-image: url("/public/assets/pokemon/background2.jpg");
+    background-position: 20% 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 30rem;
     padding: 2rem;
     border-radius: 1rem;
     margin-right: 10rem;
 
 }
+.rate-your-pokemon-title{
+    font-size: 2rem;
+}
 
 .start-your-own-post{
     background-image: url("/public/assets/pokemon/background.jpg");
+    background-position: 20% 50%;
     background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
     height: 500px;
     padding: 2rem;
     border-radius: 1rem;
     margin-right: 10rem;
+}
+
+.start-your-own-post-title{
+    font-size: 2rem;
+
 }
