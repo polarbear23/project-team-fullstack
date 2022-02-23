@@ -3,10 +3,10 @@ import LeftMenu from './components/LeftMenu'
 import Main from './components/Main'
 const Home = () => {
   return (
-    <>
-    <LeftMenu></LeftMenu>
-    <Main></Main>
-    </>
+    <div className='home-container'>
+        <LeftMenu></LeftMenu>
+        <Main></Main>
+    </div>
   )
 }
 
