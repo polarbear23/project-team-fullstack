@@ -1,6 +1,8 @@
 import React from 'react'
 import "../../../styles/app.css"
+
 const Main = () => {
+    
   return (
     <main className='homepage-main'>
         <section className='top-5-pokemon-section'>
@@ -24,11 +26,24 @@ const Main = () => {
         <section className='categories-section'>
             <h3>Categories</h3>
             <ul className='categories-list'>
-                <li>Gaming</li>
-                <li>Fan-Fiction</li>
-                <li>Cosplay</li>
-                <li>Manga</li>
-                <li>TV/Film</li>
+                <li className='categories-list-item'>
+                    <img src="games.png" alt="" className='game-img'/>
+                    <p>Gaming</p>
+                </li>
+                <li className='categories-list-item'>
+                    Fan-Fiction</li>
+                <li className='categories-list-item'>
+                    <img src="cat.png" alt="" className='cat-img'/>
+                    <p>Cosplay</p>
+                </li>
+                <li className='categories-list-item'>
+                    <img src="manga.png" alt="" className='manga-img'/>
+                    <p>Manga</p>
+                </li>
+                <li className='categories-list-item'>
+                    <img src="tv.png" alt="" className='manga-img'/>
+                    <p>TV/Film</p>
+                </li>
             </ul>
         </section>
     </main>
