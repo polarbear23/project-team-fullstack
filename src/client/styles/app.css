@@ -58,11 +58,11 @@ header{
 .footer-container{
     height: 8rem;
     width: 100%;
-    background-color: #DDD8D5;
+    background-color: #a293ad;
 } 
 
 .footer{
-    padding-top: 1rem;
+    padding-top: 4rem;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -101,7 +101,7 @@ header{
 /* home-container */
 .home-container{
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 30rem 2fr;
     justify-content: center;
 }
 
@@ -111,6 +111,7 @@ aside{
     display: flex;
     flex-direction:column;
     margin-left: 5rem;
+    justify-content: space-between;
 }
 .aside-nav ul {
     list-style: none;
@@ -118,6 +119,7 @@ aside{
 
 .aside-nav-item{
     text-decoration: none;
+    margin-left: 1rem;
 }
 
 .aside-nav ul li{
@@ -127,13 +129,14 @@ aside{
 
 /* dark mode */
 .dark-mode{
-    position: absolute;
-    right: 4rem;
-    top: 3rem;
+    /* position: absolute;
+    left: 4rem;
+    bottom: 12rem; */
+    margin-bottom: 1rem;
 }
 .mode-label{
-    width: 5rem;
-    height: 2.6rem;
+    width: 4rem;
+    height: 2rem;
     background-color: #fff;
     display: flex;
     align-items: center;
@@ -142,7 +145,7 @@ aside{
     padding: 5px;
     position: relative;
     transition: all 0.15s ease-in-out;
-    border: 2px solid #4F80FF;
+    border: 2px solid #172853;
 }
 
 .fa-moon{
@@ -155,11 +158,10 @@ aside{
 }
 
 
-
 .ball{
-    background-color: #4F80FF;
-    height: 2.2rem;
-    width: 2.2rem;
+    background-color: #172853;
+    height: 1.8rem;
+    width: 1.8rem;
     position: absolute;
     top: 0;
     left: 0;
@@ -167,23 +169,23 @@ aside{
     transition: all 0.2s ease-in-out;
 }
 
-.checkbox{
+.dark-mode-input{
     opacity: 0;
     position: absolute;
 }
 
-.checkbox:checked + .mode-label{
+.dark-mode-input:checked + .mode-label{
     background-color: #fff;
 }
 
-.checkbox:checked + .mode-label .ball{
+.dark-mode-input:checked + .mode-label .ball{
     /* transform: translateX(24px); */
     left:3rem;
     transform: rotate(180deg);
     opacity: 0;
 }
 
-.checkbox:checked + .mode-label .fa-moon{
+.dark-mode-input:checked + .mode-label .fa-moon{
     opacity: 1;
     color: #000;
 }
@@ -243,4 +245,43 @@ section{
 .start-your-own-post-title{
     font-size: 2rem;
 
+}
+
+/* main page styleing */
+.homepage-main{
+    margin-right: 5rem;
+}
+.categories-list{
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+.cat-img{
+    width: 4rem;
+    /* height: 1rem; */
+}
+
+.manga-img{
+    height: 2.3rem;
+}
+
+.game-img{
+    width: 2.5rem;
+}
+
+.categories-list-item{
+    border-radius: 20px;
+    background-color: #Efe9f4;
+    padding: 1rem;
+    justify-content: center;
+    align-items: center;
+    width: 6rem;
+    height: 6rem;
+    text-align: center;
+}
+
+.categories-list-item img{
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 7px;
 }
