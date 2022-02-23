@@ -191,11 +191,40 @@ aside{
 
 .homepage-main{
     display: grid;
-    grid-template-rows: 0.2fr 0.3fr 0.3fr 0.2fr;
+    grid-template-rows: 0.1fr 0.5fr 0.5fr 0.1fr;
 }
 
 .top-pokemon-list, .categories-list{
     list-style: none;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
+}
+
+.pokemon-rating-img{
+    height: 120px;
+    margin-top: 20px;
+    background-color: #EFE9F4;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+section{
+    margin-bottom: 2rem;
+}
+
+.rate-your-pokemon-container{
+    background-color: gray;
+    padding: 2rem;
+    border-radius: 1rem;
+    margin-right: 10rem;
+
+}
+
+.start-your-own-post{
+    background-image: url("/public/assets/pokemon/background.jpg");
+    background-size: cover;
+    height: 500px;
+    padding: 2rem;
+    border-radius: 1rem;
+    margin-right: 10rem;
 }
