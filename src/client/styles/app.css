@@ -1,0 +1,12 @@
+/* Main HomePage Styling*/
+
+.homepage-main{
+    display: grid;
+    grid-template-rows: 0.2fr 0.3fr 0.3fr 0.2fr;
+}
+
+.top-pokemon-list, .categories-list{
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
