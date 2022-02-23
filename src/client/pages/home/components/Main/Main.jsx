@@ -39,21 +39,21 @@ const Main = () => {
             <h3>Categories</h3>
             <ul className='categories-list'>
                 <li className='categories-list-item'>
-                    <img src="games.png" alt="" className='game-img'/>
+                    <img src="/assets/games.png" alt="game icon" className='game-img'/>
                     <p>Gaming</p>
                 </li>
                 <li className='categories-list-item'>
                     Fan-Fiction</li>
                 <li className='categories-list-item'>
-                    <img src="cat.png" alt="" className='cat-img'/>
+                    <img src="/assets/cat.png" alt="cat icon" className='cat-img'/>
                     <p>Cosplay</p>
                 </li>
                 <li className='categories-list-item'>
-                    <img src="manga.png" alt="" className='manga-img'/>
+                    <img src="/assets/manga.png" alt="manga icon" className='manga-img'/>
                     <p>Manga</p>
                 </li>
                 <li className='categories-list-item'>
-                    <img src="tv.png" alt="" className='manga-img'/>
+                    <img src="/assets/tv.png" alt="tv icon" className='manga-img'/>
                     <p>TV/Film</p>
                 </li>
             </ul>
