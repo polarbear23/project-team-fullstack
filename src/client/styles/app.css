@@ -14,6 +14,12 @@ body{
     position: relative;
 }
 
+.app{
+    display: grid;
+    grid-template-rows: 8rem auto 8rem;
+    height: 100vh;
+}
+
 /* navbar styling */
 header{
     height: 8rem;
@@ -89,6 +95,95 @@ header{
 }
 
 .disabled-link {
-    /* pointer-events: none; */
     cursor: pointer;
+}
+
+/* home-container */
+.home-container{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    justify-content: center;
+}
+
+
+/* Left Menu Styling */
+aside{
+    display: flex;
+    flex-direction:column;
+    margin-left: 5rem;
+}
+.aside-nav ul {
+    list-style: none;
+}
+
+.aside-nav-item{
+    text-decoration: none;
+}
+
+.aside-nav ul li{
+    padding-bottom: 1rem;
+}
+
+
+/* dark mode */
+.dark-mode{
+    position: absolute;
+    right: 4rem;
+    top: 3rem;
+}
+.mode-label{
+    width: 5rem;
+    height: 2.6rem;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 5rem;
+    padding: 5px;
+    position: relative;
+    transition: all 0.15s ease-in-out;
+    border: 2px solid #4F80FF;
+}
+
+.fa-moon{
+    position: absolute;
+    color: #000;
+    right: 0;
+    opacity: 0;
+    font-size: 2rem;
+    transition: all 0.2s ease-in-out;
+}
+
+
+
+.ball{
+    background-color: #4F80FF;
+    height: 2.2rem;
+    width: 2.2rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    transition: all 0.2s ease-in-out;
+}
+
+.checkbox{
+    opacity: 0;
+    position: absolute;
+}
+
+.checkbox:checked + .mode-label{
+    background-color: #fff;
+}
+
+.checkbox:checked + .mode-label .ball{
+    /* transform: translateX(24px); */
+    left:3rem;
+    transform: rotate(180deg);
+    opacity: 0;
+}
+
+.checkbox:checked + .mode-label .fa-moon{
+    opacity: 1;
+    color: #000;
 }
