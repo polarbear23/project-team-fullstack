@@ -1,8 +1,12 @@
 import React from 'react'
-
+import LeftMenu from './components/LeftMenu'
+import Main from './components/Main'
 const Home = () => {
   return (
-    <div>Home</div>
+    <>
+    <LeftMenu></LeftMenu>
+    <Main></Main>
+    </>
   )
 }
 
