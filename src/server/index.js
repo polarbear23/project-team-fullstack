@@ -1,8 +1,9 @@
+require('dotenv').config()
+
 const express = require('express');
 const cors = require('cors');
-//const axios = require('axios')
 
-const port = 5000;
+const port = process.env.PORT;
 
 const pokemonRouter = require('./routers/pokemon');
 

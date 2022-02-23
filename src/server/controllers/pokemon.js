@@ -1,10 +1,8 @@
-const { PrismaClient } = require('@prisma/client');
-
-const prisma = new PrismaClient();
-
 const axios = require('axios');
 
-const capitalizeFirstLetter = (string) => string.replace(/\b\w/g, (c) => c.toUpperCase());
+const { URL } = require('../config');
+
+const { prisma, capitalizeFirstLetter } = require('../utils');
 
 const populateDatabase = async (pokemon) => {
     const {
@@ -65,6 +63,7 @@ const populateDatabase = async (pokemon) => {
 const initPokemonDatabase = async (req, res) => {
     const filterPokemonData = async (pokemon, pokemonId) => {
         const pokemonName = capitalizeFirstLetter(pokemon.name);
+
         const pokemonTypes = [];
         pokemon.types.forEach((type) => pokemonTypes.push(capitalizeFirstLetter(type.type.name)));
 
@@ -85,15 +84,11 @@ const initPokemonDatabase = async (req, res) => {
         const numberOfPokemonToFetch = 151;
         let pokemonId = 1;
         for (let i = 0; i < numberOfPokemonToFetch; i++, pokemonId++) {
-            const response = await axios(
-                `https://pokeapi.co/api/v2/pokemon/${pokemonId}`
-            );
+            const response = await axios(`${URL}${pokemonId}`);
+            
             const fetchedPokemon = response.data;
 
-            const pokemonCleanData = await filterPokemonData(
-                fetchedPokemon,
-                pokemonId
-            );
+            const pokemonCleanData = await filterPokemonData(fetchedPokemon, pokemonId);
 
             await populateDatabase(pokemonCleanData);
         }
