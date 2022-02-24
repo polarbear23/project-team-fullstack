@@ -3,6 +3,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import "../client/styles/app.css";
 import { Routes, Route } from 'react-router-dom';
+
 function App() {
   return (
     <div className="app">

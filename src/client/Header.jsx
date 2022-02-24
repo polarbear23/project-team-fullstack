@@ -6,7 +6,10 @@ const Header = () => {
 		<header>
 			<nav className="navbar-container">
 				
-				<Link to="/" className="navbar__logo"><img className="logo" src="/assets/pokemon/pokeball.png" alt="" /><span>Pokimo & King</span></Link>
+				<Link to="/" className="navbar__logo">
+					<img className="logo" src="/assets/pokemon/pokeball.png" alt="" />
+					<span>Pokimo & King</span>
+				</Link>
 				
 				<ul className="navbar__lists">
 					<li className="navbar__lists--item">

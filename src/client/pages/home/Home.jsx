@@ -4,8 +4,8 @@ import Main from './components/Main/Main'
 const Home = () => {
   return (
     <div className='home-container'>
-        <LeftMenu></LeftMenu>
-        <Main></Main>
+      <LeftMenu></LeftMenu>
+      <Main></Main>
     </div>
   )
 }
