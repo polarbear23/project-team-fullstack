@@ -169,4 +169,11 @@ module.exports = {
     isLoggedIn,
     prisma,
     capitalizeFirstLetter,
+    createRating,
+    createComment,
+    createPost,
+    createLike,
+    createTag,
+    createProfile,
+    createUserWithProfile,
 };
