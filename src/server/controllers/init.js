@@ -65,7 +65,9 @@ const initPokemonDatabase = async (req, res) => {
         const pokemonName = capitalizeFirstLetter(pokemon.name);
 
         const pokemonTypes = [];
-        pokemon.types.forEach((type) => pokemonTypes.push(capitalizeFirstLetter(type.type.name)));
+        pokemon.types.forEach((type) =>
+            pokemonTypes.push(capitalizeFirstLetter(type.type.name))
+        );
 
         return {
             name: pokemonName,
@@ -85,10 +87,13 @@ const initPokemonDatabase = async (req, res) => {
         let pokemonId = 1;
         for (let i = 0; i < numberOfPokemonToFetch; i++, pokemonId++) {
             const response = await axios(`${EXTERNAL_API}${pokemonId}`);
-            
+
             const fetchedPokemon = response.data;
 
-            const pokemonCleanData = await filterPokemonData(fetchedPokemon, pokemonId);
+            const pokemonCleanData = await filterPokemonData(
+                fetchedPokemon,
+                pokemonId
+            );
 
             await populateDatabase(pokemonCleanData);
         }
@@ -97,6 +102,19 @@ const initPokemonDatabase = async (req, res) => {
     catchPokemon();
 };
 
+const initCategoriesDatabase = async () => {
+    const categories = ['Gaming', 'Fan-Fiction', 'Cosplay', 'Manga', 'TV/Film'];
+
+    for (let i = 0; i < categories.length; i++) {
+        await prisma.category.create({
+            data: {
+                name: categories[i]
+            }
+        });
+    }
+};
+
 module.exports = {
     initPokemonDatabase,
+    initCategoriesDatabase,
 };

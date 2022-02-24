@@ -1,18 +1,18 @@
-require('dotenv').config()
+require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
 
 const port = process.env.PORT || 4000;
 
-const pokemonRouter = require('./routers/pokemon');
+const initDatabaseRouter = require('./routers/init');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.use('/pokemon', pokemonRouter)
+app.use('/init', initDatabaseRouter);
 
 app.get('*', (req, res) => {
     res.json('server running');
