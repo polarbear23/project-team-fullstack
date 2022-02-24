@@ -1,16 +1,19 @@
 const express = require('express');
 
 const {
+    initAllDatabases,
     initPokemonDatabase,
     initCategoriesDatabase,
 } = require('../controllers/init');
 
 const router = express.Router();
 
-//will need elevated (owner) role
+const { isLoggedIn, isAdmin } = require('../config');
 
-router.post('/pokemon', initPokemonDatabase);
+router.post('/all', isLoggedIn, isAdmin, initAllDatabases);
 
-router.post('/categories', initCategoriesDatabase);
+router.post('/pokemon', isLoggedIn, isAdmin, initPokemonDatabase);
+
+router.post('/categories', isLoggedIn, isAdmin, initCategoriesDatabase);
 
 module.exports = router;
