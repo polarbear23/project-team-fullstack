@@ -1,5 +1,5 @@
 const { PrismaClient } = require('@prisma/client');
-const { RES_ERRORS, RES_ERROR_MESSAGES } = require('./config');
+const { SERVER_STATUS_CODE, SERVER_ERROR_MESSAGE } = require('./config');
 
 const jwt = require('jsonwebtoken');
 
@@ -13,10 +13,10 @@ const isLoggedIn = (req, res, next) => {
     const token = req.headers.authorization;
     
     try {
-        jwt.verify(token, secret)
+        jwt.verify(token, secret);
     } catch(error) {
-        console.log('error', error)
-        return res.status(401).json(SERVER_ERROR_MESSAGE.UNAUTHORIZED)
+        console.log('error', error);
+        return res.status(401).json(SERVER_ERROR_MESSAGE.UNAUTHORIZED);
     }
 
     next();
@@ -63,7 +63,7 @@ const createProfile = async (req, res) => {
     });
 
     if(!createdProfile){
-        return res.status(RES_ERRORS.create).json({ error: RES_ERROR_MESSAGES.create });
+        return res.status(SERVER_STATUS_CODE.CREATE).json({ error: SERVER_ERROR_MESSAGE.CREATE });
     }
     return res.json({ data: createdProfile });
 }
@@ -78,7 +78,7 @@ const createTag = async (req, res) => {
     });
 
     if(!createdTag){
-        return res.status(RES_ERRORS.create).json({ error: RES_ERROR_MESSAGES.create });
+        return res.status(SERVER_STATUS_CODE.CREATE).json({ error: SERVER_ERROR_MESSAGE.CREATE });
     }
     return res.json({ data: createdTag });
 }
@@ -95,7 +95,7 @@ const createLike = async (req, res) => {
     });
 
     if(!createdLike){
-        return res.status(RES_ERRORS.create).json({ error: RES_ERROR_MESSAGES.create });
+        return res.status(SERVER_STATUS_CODE.CREATE).json({ error: SERVER_ERROR_MESSAGE.CREATE });
     }
     return res.json({ data: createdLike });
 }
@@ -118,7 +118,7 @@ const createPost = async (req, res) => {
     });
 
     if(!createdPost){
-        return res.status(RES_ERRORS.create).json({ error: RES_ERROR_MESSAGES.create });
+        return res.status(SERVER_STATUS_CODE.CREATE).json({ error: SERVER_ERROR_MESSAGE.CREATE });
     }
     return res.json({ data: createdPost });
 }
@@ -143,7 +143,7 @@ const createComment = async (req, res) => {
     });
 
     if(!createdComment){
-        return res.status(RES_ERRORS.create).json({ error: RES_ERROR_MESSAGES.create });
+        return res.status(SERVER_STATUS_CODE.CREATE).json({ error: SERVER_ERROR_MESSAGE.CREATE });
     }
     return res.json({ data: createdComment });
 }
@@ -159,7 +159,7 @@ const createRating = async (req, res) => {
     });
 
     if(!createdRating){
-        return res.status(RES_ERRORS.create).json({ error: RES_ERROR_MESSAGES.create });
+        return res.status(SERVER_STATUS_CODE.CREATE).json({ error: SERVER_ERROR_MESSAGE.CREATE });
     }
     return res.json({ data: createdRating });
 }
