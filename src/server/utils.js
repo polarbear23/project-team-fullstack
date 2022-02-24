@@ -44,11 +44,11 @@ const createUserWithProfile = async () => {
 
     //const hashedPassword = ...;
 
-    // const createdUserWithProfile = await prisma.user.create(
-    //     // data: {
+    const createdUserWithProfile = await prisma.user.create(
+        // data: {
 
-    //     // }
-    // );
+        // }
+    );
 }
 
 const createProfile = async (req, res) => {
