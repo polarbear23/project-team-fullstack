@@ -18,7 +18,7 @@ body {
 .app {
   display: grid;
   grid-template:
-    "header header" 7rem
+    "header header" 5rem
     "leftMenu main" 1fr
     "footer footer" 5rem/
     0.3fr 0.7fr;
@@ -93,7 +93,6 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem 0;
 }
 .footer__lists {
   list-style: none;
@@ -257,7 +256,7 @@ aside {
   display: grid;
   grid-template-rows: 0.1fr 0.5fr 0.5fr 0.1fr;
   /* padding-bottom: 8rem; */
-  padding-top: 1rem;
+  margin-top: 4rem;
   margin-right: 4rem;
 }
 
