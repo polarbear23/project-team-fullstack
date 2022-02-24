@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@prisma/client": "^3.9.2",
+    "@prisma/client": "^3.10.0",
     "axios": "^0.26.0",
     "bcrypt": "^5.0.1",
     "concurrently": "^7.0.0",
