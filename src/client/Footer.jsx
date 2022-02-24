@@ -6,7 +6,12 @@ const Footer = () => {
     <footer className="footer-container">
       <div className="footer">
         <Link to="/" className="footer__logo">
-          Pokimo & King
+          <img
+            className="logo"
+            src="/assets/pokemon/pokeball.png"
+            alt="pokeball"
+          />
+          <span>Pokimo & King</span>
         </Link>
         <ul className="footer__lists">
           <li className="footer__lists--item">

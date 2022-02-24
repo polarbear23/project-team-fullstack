@@ -68,9 +68,14 @@ header {
   color: black;
 }
 
+.logo:hover {
+  transform: rotate(360deg);
+}
+
 .logo {
   height: 3rem;
   margin: 1rem;
+  transition: transform 0.7s ease-in-out;
 }
 
 /* footer styling*/
