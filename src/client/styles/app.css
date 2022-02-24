@@ -16,18 +16,25 @@ body{
 
 .app{
     display: grid;
-    grid-template-rows: 8rem auto 8rem;
+    grid-template: 
+    "header header" 1fr
+    "leftMenu main" 2fr
+    "footer footer"1fr/
+    1fr 2fr;
     height: 100vh;
     
 }
 
+
 /* navbar styling */
 header{
-    height: 8rem;
+    /* height: 8rem; */
     width: 100%;
     font-size: 1.3rem;
-
-
+    grid-area: header;
+    position: fixed;
+    top: 0;
+    z-index: 99;
 }
 .navbar-container{
     display: flex;
@@ -69,19 +76,19 @@ header{
 
 /* footer styling*/
 .footer-container{
-    height: 8rem;
     width: 100%;
     background-color: #a293ad;
+    grid-area: footer;
 } 
 
 .footer{
-    padding-top: 4rem;
+    /* padding-top: 1rem; */
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 2rem 0;
 }
-
 .footer__lists{
     list-style: none;
     display: flex;
@@ -101,6 +108,7 @@ header{
     display: flex;
     gap: 1rem;
     margin-right: 5rem;
+    font-size: 1.5rem;
 }
 
 .footer__icon i{
@@ -113,12 +121,21 @@ header{
 
 /* home-container */
 .home-container{
-    display: grid;
+    /* display: grid;
     grid-template-columns: 30rem 2fr;
-    justify-content: space-around;
+    justify-content: space-around; */
+    grid-area: main;
+    /* margin-left: 25rem; */
+    z-index: 1;
+ 
+    padding: 3rem 0;
 
 }
 
+/* .main{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+} */
 
 /* Left Menu Styling */
 aside{
@@ -126,6 +143,14 @@ aside{
     flex-direction:column;
     margin-left: 5rem;
     justify-content: space-between;
+    grid-area: leftMenu;
+    /* position: fixed;
+    top: 10rem;
+    left: 0;
+    z-index: 99;
+    width: 25rem;
+    height: calc(100vh - 16rem); */
+    margin-top: 12rem;
 }
 .aside-nav ul {
     list-style: none;
@@ -209,6 +234,8 @@ aside{
 .homepage-main{
     display: grid;
     grid-template-rows: 0.1fr 0.5fr 0.5fr 0.1fr;
+    margin: 6rem 5rem 3rem 0;
+    /* padding-bottom: 8rem; */
 }
 
 .top-pokemon-list, .categories-list{
@@ -216,6 +243,7 @@ aside{
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     margin-right: 5rem;
+    gap: 1rem;
 }
 
 .pokemon-rating-img{
@@ -272,34 +300,33 @@ section{
 }
 
 /* main page styleing */
-.homepage-main{
-    margin-right: 5rem;
-}
+
 .categories-list{
     display: flex;
     justify-content: space-between;
     gap: 1rem;
 }
-.cat-img{
+
+/* .cat-img{
     width: 4rem;
-    /* height: 1rem; */
-}
+    height: 4rem !important;
+}  */
 
-.manga-img{
+/* .manga-img{
     height: 2.3rem;
-}
+} */
 
-.game-img{
+/* .game-img{
     width: 2.5rem;
-}
+} */
 
 .categories-list-item{
     background-color: #Efe9f4;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     text-align: center;
-    height: 8rem;
-    width: 8rem;
+    /* height: 12rem; */
+    width: 12rem;
     margin-top: 20px;
     padding: 15px;
     border-radius: 10px;
@@ -307,7 +334,9 @@ section{
 }
 
 .categories-list-item img{
-    margin: 0 auto;
-    display: block;
+    /* margin: 0 auto;
+    display: block; */
     margin-bottom: 1rem;
+    width: 5rem;
+    min-height: 5rem;
 }
