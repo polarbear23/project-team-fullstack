@@ -1,5 +1,5 @@
-const URL = 'https://pokeapi.co/api/v2/pokemon/'
+const EXTERNAL_API = 'https://pokeapi.co/api/v2/pokemon/'
 
 module.exports = {
-    URL
+    EXTERNAL_API
 }

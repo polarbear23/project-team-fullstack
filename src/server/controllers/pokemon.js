@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const { URL } = require('../config');
+const { EXTERNAL_API } = require('../config');
 
 const { prisma, capitalizeFirstLetter } = require('../utils');
 
@@ -84,7 +84,7 @@ const initPokemonDatabase = async (req, res) => {
         const numberOfPokemonToFetch = 151;
         let pokemonId = 1;
         for (let i = 0; i < numberOfPokemonToFetch; i++, pokemonId++) {
-            const response = await axios(`${URL}${pokemonId}`);
+            const response = await axios(`${EXTERNAL_API}${pokemonId}`);
             
             const fetchedPokemon = response.data;
 
