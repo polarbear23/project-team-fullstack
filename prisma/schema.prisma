@@ -30,8 +30,8 @@ model User {
 
 model Profile {
   id             Int      @id @default(autoincrement())
-  profilePicture String
-  location       String
+  profilePicture String?
+  location       String?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
   rating         Rating[]
@@ -127,7 +127,6 @@ model Pokemon {
   specialDefense Int
   speed          Int
   ratings        RatingsOnPokemon[]
-  averageRating  Int?
   createdAt      DateTime           @default(now())
   updatedAt      DateTime           @updatedAt
 }
