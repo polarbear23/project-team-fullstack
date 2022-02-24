@@ -8,7 +8,6 @@ const Footer = () => {
         <Link to="/" className="footer__logo">
           Pokimo & King
         </Link>
-
         <ul className="footer__lists">
           <li className="footer__lists--item">
             <Link to="/" className="disabled-link">
