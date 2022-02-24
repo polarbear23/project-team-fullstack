@@ -22,7 +22,7 @@ const LeftMenu = () => {
           </li>
           <li>
             <MdLeaderboard />
-            <Link to="/" className="aside-nav-item">
+            <Link to="/leaderboard" className="aside-nav-item">
               Leaderboard
             </Link>
           </li>
