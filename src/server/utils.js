@@ -64,6 +64,8 @@ const createUserWithProfile = async () => {
         // data: {
     //     // }
     // );
+    )
+}
 
 
 const createProfile = async (req, res) => {
