@@ -43,7 +43,6 @@ model Post {
   id            Int                 @id @default(autoincrement())
   title         String
   content       String
-  numberOfLikes Int
   isReported    Boolean
   isRemoved     Boolean
   createdAt     DateTime            @default(now())
@@ -62,7 +61,6 @@ model Comment {
   parentId      Int?
   isReported    Boolean
   isRemoved     Boolean
-  numberOfLikes Int
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   post          Post     @relation(fields: [postId], references: [id])

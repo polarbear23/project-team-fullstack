@@ -111,7 +111,6 @@ const createPost = async (req, res) => {
         data: {
             title: title,
             content: content,
-            numberOfLikes: numberOfLikes,
             isReported: isReported,
             isRemoved: isRemoved
         }
@@ -136,7 +135,6 @@ const createComment = async (req, res) => {
             content: content,
             parentId: parentId, 
             postId: postId,
-            numberOfLikes: numberOfLikes,
             isReported: isReported,
             isRemoved: isRemoved
         }
