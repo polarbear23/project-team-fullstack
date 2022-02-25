@@ -4,9 +4,9 @@ const { SERVER_ERROR_MESSAGE } = require("../config");
 const getPokemonById = async (req, res) => {
     const id = parseInt(req.params.id, 10);
 
-    const foundPokemon = await prisma.pokemon.findUnique({
+    const foundPokemon = await prisma.pokemon.findMany({
         where: {
-            id: id
+            id,
         }
     });
 

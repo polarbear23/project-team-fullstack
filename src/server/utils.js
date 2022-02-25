@@ -12,7 +12,7 @@ const saltRounds = 10;
 const capitalizeFirstLetter = (string) =>
     string.replace(/\b\w/g, (c) => c.toUpperCase());
 
-const hashedPassword = (password) => bcrypt.hashSync(password, saltRounds);
+const hashedPassword = async (password) => bcrypt.hashSync(password, saltRounds);
 
 const createToken = (payload) => jwt.sign(payload, SECRET);
 
@@ -67,8 +67,7 @@ const isModerator = async (req, res, next) => {
 };
 
 const createUser = async (req, res) => {
-    const { username, email } = req.body;
-    let { password } = req.body;
+    let { username, password, email } = req.body;
 
     password = hashedPassword(password);
 
@@ -223,6 +222,7 @@ const createRating = async (req, res) => {
 
 module.exports = {
     checkPassword,
+    hashedPassword,
     createToken,
     isAdmin,
     isModerator,

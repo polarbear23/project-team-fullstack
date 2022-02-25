@@ -58,6 +58,8 @@ const populateDatabase = async (pokemon) => {
             },
         },
     });
+
+    console.log(createdPokemon)
 };
 
 const initPokemonDatabase = async (req, res) => {

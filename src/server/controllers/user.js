@@ -1,5 +1,6 @@
-const { prisma } = require('../utils');
-const { checkPassword, hashedPassword, createToken } = require('../utils')
+const {checkPassword, hashedPassword, createToken, prisma} = require('../utils');
+
+const { SECRET } = ('../config.js');
 
 const authenticateUser = async (req, res) => {
     let { username, password } = req.body;
@@ -25,7 +26,7 @@ const editUser = async (req, res) => {
 
     const id = parseInt(req.params.id, 10);
 
-    password = hashedPassword(password);
+    password = await hashedPassword(password);
 
     const user = {
         username,
