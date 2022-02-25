@@ -1,7 +1,5 @@
 const { prisma, isModerator, createPost, createCommment } = require('../utils');
 
-//function checkElevatedPriviledge
-
 const getPost = async (req, res) => {
     const id = req.params.id;
 
@@ -64,11 +62,11 @@ const deletePost = async (req, res) => {
         },
     });
 
-    res.status(201).json('post deleted')
+    res.status(201).json('post deleted');
 };
 
 const getComment = async (req, res) => {
-    const id = req.params.id;
+    const id = parseInt(req.params.id, 10);
 
     const selectedComment = await prisma.comment.findUnique({
         where: {
@@ -126,7 +124,7 @@ const deleteComment = async (req, res) => {
         },
     });
 
-    res.status(201).json('comment deleted')
+    res.status(201).json('comment deleted');
 };
 
 module.exports = {
