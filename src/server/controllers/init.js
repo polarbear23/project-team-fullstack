@@ -99,6 +99,7 @@ const initPokemonDatabase = async (req, res) => {
 
             await populateDatabase(pokemonCleanData);
         }
+        res.status(200).json('pokemon seeded')
     };
 
     catchPokemon();

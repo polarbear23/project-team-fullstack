@@ -43,6 +43,8 @@ const editUser = async (req, res) => {
         },
     });
 
+    delete updatedUser.password;
+
     res.json(updatedUser);
 };
 

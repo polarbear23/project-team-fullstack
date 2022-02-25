@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { createPost, createComment, isLoggedIn } = require('../utils');
+const { createPost, createComment, isLoggedIn, createLike } = require('../utils');
 
 const {
     getPost,
@@ -9,7 +9,6 @@ const {
     getComment,
     editComment,
     deleteComment,
-    addLike,
     deleteLike,
 } = require('../controllers/post');
 
@@ -31,7 +30,7 @@ router.put('/:id/comment/:id', isLoggedIn, editComment);
 
 router.delete('/:id/comment/:id', isLoggedIn, deleteComment);
 
-router.post('/like', isLoggedIn, addLike);
+router.post('/like', isLoggedIn, createLike);
 
 router.delete('/like', isLoggedIn, deleteLike);
 
