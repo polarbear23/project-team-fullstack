@@ -52,7 +52,7 @@ const isModerator = async (req, res, next) => {
     next();
 };
 
-const createUserWithProfile = async () => {
+const createUser = async () => {
     const { username, password, email, role } = req.body;
     let { isBanned } = req.body;
 
@@ -60,11 +60,11 @@ const createUserWithProfile = async () => {
 
     //const hashedPassword = ...;
 
-    const createdUserWithProfile = await prisma.user.create(
+    const createdUser = await prisma.user.create(
         // data: {
     //     // }
-    // );
-
+    );
+}
 
 const createProfile = async (req, res) => {
     const { userId, profilePicture, location } = req.body;
@@ -178,12 +178,17 @@ const createComment = async (req, res) => {
 };
 
 const createRating = async (req, res) => {
-    const { profileId, rating } = req.body;
+    const { profileId, rating, pokemonId } = req.body;
 
     const createdRating = await prisma.rating.create({
         data: {
             profileId: profileId,
             rating: rating,
+            pokemons: {
+                connect: {
+                    id: pokemonId
+                }
+            }
         },
     });
 
@@ -204,5 +209,5 @@ module.exports = {
     createLike,
     createTag,
     createProfile,
-    createUserWithProfile,
+    createUser,
 };
