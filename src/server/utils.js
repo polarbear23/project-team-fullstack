@@ -212,11 +212,22 @@ const createRating = async (req, res) => {
             profileId,
             rating,
             pokemons: {
-                connect: {
-                    id: pokemonId,
-                },
+                create:{
+                    pokemon: {
+                        connect: {
+                            id: pokemonId
+                        }
+                    }
+                }
             },
         },
+        include: {
+            pokemons: {
+                include: {
+                    pokemon: true
+                }
+            }
+        }
     });
 
     if (!createdRating) {
