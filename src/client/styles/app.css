@@ -431,18 +431,37 @@ table td {
 }
 
 .pokemon-tile {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: #d2e4fc;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  border-radius: 10px 10px 0 0;
+  border-radius: 10px 10px 10px 10px;
+  margin-bottom: 2rem;
+}
+
+.medal {
+  float: right;
+}
+
+.type-tile {
 }
 
 .top-3-pokemon-image {
   height: 200px;
+  padding: 1rem;
+  background-color: #aabcfe;
+  border-radius: 10px 0 0 10px;
 }
 
 .pokemon-text-container {
-  background-color: rgba(0, 0, 0, 0);
+  padding: 1rem;
+  /*
+  display: grid;
+  grid-template:
+    ". . medal" 1fr
+    ". stats ." 1fr
+    ". . type" 1fr/
+    1fr 1fr 1fr;
+    */
 }
 
 .leaderboard-list-item td {

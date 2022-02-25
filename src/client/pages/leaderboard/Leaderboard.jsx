@@ -3,7 +3,6 @@ import LeaderboardItem from "./components/LeaderboardItem";
 const Leaderboard = () => {
   return (
     <div className="leaderboard">
-      <h1 className="leaderboard-title">Leaderboards</h1>
       <h2 className="top-3-leaders">Best Rated Pokemon</h2>
       <div className="top-3-container">
         <div className="pokemon-container">
@@ -11,21 +10,33 @@ const Leaderboard = () => {
             <img
               className="top-3-pokemon-image"
               src="/assets/pokemon/025.png"
-              alt=""
+              alt="pikachu"
             />
             <div className="pokemon-text-container">
-              <h3>Squirtle</h3>
+              <img className="medal" src="/assets/medals/gold.svg" alt="" />
+
+              <h3>Pikachu</h3>
+              <p>Hp:</p>
+              <p>Atk:</p>
+              <p>Def:</p>
+              <p>Sp. Atk:</p>
+              <p>Sp. Def:</p>
+              <p>Spd:</p>
+              <p>Rating:</p>
             </div>
           </div>
         </div>
+
         <div className="pokemon-container">
           <div className="pokemon-tile">
             <img
               className="top-3-pokemon-image"
               src="/assets/pokemon/007.png"
-              alt=""
+              alt="gold medal"
             />
             <div className="pokemon-text-container">
+              <img className="medal" src="/assets/medals/silver.svg" alt="" />
+
               <h3>Squirtle</h3>
             </div>
           </div>
@@ -35,14 +46,21 @@ const Leaderboard = () => {
             <img
               className="top-3-pokemon-image"
               src="/assets/pokemon/004.png"
-              alt=""
+              alt="silver medal"
             />
             <div className="pokemon-text-container">
-              <h3>Squirtle</h3>
+              <img
+                className="medal"
+                src="/assets/medals/bronze.svg"
+                alt="bronze medal"
+              />
+              <h3>Charmander</h3>
             </div>
           </div>
         </div>
       </div>
+      <h1 className="leaderboard-title">Leaderboard</h1>
+
       <table className="leaderboard-list">
         <thead>
           <th></th>

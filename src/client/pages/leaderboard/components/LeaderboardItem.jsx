@@ -25,50 +25,55 @@ const LeaderboardItem = () => {
           src="/assets/pokemontypes/grass.svg"
           alt=""
         />
+        <img
+          className="type-icon"
+          src="/assets/pokemontypes/poison.svg"
+          alt=""
+        />
       </td>
       <td
-        data-column="average-rating"
+        data-column="health"
         className="leaderboard-average-rating leaderboard-text"
       >
-        Hp
+        45
       </td>
       <td
-        data-column="average-rating"
+        data-column="attack"
         className="leaderboard-average-rating leaderboard-text"
       >
-        Attack
+        49
       </td>
       <td
-        data-column="average-rating"
+        data-column="defense"
         className="leaderboard-average-rating leaderboard-text"
       >
-        Defense
-      </td>
-
-      <td
-        data-column="average-rating"
-        className="leaderboard-average-rating leaderboard-text"
-      >
-        Spec attk
+        49
       </td>
 
       <td
-        data-column="average-rating"
+        data-column="special-attack"
         className="leaderboard-average-rating leaderboard-text"
       >
-        specdef
+        65
+      </td>
+
+      <td
+        data-column="special-defense"
+        className="leaderboard-average-rating leaderboard-text"
+      >
+        65
+      </td>
+      <td
+        data-column="speed"
+        className="leaderboard-average-rating leaderboard-text"
+      >
+        45
       </td>
       <td
         data-column="average-rating"
         className="leaderboard-average-rating leaderboard-text"
       >
-        spd
-      </td>
-      <td
-        data-column="average-rating"
-        className="leaderboard-average-rating leaderboard-text"
-      >
-        Average Rating
+        4.5
       </td>
       <td data-column="rating" className="leaderboard-rating leaderboard-text">
         Rating
