@@ -1,18 +1,16 @@
 const express = require('express');
 
-const { 
-    createPost, 
-    createCommment, 
-    isLoggedIn, 
-} = require('../utils');
+const { createPost, createCommment, isLoggedIn } = require('../utils');
 
-const { 
+const {
     getPost,
     editPost,
     deletePost,
     getComment,
     editComment,
-    deleteComment, 
+    deleteComment,
+    addLike,
+    deleteLike,
 } = require('../controllers/post');
 
 const router = express.Router();
@@ -33,6 +31,8 @@ router.put('/:id/comment/:id', isLoggedIn, editComment);
 
 router.delete('/:id/comment/:id', isLoggedIn, deleteComment);
 
-//add route for likes
+router.post('/like', isLoggedIn, addLike);
+
+router.delete('/like', isLoggedIn, deleteLike);
 
 module.exports = router;

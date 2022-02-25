@@ -63,7 +63,8 @@ const createUser = async () => {
     const createdUser = await prisma.user.create(
         // data: {
     //     // }
-    );
+    // );
+    )
 }
 
 const createProfile = async (req, res) => {
