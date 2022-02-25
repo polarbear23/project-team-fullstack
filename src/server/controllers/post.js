@@ -136,4 +136,6 @@ module.exports = {
     createCommment,
     editComment,
     deleteComment,
+    addLike,
+    deleteLike,
 };
