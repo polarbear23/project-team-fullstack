@@ -1,17 +1,19 @@
 const { PrismaClient } = require('@prisma/client');
+
 const { SERVER_STATUS_CODE, SERVER_ERROR_MESSAGE } = require('./config');
 
 const jwt = require('jsonwebtoken');
 
-const { SERVER_ERROR_MESSAGE } = require('./config')
+const { SERVER_ERROR_MESSAGE, SERVER_STATUS_CODE } = require('./config');
 
 const prisma = new PrismaClient();
 
-const capitalizeFirstLetter = (string) => string.replace(/\b\w/g, (c) => c.toUpperCase());
+const capitalizeFirstLetter = (string) =>
+    string.replace(/\b\w/g, (c) => c.toUpperCase());
 
 const isLoggedIn = (req, res, next) => {
     const token = req.headers.authorization;
-    
+
     try {
         jwt.verify(token, secret);
     } catch(error) {
@@ -20,7 +22,7 @@ const isLoggedIn = (req, res, next) => {
     }
 
     next();
-}
+};
 
 const isAdmin = async (req, res, next) => {
     const { id } = req.params;
@@ -36,20 +38,33 @@ const isAdmin = async (req, res, next) => {
     next();
 };
 
+const isModerator = async (req, res, next) => {
+    const { id } = req.params;
+
+    const fetchedUser = await prisma.user.findUnique({
+        where: { id },
+    });
+
+    if (fetchedUser.role === 'USER') {
+        return res.status(403).json(SERVER_ERROR_MESSAGE.FORBIDDEN);
+    }
+
+    next();
+};
+
 const createUserWithProfile = async () => {
     const { username, password, email, role } = req.body;
     let { isBanned } = req.body;
-    
+
     !isBanned && (isBanned = false);
 
     //const hashedPassword = ...;
 
     const createdUserWithProfile = await prisma.user.create(
         // data: {
+    //     // }
+    // );
 
-        // }
-    );
-}
 
 const createProfile = async (req, res) => {
     const { userId, profilePicture, location } = req.body;
@@ -58,30 +73,30 @@ const createProfile = async (req, res) => {
         data: {
             userId: userId,
             profilePicture: profilePicture,
-            location: location
-        }
+            location: location,
+        },
     });
 
     if(!createdProfile){
         return res.status(SERVER_STATUS_CODE.CREATE).json({ error: SERVER_ERROR_MESSAGE.CREATE });
     }
     return res.json({ data: createdProfile });
-}
+};
 
 const createTag = async (req, res) => {
     const { name } = req.body;
-    
+
     const createdTag = await prisma.tag.create({
         data: {
-            name: name
-        }
+            name: name,
+        },
     });
 
     if(!createdTag){
         return res.status(SERVER_STATUS_CODE.CREATE).json({ error: SERVER_ERROR_MESSAGE.CREATE });
     }
     return res.json({ data: createdTag });
-}
+};
 
 const createLike = async (req, res) => {
     const { userId, postId, commentId } = req.body;
@@ -90,15 +105,15 @@ const createLike = async (req, res) => {
         data: {
             userId: userId,
             postId: postId,
-            commentId: commentId
-        }
+            commentId: commentId,
+        },
     });
 
     if(!createdLike){
         return res.status(SERVER_STATUS_CODE.CREATE).json({ error: SERVER_ERROR_MESSAGE.CREATE });
     }
     return res.json({ data: createdLike });
-}
+};
 
 const createPost = async (req, res) => {
     const { title, content, tags } = req.body;
@@ -112,7 +127,7 @@ const createPost = async (req, res) => {
             title: title,
             content: content,
             isReported: isReported,
-            isRemoved: isRemoved
+            isRemoved: isRemoved,
         },
         tags: {
             create: tags.map(tag => {
@@ -136,7 +151,7 @@ const createPost = async (req, res) => {
         return res.status(SERVER_STATUS_CODE.CREATE).json({ error: SERVER_ERROR_MESSAGE.CREATE });
     }
     return res.json({ data: createdPost });
-}
+};
 
 const createComment = async (req, res) => {
     const { userId, content, postId, parentId } = req.body;
@@ -149,18 +164,18 @@ const createComment = async (req, res) => {
         data: {
             userId: userId,
             content: content,
-            parentId: parentId, 
+            parentId: parentId,
             postId: postId,
             isReported: isReported,
-            isRemoved: isRemoved
-        }
+            isRemoved: isRemoved,
+        },
     });
 
     if(!createdComment){
         return res.status(SERVER_STATUS_CODE.CREATE).json({ error: SERVER_ERROR_MESSAGE.CREATE });
     }
     return res.json({ data: createdComment });
-}
+};
 
 const createRating = async (req, res) => {
     const { profileId, rating } = req.body;
@@ -168,15 +183,15 @@ const createRating = async (req, res) => {
     const createdRating = await prisma.rating.create({
         data: {
             profileId: profileId,
-            rating: rating
-        }
+            rating: rating,
+        },
     });
 
     if(!createdRating){
         return res.status(SERVER_STATUS_CODE.CREATE).json({ error: SERVER_ERROR_MESSAGE.CREATE });
     }
     return res.json({ data: createdRating });
-}
+};
 
 module.exports = {
     isAdmin,

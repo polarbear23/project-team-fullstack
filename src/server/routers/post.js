@@ -1,17 +1,19 @@
 const express = require('express');
 
-const {
+const { 
+    createPost, 
+    createCommment, 
+    isLoggedIn, 
+} = require('../utils');
+
+const { 
     getPost,
-    createPost,
     editPost,
     deletePost,
     getComment,
-    createCommment,
     editComment,
-    deleteComment,
+    deleteComment, 
 } = require('../controllers/post');
-
-const { isLoggedIn } = require('../config');
 
 const router = express.Router();
 
@@ -30,5 +32,7 @@ router.post('/:id/comment/', isLoggedIn, createCommment);
 router.put('/:id/comment/:id', isLoggedIn, editComment);
 
 router.delete('/:id/comment/:id', isLoggedIn, deleteComment);
+
+//add route for likes
 
 module.exports = router;
