@@ -192,7 +192,7 @@ const createComment = async (req, res) => {
             userId,
             content,
             parentId,
-            postId,
+            postId
         },
     });
 
