@@ -1,26 +1,26 @@
 const { PrismaClient } = require('@prisma/client');
-const { RES_ERRORS, RES_ERROR_MESSAGES } = require('./config');
 
 const jwt = require('jsonwebtoken');
 
-const { SERVER_ERROR_MESSAGE } = require('./config')
+const { SERVER_ERROR_MESSAGE, SERVER_STATUS_CODE } = require('./config');
 
 const prisma = new PrismaClient();
 
-const capitalizeFirstLetter = (string) => string.replace(/\b\w/g, (c) => c.toUpperCase());
+const capitalizeFirstLetter = (string) =>
+    string.replace(/\b\w/g, (c) => c.toUpperCase());
 
 const isLoggedIn = (req, res, next) => {
     const token = req.headers.authorization;
-    
+
     try {
-        jwt.verify(token, secret)
-    } catch(error) {
-        console.log('error', error)
-        return res.status(401).json(SERVER_ERROR_MESSAGE.UNAUTHORIZED)
+        jwt.verify(token, secret);
+    } catch (error) {
+        console.log('error', error);
+        return res.status(401).json(SERVER_ERROR_MESSAGE.UNAUTHORIZED);
     }
 
     next();
-}
+};
 
 const isAdmin = async (req, res, next) => {
     const { id } = req.params;
@@ -36,10 +36,24 @@ const isAdmin = async (req, res, next) => {
     next();
 };
 
+const isModerator = async (req, res, next) => {
+    const { id } = req.params;
+
+    const fetchedUser = await prisma.user.findUnique({
+        where: { id },
+    });
+
+    if (fetchedUser.role === 'USER') {
+        return res.status(403).json(SERVER_ERROR_MESSAGE.FORBIDDEN);
+    }
+
+    next();
+};
+
 const createUserWithProfile = async () => {
     const { username, password, email, role } = req.body;
     let { isBanned } = req.body;
-    
+
     !isBanned && (isBanned = false);
 
     //const hashedPassword = ...;
@@ -49,7 +63,7 @@ const createUserWithProfile = async () => {
 
     //     // }
     // );
-}
+};
 
 const createProfile = async (req, res) => {
     const { userId, profilePicture, location } = req.body;
@@ -58,30 +72,34 @@ const createProfile = async (req, res) => {
         data: {
             userId: userId,
             profilePicture: profilePicture,
-            location: location
-        }
+            location: location,
+        },
     });
 
-    if(!createdProfile){
-        return res.status(RES_ERRORS.create).json({ error: RES_ERROR_MESSAGES.create });
+    if (!createdProfile) {
+        return res
+            .status(RES_ERRORS.create)
+            .json({ error: RES_ERROR_MESSAGES.create });
     }
     return res.json({ data: createdProfile });
-}
+};
 
 const createTag = async (req, res) => {
     const { name } = req.body;
-    
+
     const createdTag = await prisma.tag.create({
         data: {
-            name: name
-        }
+            name: name,
+        },
     });
 
-    if(!createdTag){
-        return res.status(RES_ERRORS.create).json({ error: RES_ERROR_MESSAGES.create });
+    if (!createdTag) {
+        return res
+            .status(RES_ERRORS.create)
+            .json({ error: RES_ERROR_MESSAGES.create });
     }
     return res.json({ data: createdTag });
-}
+};
 
 const createLike = async (req, res) => {
     const { userId, postId, commentId } = req.body;
@@ -90,15 +108,17 @@ const createLike = async (req, res) => {
         data: {
             userId: userId,
             postId: postId,
-            commentId: commentId
-        }
+            commentId: commentId,
+        },
     });
 
-    if(!createdLike){
-        return res.status(RES_ERRORS.create).json({ error: RES_ERROR_MESSAGES.create });
+    if (!createdLike) {
+        return res
+            .status(RES_ERRORS.create)
+            .json({ error: RES_ERROR_MESSAGES.create });
     }
     return res.json({ data: createdLike });
-}
+};
 
 const createPost = async (req, res) => {
     const { title, content, numberOfLikes } = req.body;
@@ -113,15 +133,17 @@ const createPost = async (req, res) => {
             content: content,
             numberOfLikes: numberOfLikes,
             isReported: isReported,
-            isRemoved: isRemoved
-        }
+            isRemoved: isRemoved,
+        },
     });
 
-    if(!createdPost){
-        return res.status(RES_ERRORS.create).json({ error: RES_ERROR_MESSAGES.create });
+    if (!createdPost) {
+        return res
+            .status(RES_ERRORS.create)
+            .json({ error: RES_ERROR_MESSAGES.create });
     }
     return res.json({ data: createdPost });
-}
+};
 
 const createComment = async (req, res) => {
     const { userId, content, postId, parentId, numberOfLikes } = req.body;
@@ -134,19 +156,21 @@ const createComment = async (req, res) => {
         data: {
             userId: userId,
             content: content,
-            parentId: parentId, 
+            parentId: parentId,
             postId: postId,
             numberOfLikes: numberOfLikes,
             isReported: isReported,
-            isRemoved: isRemoved
-        }
+            isRemoved: isRemoved,
+        },
     });
 
-    if(!createdComment){
-        return res.status(RES_ERRORS.create).json({ error: RES_ERROR_MESSAGES.create });
+    if (!createdComment) {
+        return res
+            .status(RES_ERRORS.create)
+            .json({ error: RES_ERROR_MESSAGES.create });
     }
     return res.json({ data: createdComment });
-}
+};
 
 const createRating = async (req, res) => {
     const { profileId, rating } = req.body;
@@ -154,15 +178,17 @@ const createRating = async (req, res) => {
     const createdRating = await prisma.rating.create({
         data: {
             profileId: profileId,
-            rating: rating
-        }
+            rating: rating,
+        },
     });
 
-    if(!createdRating){
-        return res.status(RES_ERRORS.create).json({ error: RES_ERROR_MESSAGES.create });
+    if (!createdRating) {
+        return res
+            .status(RES_ERRORS.create)
+            .json({ error: RES_ERROR_MESSAGES.create });
     }
     return res.json({ data: createdRating });
-}
+};
 
 module.exports = {
     isAdmin,

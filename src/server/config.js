@@ -1,25 +1,21 @@
 const EXTERNAL_API = 'https://pokeapi.co/api/v2/pokemon/';
 
-const RES_ERRORS = {
-    create: 500,
-    find: 404
-}
+const SECRET = 'process.env.SECRET';
 
-const RES_ERROR_MESSAGES = {
-    create: "Internal server error" 
-}
+const SERVER_ERROR_MESSAGE = {
+    UNAUTHORIZED: 'Unauthorized',
+    FORBIDDEN: 'Forbidden',
+    CREATE: 'Internal server error',
+};
 
-const SECRET = 'process.env.SECRET'
-
-class SERVER_ERROR_MESSAGE {
-    UNAUTHORIZED = 'Unauthorized'
-    FORBIDDEN = 'Forbidden'
-}
+const SERVER_STATUS_CODE = {
+    CREATE: 500,
+    NOT_FOUND: 404,
+};
 
 module.exports = {
     EXTERNAL_API,
-    RES_ERRORS,
-    RES_ERROR_MESSAGES,
     SECRET,
-    SERVER_ERROR_MESSAGE
-}
+    SERVER_STATUS_CODE,
+    SERVER_ERROR_MESSAGE,
+};
