@@ -20,7 +20,7 @@ model User {
   password  String
   email     String    @unique
   role      Role      @default(USER)
-  isBanned  Boolean
+  isBanned  Boolean   @default(false)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   profile   Profile?

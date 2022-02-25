@@ -1,22 +1,36 @@
 const { PrismaClient } = require('@prisma/client');
 
-const { SERVER_STATUS_CODE, SERVER_ERROR_MESSAGE } = require('./config');
-
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
-const { SERVER_ERROR_MESSAGE, SERVER_STATUS_CODE } = require('./config');
+const { SERVER_ERROR_MESSAGE } = require('./config');
 
 const prisma = new PrismaClient();
 
+const saltRounds = 10;
+
 const capitalizeFirstLetter = (string) =>
     string.replace(/\b\w/g, (c) => c.toUpperCase());
+
+const hashedPassword = (password) => bcrypt.hashSync(password, saltRounds);
+
+const createToken = (payload) => jwt.sign(payload, secret);
+
+const checkPassword = async (textPassword, hashedPassword) => {
+    try {
+        return await bcrypt.compare(textPassword, hashedPassword);
+    } catch (error) {
+        console.log(`error in password check`, error);
+        return error;
+    }
+};
 
 const isLoggedIn = (req, res, next) => {
     const token = req.headers.authorization;
 
     try {
         jwt.verify(token, secret);
-    } catch(error) {
+    } catch (error) {
         console.log('error', error);
         return res.status(401).json(SERVER_ERROR_MESSAGE.UNAUTHORIZED);
     }
@@ -53,19 +67,25 @@ const isModerator = async (req, res, next) => {
 };
 
 const createUser = async () => {
-    const { username, password, email, role } = req.body;
-    let { isBanned } = req.body;
+    const { username, password, email } = req.body;
 
-    !isBanned && (isBanned = false);
+    password = hashedPassword(password);
 
-    //const hashedPassword = ...;
+    const user = {
+        username,
+        password,
+        email,
+        isBanned = false,
+    };
 
-    const createdUser = await prisma.user.create(
-        // data: {
-    //     // }
-    // );
-    )
-}
+    const createdUser = await prisma.user.create({
+        data: {
+            ...user,
+        },
+    });
+
+    res.status(200).json({ data: createdUser });
+};
 
 const createProfile = async (req, res) => {
     const { userId, profilePicture, location } = req.body;
@@ -78,8 +98,10 @@ const createProfile = async (req, res) => {
         },
     });
 
-    if(!createdProfile){
-        return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER});
+    if (!createdProfile) {
+        return res
+            .status(500)
+            .json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
     }
     return res.status(200).json({ data: createdProfile });
 };
@@ -93,8 +115,10 @@ const createTag = async (req, res) => {
         },
     });
 
-    if(!createdTag){
-        return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
+    if (!createdTag) {
+        return res
+            .status(500)
+            .json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
     }
     return res.status(200).json({ data: createdTag });
 };
@@ -110,8 +134,10 @@ const createLike = async (req, res) => {
         },
     });
 
-    if(!createdLike){
-        return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
+    if (!createdLike) {
+        return res
+            .status(500)
+            .json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
     }
     return res.status(200).json({ data: createdLike });
 };
@@ -131,7 +157,7 @@ const createPost = async (req, res) => {
             isRemoved: isRemoved,
         },
         tags: {
-            create: tags.map(tag => {
+            create: tags.map((tag) => {
                 return {
                     tag: {
                         connectOrCreate: {
@@ -148,8 +174,10 @@ const createPost = async (req, res) => {
         },
     });
 
-    if(!createdPost){
-        return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
+    if (!createdPost) {
+        return res
+            .status(500)
+            .json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
     }
     return res.status(200).json({ data: createdPost });
 };
@@ -172,8 +200,10 @@ const createComment = async (req, res) => {
         },
     });
 
-    if(!createdComment){
-        return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
+    if (!createdComment) {
+        return res
+            .status(500)
+            .json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
     }
     return res.status(200).json({ data: createdComment });
 };
@@ -187,19 +217,23 @@ const createRating = async (req, res) => {
             rating: rating,
             pokemons: {
                 connect: {
-                    id: pokemonId
-                }
-            }
+                    id: pokemonId,
+                },
+            },
         },
     });
 
-    if(!createdRating){
-        return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
+    if (!createdRating) {
+        return res
+            .status(500)
+            .json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
     }
     return res.status(200).json({ data: createdRating });
 };
 
 module.exports = {
+    checkPassword,
+    createToken,
     isAdmin,
     isLoggedIn,
     prisma,
