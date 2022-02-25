@@ -33,4 +33,6 @@ router.put('/:id/comment/:id', isLoggedIn, editComment);
 
 router.delete('/:id/comment/:id', isLoggedIn, deleteComment);
 
+//add route for likes
+
 module.exports = router;

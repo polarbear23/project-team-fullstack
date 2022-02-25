@@ -21,6 +21,36 @@ const getPost = async (req, res) => {
     res.status(200).json(selectedPost);
 };
 
+const editPost = async (req, res) => {
+    //might be patch not put
+    const id = req.params.id;
+
+    const post = req.body;
+
+    const token = req.headers.authorization;
+
+    const decodedToken = jwt.decode(token); //decode payload
+
+    const payload = decodedToken.payload;
+
+    const tokenId = payload.id; //grab user's id from payload
+
+    if (post.userId !== tokenId || !isModerator) {
+        return res.status(400).json('error'); //check user's id agianst userId in post. This check should have been completed in client //check if OP or MOD or ADMIN
+    }
+
+    const updatedPost = await prisma.post.update({
+        where: {
+            id,
+        },
+        data: {
+            ...post,
+        },
+    });
+
+    res.status(200).json(updatedPost);
+};
+
 module.exports = {
     getPost,
     createPost,
