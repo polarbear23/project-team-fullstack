@@ -142,29 +142,31 @@ const createLike = async (req, res) => {
 };
 
 const createPost = async (req, res) => {
-    const { title, content, tags } = req.body;
+    const { title, content, tags, userId } = req.body;
 
     const createdPost = await prisma.post.create({
         data: {
             title: title,
             content: content,
-        },
-        tags: {
-            create: tags.map((tag) => {
-                return {
-                    tag: {
-                        connectOrCreate: {
-                            where: {
-                                name: tag,
-                            },
-                            create: {
-                                name: tag,
+            userId: userId,
+            tags: {
+                create: tags.map((tag) => {
+                    return {
+                        tag: {
+                            connectOrCreate: {
+                                where: {
+                                    name: tag,
+                                },
+                                create: {
+                                    name: tag,
+                                },
                             },
                         },
-                    },
-                };
-            }),
+                    };
+                }),
+            }
         },
+
     });
 
     if (!createdPost) {
