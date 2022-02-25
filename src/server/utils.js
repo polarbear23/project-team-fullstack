@@ -168,7 +168,11 @@ const createPost = async (req, res) => {
             }
         },
         include: {
-            tags: true
+            tags: {
+                include: {
+                    tag: true
+                }
+            }
         }
     });
 
