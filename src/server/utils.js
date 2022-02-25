@@ -91,9 +91,9 @@ const createProfile = async (req, res) => {
 
     const createdProfile = await prisma.profile.create({
         data: {
-            userId: userId,
-            profilePicture: profilePicture,
-            location: location,
+            userId,
+            profilePicture,
+            location,
         },
     });
 
@@ -110,7 +110,7 @@ const createTag = async (req, res) => {
 
     const createdTag = await prisma.tag.create({
         data: {
-            name: name,
+            name,
         },
     });
 
@@ -127,9 +127,9 @@ const createLike = async (req, res) => {
 
     const createdLike = await prisma.like.create({
         data: {
-            userId: userId,
-            postId: postId,
-            commentId: commentId,
+            userId,
+            postId,
+            commentId,
         },
     });
 
@@ -146,9 +146,9 @@ const createPost = async (req, res) => {
 
     const createdPost = await prisma.post.create({
         data: {
-            title: title,
-            content: content,
-            userId: userId,
+            title,
+            content,
+            userId,
             tags: {
                 create: tags.map((tag) => {
                     return {
@@ -182,10 +182,10 @@ const createComment = async (req, res) => {
 
     const createdComment = await prisma.comment.create({
         data: {
-            userId: userId,
-            content: content,
-            parentId: parentId,
-            postId: postId,
+            userId,
+            content,
+            parentId,
+            postId,
         },
     });
 
@@ -202,8 +202,8 @@ const createRating = async (req, res) => {
 
     const createdRating = await prisma.rating.create({
         data: {
-            profileId: profileId,
-            rating: rating,
+            profileId,
+            rating,
             pokemons: {
                 connect: {
                     id: pokemonId,
