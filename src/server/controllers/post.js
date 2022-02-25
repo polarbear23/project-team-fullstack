@@ -16,7 +16,7 @@ const getPost = async (req, res) => {
         return res.status(400).json('error');
     }
 
-    res.status(200).json(selectedPost);
+    res.status(200).json({ data: selectedPost });
 };
 
 const editPost = async (req, res) => {
@@ -45,7 +45,7 @@ const editPost = async (req, res) => {
         },
     });
 
-    res.status(200).json(updatedPost);
+    res.status(200).json({ data: updatedPost });
 };
 
 const deletePost = async (req, res) => {
@@ -78,7 +78,7 @@ const getComment = async (req, res) => {
         return res.status(400).json('error');
     }
 
-    res.status(200).json(selectedComment);
+    res.status(200).json({ data: selectedComment });
 };
 
 const editComment = async (req, res) => {
@@ -107,7 +107,7 @@ const editComment = async (req, res) => {
         },
     });
 
-    res.status(200).json(updatedComment);
+    res.status(200).json({ data: updatedComment });
 };
 
 const deleteComment = async (req, res) => {

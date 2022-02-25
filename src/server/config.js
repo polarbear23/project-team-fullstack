@@ -5,12 +5,7 @@ const SECRET = 'process.env.SECRET';
 const SERVER_ERROR_MESSAGE = {
     UNAUTHORIZED: 'Unauthorized',
     FORBIDDEN: 'Forbidden',
-    CREATE: 'Internal server error',
-};
-
-const SERVER_STATUS_CODE = {
-    CREATE: 500,
-    NOT_FOUND: 404,
+    INTERNAL_SERVER: 'Internal server error',
 };
 
 module.exports = {
