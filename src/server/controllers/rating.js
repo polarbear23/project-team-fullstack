@@ -1,7 +1,7 @@
 const { prisma } = require("@prisma/client");
 const { SERVER_ERROR_MESSAGE } = require("../config");
 
-const getRatings = (req, res) => {
+const getRatings = async (req, res) => {
     const ratings = await prisma.rating.findMany({});
 
     if(!ratings){

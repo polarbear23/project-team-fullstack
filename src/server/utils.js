@@ -222,6 +222,7 @@ module.exports = {
     checkPassword,
     createToken,
     isAdmin,
+    isModerator,
     isLoggedIn,
     prisma,
     capitalizeFirstLetter,

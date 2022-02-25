@@ -11,6 +11,5 @@ const SERVER_ERROR_MESSAGE = {
 module.exports = {
     EXTERNAL_API,
     SECRET,
-    SERVER_STATUS_CODE,
     SERVER_ERROR_MESSAGE,
 };
