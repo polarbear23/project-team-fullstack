@@ -101,7 +101,7 @@ const createLike = async (req, res) => {
 }
 
 const createPost = async (req, res) => {
-    const { title, content, numberOfLikes } = req.body;
+    const { title, content, tags } = req.body;
     let { isReported, isRemoved } = req.body;
 
     !isReported && (isReported = false);
@@ -113,7 +113,23 @@ const createPost = async (req, res) => {
             content: content,
             isReported: isReported,
             isRemoved: isRemoved
-        }
+        },
+        tags: {
+            create: tags.map(tag => {
+                return {
+                    tag: {
+                        connectOrCreate: {
+                            where: {
+                                name: tag,
+                            },
+                            create: {
+                                name: tag,
+                            },
+                        },
+                    },
+                };
+            }),
+        },
     });
 
     if(!createdPost){
@@ -123,7 +139,7 @@ const createPost = async (req, res) => {
 }
 
 const createComment = async (req, res) => {
-    const { userId, content, postId, parentId, numberOfLikes } = req.body;
+    const { userId, content, postId, parentId } = req.body;
     let { isReported, isRemoved } = req.body;
 
     !isReported && (isReported = false);
