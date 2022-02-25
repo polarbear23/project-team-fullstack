@@ -421,6 +421,9 @@ table td {
 .top-3-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  width: 90%;
+  border-radius: 20px;
 }
 
 .pokemon-container {
@@ -428,7 +431,10 @@ table td {
 }
 
 .pokemon-tile {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.2);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 10px 10px 0 0;
 }
 
 .top-3-pokemon-image {
