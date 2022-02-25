@@ -127,34 +127,6 @@ const deleteComment = async (req, res) => {
     res.status(201).json('Comment deleted');
 };
 
-const addLike = async (req, res) => {
-    const { userId, postId, commentId } = req.body;
-
-    let like;
-
-    if (!commentId) {
-        like = {
-            userId,
-            postId,
-        };
-    }
-
-    if (!postId) {
-        like = {
-            userId,
-            commentId,
-        };
-    }
-
-    await prisma.like.create({
-        data: {
-            like,
-        },
-    });
-
-    res.status(201).json('Post liked');
-};
-
 const deleteLike = async (req, res) => {
     const { id } = req.params;
 
