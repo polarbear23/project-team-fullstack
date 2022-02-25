@@ -9,7 +9,7 @@ const LeaderboardItem = () => {
       >
         <img
           className="leaderboard-pokemon-icon"
-          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
+          src="assets/pokemon/001.png"
           alt=""
         />
       </td>
@@ -19,13 +19,51 @@ const LeaderboardItem = () => {
       >
         Bulbasaur
       </td>
+      <td data-column="pokemon-type" className="leaderboard-pokemon-type">
+        <img
+          className="type-icon"
+          src="/assets/pokemontypes/grass.svg"
+          alt=""
+        />
+      </td>
       <td
-        data-column="pokemon-type"
-        className="leaderboard-pokemon-name leaderboard-text"
+        data-column="average-rating"
+        className="leaderboard-average-rating leaderboard-text"
       >
-        Type
+        Hp
+      </td>
+      <td
+        data-column="average-rating"
+        className="leaderboard-average-rating leaderboard-text"
+      >
+        Attack
+      </td>
+      <td
+        data-column="average-rating"
+        className="leaderboard-average-rating leaderboard-text"
+      >
+        Defense
       </td>
 
+      <td
+        data-column="average-rating"
+        className="leaderboard-average-rating leaderboard-text"
+      >
+        Spec attk
+      </td>
+
+      <td
+        data-column="average-rating"
+        className="leaderboard-average-rating leaderboard-text"
+      >
+        specdef
+      </td>
+      <td
+        data-column="average-rating"
+        className="leaderboard-average-rating leaderboard-text"
+      >
+        spd
+      </td>
       <td
         data-column="average-rating"
         className="leaderboard-average-rating leaderboard-text"

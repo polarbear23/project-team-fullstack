@@ -369,12 +369,12 @@ section {
 
 .leaderboard {
   grid-area: main;
+  margin-top: 4rem;
 }
 
 tbody {
   /*border: thin solid black;*/
 }
-
 table {
   width: 90%;
   border-collapse: collapse;
@@ -383,7 +383,6 @@ table {
 }
 
 table td {
-  background-color: #e8edff;
   border-color: #aabcfe;
   border-style: solid;
   border-width: 0px;
@@ -391,7 +390,6 @@ table td {
   font-family: Arial, sans-serif;
   font-size: 14px;
   overflow: hidden;
-
   word-break: normal;
 }
 
@@ -411,12 +409,34 @@ table td {
   padding: 1rem;
   word-break: normal;
 }
+
 .leaderboard-title {
   margin-bottom: 1rem;
 }
 
-.top-5-leaders {
+.top-3-leaders {
   margin-bottom: 2rem;
+}
+
+.top-3-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.pokemon-container {
+  display: grid;
+}
+
+.pokemon-tile {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.top-3-pokemon-image {
+  height: 200px;
+}
+
+.pokemon-text-container {
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .leaderboard-list-item td {
@@ -431,28 +451,27 @@ table td {
 }
 
 .leaderboard td {
+  text-align: left;
+  vertical-align: top;
+}
+
+.leaderboard-list-item:nth-child(even) {
   background-color: #d2e4fc;
-  border-color: inherit;
-  text-align: left;
-  vertical-align: top;
 }
 
-tr:nth-child(even) {
-  background-color: #ccc;
+.leaderboard-list-item:nth-child(odd) {
+  background-color: #e8edff;
 }
 
-tr:nth-child(odd) {
-  background-color: white;
+.type-icon {
+  height: 40px;
 }
 
-.tg .tg-c6of {
-  background-color: #ffffff;
-  border-color: inherit;
-  text-align: left;
-  vertical-align: top;
+.leaderboard-pokemon-icon {
+  height: 120px;
+  padding: 1rem;
 }
-.tg .tg-0pky {
-  border-color: inherit;
-  text-align: left;
-  vertical-align: top;
+
+.leaderboard-pokemon-type {
+  padding: 1rem;
 }
