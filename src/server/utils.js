@@ -78,9 +78,9 @@ const createProfile = async (req, res) => {
     });
 
     if(!createdProfile){
-        return res.status(SERVER_STATUS_CODE.CREATE).json({ error: SERVER_ERROR_MESSAGE.CREATE });
+        return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER});
     }
-    return res.json({ data: createdProfile });
+    return res.status(200).json({ data: createdProfile });
 };
 
 const createTag = async (req, res) => {
@@ -93,9 +93,9 @@ const createTag = async (req, res) => {
     });
 
     if(!createdTag){
-        return res.status(SERVER_STATUS_CODE.CREATE).json({ error: SERVER_ERROR_MESSAGE.CREATE });
+        return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
     }
-    return res.json({ data: createdTag });
+    return res.status(200).json({ data: createdTag });
 };
 
 const createLike = async (req, res) => {
@@ -110,9 +110,9 @@ const createLike = async (req, res) => {
     });
 
     if(!createdLike){
-        return res.status(SERVER_STATUS_CODE.CREATE).json({ error: SERVER_ERROR_MESSAGE.CREATE });
+        return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
     }
-    return res.json({ data: createdLike });
+    return res.status(200).json({ data: createdLike });
 };
 
 const createPost = async (req, res) => {
@@ -148,9 +148,9 @@ const createPost = async (req, res) => {
     });
 
     if(!createdPost){
-        return res.status(SERVER_STATUS_CODE.CREATE).json({ error: SERVER_ERROR_MESSAGE.CREATE });
+        return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
     }
-    return res.json({ data: createdPost });
+    return res.status(200).json({ data: createdPost });
 };
 
 const createComment = async (req, res) => {
@@ -172,9 +172,9 @@ const createComment = async (req, res) => {
     });
 
     if(!createdComment){
-        return res.status(SERVER_STATUS_CODE.CREATE).json({ error: SERVER_ERROR_MESSAGE.CREATE });
+        return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
     }
-    return res.json({ data: createdComment });
+    return res.status(200).json({ data: createdComment });
 };
 
 const createRating = async (req, res) => {
@@ -193,9 +193,9 @@ const createRating = async (req, res) => {
     });
 
     if(!createdRating){
-        return res.status(SERVER_STATUS_CODE.CREATE).json({ error: SERVER_ERROR_MESSAGE.CREATE });
+        return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
     }
-    return res.json({ data: createdRating });
+    return res.status(200).json({ data: createdRating });
 };
 
 module.exports = {
