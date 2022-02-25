@@ -63,6 +63,8 @@ const deletePost = async (req, res) => {
             ...isRemoved,
         },
     });
+
+    res.status(201).json('post deleted')
 };
 
 const getComment = async (req, res) => {
@@ -108,6 +110,23 @@ const editComment = async (req, res) => {
     });
 
     res.status(200).json(updatedComment);
+};
+
+const deleteComment = async (req, res) => {
+    const id = req.params.id;
+
+    const isRemoved = { isRemoved: true };
+
+    await prisma.post.update({
+        where: {
+            id,
+        },
+        update: {
+            ...isRemoved,
+        },
+    });
+
+    res.status(201).json('comment deleted')
 };
 
 module.exports = {
