@@ -1,4 +1,4 @@
-const { prisma } = require("@prisma/client");
+const { prisma } = require('../utils');
 const { SERVER_ERROR_MESSAGE } = require("../config");
 
 const getPokemonById = async (req, res) => {

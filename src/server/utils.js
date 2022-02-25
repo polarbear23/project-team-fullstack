@@ -66,8 +66,9 @@ const isModerator = async (req, res, next) => {
     next();
 };
 
-const createUser = async () => {
-    const { username, password, email } = req.body;
+const createUser = async (req, res) => {
+    const { username, email } = req.body;
+    let { password } = req.body;
 
     password = hashedPassword(password);
 
