@@ -167,7 +167,9 @@ const createPost = async (req, res) => {
                 }),
             }
         },
-
+        include: {
+            tags: true
+        }
     });
 
     if (!createdPost) {
