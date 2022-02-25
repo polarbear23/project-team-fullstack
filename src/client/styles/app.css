@@ -12,16 +12,19 @@ html{
 
 body{
     position: relative;
+    min-height: 100vh;
+    /* overflow: hidden; */
 }
 
 .app{
     display: grid;
     grid-template: 
-    "header header" 1fr
-    "leftMenu main" 2fr
-    "footer footer"1fr/
-    1fr 2fr;
-    height: 100vh;
+    "header header" 5rem
+    "leftMenu main" 1fr
+    "footer footer"5rem/
+    .3fr .7fr;
+    /* height: 100vh; */
+    /* gap: 1rem; */
     
 }
 
@@ -32,7 +35,7 @@ header{
     width: 100%;
     font-size: 1.3rem;
     grid-area: header;
-    position: fixed;
+    position: sticky;
     top: 0;
     z-index: 99;
 }
@@ -79,15 +82,16 @@ header{
     width: 100%;
     background-color: #a293ad;
     grid-area: footer;
+    position: absolute;
+    bottom: 0;
 } 
 
 .footer{
-    /* padding-top: 1rem; */
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 2rem 0;
+    /* padding: 2rem 0; */
 }
 .footer__lists{
     list-style: none;
@@ -121,13 +125,8 @@ header{
 
 /* home-container */
 .home-container{
-    /* display: grid;
-    grid-template-columns: 30rem 2fr;
-    justify-content: space-around; */
     grid-area: main;
-    /* margin-left: 25rem; */
     z-index: 1;
- 
     padding: 3rem 0;
 
 }
@@ -144,13 +143,11 @@ aside{
     margin-left: 5rem;
     justify-content: space-between;
     grid-area: leftMenu;
-    /* position: fixed;
-    top: 10rem;
+    padding-top: 3rem;
+    position: fixed;
+    top: 7rem;
     left: 0;
     z-index: 99;
-    width: 25rem;
-    height: calc(100vh - 16rem); */
-    margin-top: 12rem;
 }
 .aside-nav ul {
     list-style: none;
@@ -171,7 +168,7 @@ aside{
 .dark-mode{
     /* position: absolute;
     left: 4rem;
-    bottom: 12rem; */
+    bottom: 2rem; */
     margin-bottom: 1rem;
 }
 .mode-label{
@@ -234,15 +231,14 @@ aside{
 .homepage-main{
     display: grid;
     grid-template-rows: 0.1fr 0.5fr 0.5fr 0.1fr;
-    margin: 6rem 5rem 3rem 0;
-    /* padding-bottom: 8rem; */
+    padding-top: 1rem;
+    margin-right: 4rem;
 }
 
 .top-pokemon-list, .categories-list{
     list-style: none;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    margin-right: 5rem;
     gap: 1rem;
 }
 
@@ -275,7 +271,6 @@ section{
     height: 30rem;
     padding: 2rem;
     border-radius: 1rem;
-    margin-right: 4rem;
 
 }
 .rate-your-pokemon-title{
@@ -291,7 +286,7 @@ section{
     height: 30rem;
     padding: 2rem;
     border-radius: 1rem;
-    margin-right: 4rem;
+
 }
 
 .start-your-own-post-title{
@@ -307,25 +302,11 @@ section{
     gap: 1rem;
 }
 
-/* .cat-img{
-    width: 4rem;
-    height: 4rem !important;
-}  */
-
-/* .manga-img{
-    height: 2.3rem;
-} */
-
-/* .game-img{
-    width: 2.5rem;
-} */
-
 .categories-list-item{
     background-color: #Efe9f4;
     justify-content: space-around;
     align-items: center;
     text-align: center;
-    /* height: 12rem; */
     width: 12rem;
     margin-top: 20px;
     padding: 15px;
@@ -334,9 +315,89 @@ section{
 }
 
 .categories-list-item img{
-    /* margin: 0 auto;
-    display: block; */
     margin-bottom: 1rem;
     width: 5rem;
     min-height: 5rem;
+}
+
+.signup{
+    grid-area: main;
+    color: #fff;
+    margin: 3rem;
+    background-image: url('/public/assets/pokemon.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.signup-form{
+    background-color:rgba(255,255,255,.4) ;
+    width: 23rem;
+    padding: 2rem;
+}
+
+.signup h1{
+    margin-bottom: 1rem;
+}
+
+.input-groups{
+    padding-bottom:2rem;
+    font-size: 1.3rem;
+}
+
+.input-groups .input{
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid #7c6d86;
+}
+
+.dob{
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid #7c6d86;
+    padding: 5px;
+    margin-right: 8px;
+}
+
+.terms{
+    font-size: 1.1rem;
+    margin-left: 5px;
+    margin-bottom: 1rem;
+}
+
+.register-btn{
+    display: block;
+}
+
+.dob_month{
+    padding-right: 5px;
+    display: block;
+}
+
+
+
+.register-btn{
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 1rem auto;
+    width: 7rem;
+    outline: none;
+    border:#7c6d86;
+    font-size: 1.2rem;
+}
+
+/* sign in form */
+.signIn{
+    grid-area: main;
+    background-image: url('/public/assets/pokemon1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.signin-form{
+    background-color:rgba(255,255,255,.4) ;
+    width: 23rem;
+    padding: 2rem;
 }

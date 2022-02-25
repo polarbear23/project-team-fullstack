@@ -2,28 +2,24 @@ import React from 'react'
 
 const Signup = () => {
   return (
-		<div>
-			<h1>Register</h1>
-			<form action="">
+		<div className='signup'>
+			<form className='signup-form'>
+                <h1>Register</h1>
 				<div className="input-groups">
-					<label htmlFor="">Username:</label>
-					<input type="text" />
+					<label htmlFor="username">Username:</label>
+					<input type="text" id='username' className='input'/>
 				</div>
 				<div className="input-groups">
-					<label htmlFor="">Email:</label>
-					<input type="text" />
+					<label htmlFor="email">Email:</label>
+					<input type="text" id='email' className='input'/>
 				</div>
 				<div className="input-groups">
-					<label htmlFor="">Password:</label>
-					<input type="text" />
+					<label htmlFor="password">Password:</label>
+					<input type="text" id='password' className='input'/>
 				</div>
 				<div className="input-groups">
-					<label htmlFor="">Username:</label>
-					<input type="text" />
-				</div>
-				<div className="input-groups">
-					<label htmlFor="">Date of birth:</label>
-					<select name="dob_month" class="input" aria-label="Month">
+					<label htmlFor="dob_month" className='dob_month'>Date of birth:</label>
+					<select name="dob_month" className="dob" aria-label="Month">
 						<option value="0" selected="selected">
 							&nbsp;
 						</option>
@@ -40,9 +36,12 @@ const Signup = () => {
 						<option value="11">November</option>
 						<option value="12">December</option>
 					</select>
+                    <input type="text" className="dob" name="dob_day" pattern="\d*" size="4" maxlength="2" placeholder="Day"></input>
+                    <input type="text" className="dob" name="dob_year" pattern="\d*" size="6" maxlength="4" placeholder="Year"></input>
 				</div>
-				<input type="text" />
-				<p>I agree to the terms and privacy policy.</p>
+				<input type="checkbox" />
+				<span className='terms'>I agree to the terms and privacy policy.</span>
+                <button type='submit' className='register-btn'>Register</button>
 			</form>
 		</div>
 	);
