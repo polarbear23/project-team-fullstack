@@ -8,6 +8,7 @@ const port = process.env.PORT || 4000;
 const initDatabaseRouter = require('./routers/init');
 const postRouter = require('./routers/post');
 const userRouter = require('./routers/user');
+const ratingRouter = require('./routers/rating');
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use('/init', initDatabaseRouter);
 app.use('/post', postRouter);
 app.use('/user', userRouter);
+app.use('/rating', ratingRouter);
 
 app.get('*', (req, res) => {
     res.json('server running');
