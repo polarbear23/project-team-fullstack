@@ -81,7 +81,7 @@ header {
 /* footer styling*/
 .footer-container{
     width: 100%;
-    background-color: #a293ad;
+    background-color: #dbdbdb;
     grid-area: footer;
     position: absolute;
     bottom: 0;
@@ -124,18 +124,9 @@ header {
 
 /* home-container */
 .home-container {
-  /* display: grid;
-    grid-template-columns: 30rem 2fr;
-    justify-content: space-around; */
   grid-area: main;
-  /* margin-left: 25rem; */
   z-index: 1;
 }
-
-/* .main{
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-} */
 
 /* Left Menu Styling */
 aside {
@@ -279,11 +270,20 @@ aside {
 }
 
 .categories-section {
-  margin: 2rem 0;
+  margin-top: 2rem;
+  margin-bottom: 6rem;
+  /* background-color: rgb(101, 121, 161); */
+  background-color: #efe9f4;
+  padding: 2rem;
+  box-shadow: 0 0 0 0px rgb(255 255 255 / 10%), 0 1rem 1rem 0 rgb(14 30 37 / 12%);
+  border-radius: 1rem;
+  background-color: #ededed;
 }
 
 .categories-section h3 {
   margin-bottom: 1rem;
+  color: #000;
+  font-size: 1.8rem;
 }
 
 section {
@@ -327,39 +327,30 @@ section {
 
 .categories-list {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   gap: 1rem;
-}
-
-.categories-list-item{
-    background-color: #Efe9f4;
-    justify-content: space-around;
-    align-items: center;
-    text-align: center;
-    width: 12rem;
-    margin-top: 20px;
-    padding: 15px;
-    border-radius: 10px;
-    cursor: pointer;
 }
 
 .categories-list-item img{
     margin-bottom: 1rem;
-    width: 5rem;
+    width: 6rem;
     min-height: 5rem;
+    filter: saturate(500%) contrast(80%) brightness(200%) invert(50%) sepia(450%) hue-rotate(450deg);
+    
 }
 
 .signup{
     grid-area: main;
-    color: #fff;
+    color: #000;
     margin: 3rem;
-    background-image: url('/public/assets/pokemon.jpg');
+    background-image: url('/public/assets/gen1.jpg');
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: 20% 50%;
 }
 
 .signup-form{
-    background-color:rgba(255,255,255,.4) ;
+    background-color:rgba(0, 0, 0, 0.1) ;
     width: 23rem;
     padding: 2rem;
 }
@@ -395,9 +386,7 @@ section {
     margin-bottom: 1rem;
 }
 
-.register-btn{
-    display: block;
-}
+
 
 .dob_month{
     padding-right: 5px;
@@ -405,8 +394,8 @@ section {
 }
 
 
-
 .register-btn{
+    display: block;
     cursor: pointer;
     padding: 5px;
     border-radius: 5px;
@@ -420,58 +409,83 @@ section {
 /* sign in form */
 .signIn{
     grid-area: main;
-    background-image: url('/public/assets/pokemon1.jpg');
+    background-image: url('/public/assets/pokemon2.jpg');
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: 20% 50%;
+    margin: 3rem;
+    padding: 3rem;
+}
+
+
+.signin-container{
+    background-color:rgba(255,255,255,.4) ;
+    width: 23rem;
 }
 
 .signin-form{
-    background-color:rgba(255,255,255,.4) ;
+    width: 100%;
+    padding: 2rem;
+    border-bottom: 1px solid #000;
+}
+
+
+.signin-text{
+    margin-bottom: 5px;
+    font-size: 1.2rem;
+}
+
+.new-register{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
     width: 23rem;
     padding: 2rem;
 }
-/* .cat-img{
-    width: 4rem;
-    height: 4rem !important;
-}  */
 
-/* .manga-img{
-    height: 2.3rem;
-} */
-
-/* .game-img{
-    width: 2.5rem;
-} */
-
-.categories-list-item {
-  background-color: #efe9f4;
-  justify-content: space-around;
-  align-items: center;
-  text-align: center;
-  /* height: 12rem; */
-  width: 12rem;
-  margin-top: 20px;
-  padding: 15px;
-  border-radius: 10px;
-  cursor: pointer;
+.new-register-btn{
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+    width: 10rem;
+    outline: none;
+    border:#7c6d86;
+    font-size: 1.2rem;
+    box-shadow:0 16px 24px 2px rgba(0,0,0,0.14), 0 6px 30px 5px rgba(0,0,0,0.12), 0 8px 10px -5px rgba(0,0,0,0.2);border:0;
 }
 
-.categories-list-item img {
-  /* margin: 0 auto;
-    display: block; */
-  margin-bottom: 1rem;
-  width: 5rem;
-  min-height: 5rem;
+.signin-form h1{
+    margin-bottom: 1rem;
+}
+
+.signin-btn{
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+    width: 10rem;
+    outline: none;
+    border:#7c6d86;
+    font-size: 1.2rem;
+    box-shadow:0 16px 24px 2px rgba(0,0,0,0.14), 0 6px 30px 5px rgba(0,0,0,0.12), 0 8px 10px -5px rgba(0,0,0,0.2);border:0;
+}
+
+.categories-list-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
+    /* height: 12rem; */
+    width: 12rem;
+    cursor: pointer;
+    
 }
 
 /* Leaderboard styling*/
 
 .leaderboard {
   grid-area: main;
-}
-
-tbody {
-  /*border: thin solid black;*/
 }
 
 table {
@@ -518,9 +532,7 @@ table td {
   margin-bottom: 2rem;
 }
 
-.leaderboard-list-item td {
-  /* border: thin black solid;*/
-}
+
 
 .leaderboard-text {
   line-height: 2;
@@ -554,4 +566,105 @@ tr:nth-child(odd) {
   border-color: inherit;
   text-align: left;
   vertical-align: top;
+}
+
+/* forum  styling*/
+.forum{
+    grid-area: main;
+}
+.forum-container{
+    
+    width: 80%;
+    margin: 3rem;
+    /* background-color: #c3c3c3; */
+    background-color: #e6e6e6;
+    /* color: #fff; */
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow:0 2px 2px 0 rgba(0,0,0,0.14),0 3px 1px -2px rgba(0,0,0,0.12),0 1px 5px 0 rgba(0,0,0,0.2);border:0;
+}
+
+.card{
+    display: flex;
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.card-header-title,
+.card-header-text{
+    margin-bottom: 1rem;
+}
+
+.card-footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-user{
+    display: flex;
+    align-items: center;
+}
+.comment-cards{
+    background-color: #ebebeb;
+    padding: 1rem;
+    border-radius: 1rem;
+    margin: 1rem;
+    box-shadow:0 0 0 1px rgba(255,255,255,.1), 0 2px 4px 0 rgba(14,30,37,.12);border:0;
+}
+.card-user-img,
+.comment-user-img{
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    margin-right: 1rem;
+}
+
+.comment-user{
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    gap: 5px;
+}
+.comment-card{
+    margin-bottom: 1rem;
+}
+.card-user-name{
+    margin-right: 1rem;
+}
+
+.card-comment{
+    display: flex;
+}
+
+.card-comment-icon{
+    margin-right: 5px;
+    cursor: pointer;
+}
+.card-vote{
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+}
+.card-comment-vote{
+    display: flex;
+    gap: 4px;
+}
+.card-vote-up,
+.card-vote-num{
+    padding-bottom: 5px;
+}
+.card-comment-footer{
+    display: flex;
+    justify-content: space-between;
+    width: 27rem;
+}
+.card-vote-up,
+.card-vote-down{
+    cursor: pointer;
+}
+
+.comment-icon{
+    padding-right: 5px;
+    cursor: pointer;
 }

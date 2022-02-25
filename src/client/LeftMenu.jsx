@@ -16,7 +16,7 @@ const LeftMenu = () => {
           </li>
           <li>
             <FaComments />
-            <Link to="/" className="aside-nav-item">
+            <Link to="/forum" className="aside-nav-item">
               Forum
             </Link>
           </li>
