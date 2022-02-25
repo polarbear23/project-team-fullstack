@@ -48,7 +48,9 @@ const Main = () => {
                     <p>Gaming</p>
                 </li>
                 <li className='categories-list-item'>
-                    Fan-Fiction</li>
+                    <img src="/assets/fan-fiction.png" alt="cat icon" className='cat-img'/>
+                    <p>Fan-Fiction</p>
+                </li>
                 <li className='categories-list-item'>
                     <img src="/assets/cat.png" alt="cat icon" className='cat-img'/>
                     <p>Cosplay</p>
