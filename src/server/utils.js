@@ -3,7 +3,7 @@ const { PrismaClient } = require('@prisma/client');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-const { SERVER_ERROR_MESSAGE } = require('./config');
+const { SERVER_ERROR_MESSAGE, SECRET } = require('./config');
 
 const prisma = new PrismaClient();
 
@@ -14,7 +14,7 @@ const capitalizeFirstLetter = (string) =>
 
 const hashedPassword = (password) => bcrypt.hashSync(password, saltRounds);
 
-const createToken = (payload) => jwt.sign(payload, secret);
+const createToken = (payload) => jwt.sign(payload, SECRET);
 
 const checkPassword = async (textPassword, hashedPassword) => {
     try {
@@ -29,7 +29,7 @@ const isLoggedIn = (req, res, next) => {
     const token = req.headers.authorization;
 
     try {
-        jwt.verify(token, secret);
+        jwt.verify(token, SECRET);
     } catch (error) {
         console.log('error', error);
         return res.status(401).json(SERVER_ERROR_MESSAGE.UNAUTHORIZED);
@@ -39,7 +39,7 @@ const isLoggedIn = (req, res, next) => {
 };
 
 const isAdmin = async (req, res, next) => {
-    const { id } = req.params;
+    const { id } = parseInt(req.params.id, 10);
 
     const fetchedUser = await prisma.user.findUnique({
         where: { id },
@@ -53,7 +53,7 @@ const isAdmin = async (req, res, next) => {
 };
 
 const isModerator = async (req, res, next) => {
-    const { id } = req.params;
+    const { id } = parseInt(req.params.id, 10);
 
     const fetchedUser = await prisma.user.findUnique({
         where: { id },
@@ -143,29 +143,31 @@ const createLike = async (req, res) => {
 };
 
 const createPost = async (req, res) => {
-    const { title, content, tags } = req.body;
+    const { title, content, tags, userId } = req.body;
 
     const createdPost = await prisma.post.create({
         data: {
             title: title,
             content: content,
-        },
-        tags: {
-            create: tags.map((tag) => {
-                return {
-                    tag: {
-                        connectOrCreate: {
-                            where: {
-                                name: tag,
-                            },
-                            create: {
-                                name: tag,
+            userId: userId,
+            tags: {
+                create: tags.map((tag) => {
+                    return {
+                        tag: {
+                            connectOrCreate: {
+                                where: {
+                                    name: tag,
+                                },
+                                create: {
+                                    name: tag,
+                                },
                             },
                         },
-                    },
-                };
-            }),
+                    };
+                }),
+            }
         },
+
     });
 
     if (!createdPost) {

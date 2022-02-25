@@ -1,6 +1,6 @@
 const EXTERNAL_API = 'https://pokeapi.co/api/v2/pokemon/';
 
-const SECRET = 'process.env.SECRET';
+const SECRET = process.env.SECRET;
 
 const SERVER_ERROR_MESSAGE = {
     UNAUTHORIZED: 'Unauthorized',

@@ -1,4 +1,5 @@
-const {checkPassword, hashedPassword, createToken} = require('../utils')
+const { prisma } = require('../utils');
+const { checkPassword, hashedPassword, createToken } = require('../utils')
 
 const authenticateUser = async (req, res) => {
     let { username, password } = req.body;
