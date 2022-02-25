@@ -11,7 +11,7 @@ const { isLoggedIn, isAdmin } = require('../utils');
 
 //router.post('/all', isLoggedIn, isAdmin, initAllDatabases);
 
-router.post('/pokemon', isLoggedIn, isAdmin, initPokemonDatabase);
+router.post('/pokemon', initPokemonDatabase);
 
 router.post('/categories', isLoggedIn, isAdmin, initCategoriesDatabase);
 

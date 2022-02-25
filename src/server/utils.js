@@ -1,5 +1,4 @@
 const { PrismaClient } = require('@prisma/client');
-
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
@@ -69,7 +68,7 @@ const isModerator = async (req, res, next) => {
 const createUser = async (req, res) => {
     let { username, password, email } = req.body;
 
-    password = hashedPassword(password);
+    password = await hashedPassword(password);
 
     const user = {
         username,
@@ -82,6 +81,8 @@ const createUser = async (req, res) => {
             ...user,
         },
     });
+
+    delete createdUser.password
 
     res.status(200).json({ data: createdUser });
 };
