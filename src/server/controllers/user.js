@@ -1,18 +1,4 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-
-const checkPassword = async (textPassword, hashedPassword) => {
-    try {
-        return await bcrypt.compare(textPassword, hashedPassword);
-    } catch (error) {
-        console.log(`error in password check`, error);
-        return error;
-    }
-};
-
-const hashedPassword = (password) => bcrypt.hashSync(password, saltRounds);
-
-const createToken = (payload) => jwt.sign(payload, secret);
+const {checkPassword, hashedPassword, createToken} = require('../utils')
 
 const authenticateUser = async (req, res) => {
     let { username, password } = req.body;
