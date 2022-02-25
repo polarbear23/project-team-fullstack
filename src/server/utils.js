@@ -175,6 +175,13 @@ const createPost = async (req, res) => {
                 },
             },
         },
+        include: {
+            tags: {
+                include: {
+                    tag: true
+                }
+            }
+        }
     });
 
     if (!createdPost) {
@@ -193,7 +200,7 @@ const createComment = async (req, res) => {
             userId,
             content,
             parentId,
-            postId,
+            postId
         },
     });
 
@@ -213,11 +220,22 @@ const createRating = async (req, res) => {
             profileId,
             rating,
             pokemons: {
-                connect: {
-                    id: pokemonId,
-                },
+                create:{
+                    pokemon: {
+                        connect: {
+                            id: pokemonId
+                        }
+                    }
+                }
             },
         },
+        include: {
+            pokemons: {
+                include: {
+                    pokemon: true
+                }
+            }
+        }
     });
 
     if (!createdRating) {

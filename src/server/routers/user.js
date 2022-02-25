@@ -2,6 +2,7 @@ const express = require('express');
 
 const {
     createUser,
+    createProfile
 } = require('../utils');
 
 const {
@@ -17,6 +18,8 @@ router.post('/login', authenticateUser)
 
 router.post('/register', createUser);
 
-router.put('/:id', isLoggedIn, editUser)
+router.put('/:id', isLoggedIn, editUser);
+
+router.post('/profile', createProfile);
 
 module.exports = router;

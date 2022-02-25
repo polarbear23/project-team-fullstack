@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { createPost, createComment, isLoggedIn, createLike } = require('../utils');
+const { createPost, createComment, createLike, isLoggedIn } = require('../utils');
 
 const {
     getPost,
@@ -9,7 +9,7 @@ const {
     getComment,
     editComment,
     deleteComment,
-    deleteLike,
+    deleteLike
 } = require('../controllers/post');
 
 const router = express.Router();

@@ -151,5 +151,5 @@ module.exports = {
     getComment,
     editComment,
     deleteComment,
-    deleteLike,
+    deleteLike
 };
