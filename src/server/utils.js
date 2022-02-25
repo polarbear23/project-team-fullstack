@@ -75,7 +75,6 @@ const createUser = async () => {
         username,
         password,
         email,
-        isBanned = false,
     };
 
     const createdUser = await prisma.user.create({
@@ -144,17 +143,11 @@ const createLike = async (req, res) => {
 
 const createPost = async (req, res) => {
     const { title, content, tags } = req.body;
-    let { isReported, isRemoved } = req.body;
-
-    !isReported && (isReported = false);
-    !isRemoved && (isRemoved = false);
 
     const createdPost = await prisma.post.create({
         data: {
             title: title,
             content: content,
-            isReported: isReported,
-            isRemoved: isRemoved,
         },
         tags: {
             create: tags.map((tag) => {
@@ -184,10 +177,6 @@ const createPost = async (req, res) => {
 
 const createComment = async (req, res) => {
     const { userId, content, postId, parentId } = req.body;
-    let { isReported, isRemoved } = req.body;
-
-    !isReported && (isReported = false);
-    !isRemoved && (isRemoved = false);
 
     const createdComment = await prisma.comment.create({
         data: {
@@ -195,8 +184,6 @@ const createComment = async (req, res) => {
             content: content,
             parentId: parentId,
             postId: postId,
-            isReported: isReported,
-            isRemoved: isRemoved,
         },
     });
 
