@@ -1,16 +1,15 @@
 const express = require('express');
 
 const {
-    initAllDatabases,
     initPokemonDatabase,
     initCategoriesDatabase,
 } = require('../controllers/init');
 
 const router = express.Router();
 
-const { isLoggedIn, isAdmin } = require('../config');
+const { isLoggedIn, isAdmin } = require('../utils');
 
-router.post('/all', isLoggedIn, isAdmin, initAllDatabases);
+//router.post('/all', isLoggedIn, isAdmin, initAllDatabases);
 
 router.post('/pokemon', isLoggedIn, isAdmin, initPokemonDatabase);
 

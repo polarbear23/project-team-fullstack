@@ -1,4 +1,4 @@
-const { prisma, isModerator, createPost, createCommment } = require('../utils');
+const { prisma, isModerator } = require('../utils');
 
 const getPost = async (req, res) => {
     const id = req.params.id;
@@ -169,11 +169,9 @@ const deleteLike = async (req, res) => {
 
 module.exports = {
     getPost,
-    createPost,
     editPost,
     deletePost,
     getComment,
-    createCommment,
     editComment,
     deleteComment,
     addLike,

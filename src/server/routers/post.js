@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { createPost, createCommment, isLoggedIn } = require('../utils');
+const { createPost, createComment, isLoggedIn } = require('../utils');
 
 const {
     getPost,
@@ -25,7 +25,7 @@ router.delete('/:id', isLoggedIn, deletePost);
 
 router.get('/:id/comment/', getComment);
 
-router.post('/:id/comment/', isLoggedIn, createCommment);
+router.post('/:id/comment/', isLoggedIn, createComment);
 
 router.put('/:id/comment/:id', isLoggedIn, editComment);
 

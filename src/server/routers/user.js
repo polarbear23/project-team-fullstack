@@ -1,12 +1,15 @@
 const express = require('express');
 
 const {
-    authenticateUser,
     createUser,
+} = require('../utils');
+
+const {
+    authenticateUser,
     editUser,
 } = require('../controllers/user');
 
-const { isLoggedIn } = require('../config');
+const { isLoggedIn } = require('../utils');
 
 const router = express.Router();
 
