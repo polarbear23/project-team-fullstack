@@ -96,4 +96,5 @@ module.exports = {
     isModerator,
     isLoggedIn,
     removeKeys,
+    decodeToken
 };
