@@ -546,13 +546,26 @@ table td {
 .pokemon-tile {
   background-color: #d2e4fc;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 50px;
   border-radius: 10px 10px 10px 10px;
   margin-bottom: 2rem;
 }
 
+.medal-type-container {
+  display: grid;
+  grid-template-rows: 1fr 0.5fr;
+  padding-bottom: 1rem;
+}
+
+.tile-type {
+  margin-bottom: 0.2rem;
+  height: 35px;
+}
+
 .medal {
   float: right;
+  padding-top: 1rem;
+  padding-right: 1rem;
 }
 
 .top-3-pokemon-image {
@@ -563,7 +576,7 @@ table td {
 }
 
 .pokemon-text-container {
-  padding: 1rem;
+  padding: 1rem 0 0 1rem;
   /*
   display: grid;
   grid-template:
@@ -572,6 +585,19 @@ table td {
     ". . type" 1fr/
     1fr 1fr 1fr;
     */
+}
+
+.pokemon-text-container-header {
+  margin-bottom: 0.5rem;
+}
+
+.stats {
+}
+
+.stats > p {
+  /*border-bottom: 1px black solid;*/
+  margin-bottom: 3px;
+  color: #669;
 }
 
 .leaderboard-text {

@@ -13,16 +13,24 @@ const Leaderboard = () => {
               alt="pikachu"
             />
             <div className="pokemon-text-container">
+              <h3 className="pokemon-text-container-header">Pikachu</h3>
+              <div className="stats">
+                <p>Hp:</p>
+                <p>Atk:</p>
+                <p>Def:</p>
+                <p>Spd:</p>
+                <p>Rating:</p>
+              </div>
+            </div>
+            <div className="medal-type-container">
               <img className="medal" src="/assets/medals/gold.svg" alt="" />
-
-              <h3>Pikachu</h3>
-              <p>Hp:</p>
-              <p>Atk:</p>
-              <p>Def:</p>
-              <p>Sp. Atk:</p>
-              <p>Sp. Def:</p>
-              <p>Spd:</p>
-              <p>Rating:</p>
+              <div className="type-container">
+                <img
+                  className="tile-type"
+                  src="/assets/pokemontypes/electric.svg"
+                  alt=""
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -32,12 +40,27 @@ const Leaderboard = () => {
             <img
               className="top-3-pokemon-image"
               src="/assets/pokemon/007.png"
-              alt="gold medal"
+              alt=""
             />
             <div className="pokemon-text-container">
+              <h3 className="pokemon-text-container-header">Squirtle</h3>
+              <div className="stats">
+                <p>Hp:</p>
+                <p>Atk:</p>
+                <p>Def:</p>
+                <p>Spd:</p>
+                <p>Rating:</p>
+              </div>
+            </div>
+            <div className="medal-type-container">
               <img className="medal" src="/assets/medals/silver.svg" alt="" />
-
-              <h3>Squirtle</h3>
+              <div className="type-container">
+                <img
+                  className="tile-type"
+                  src="/assets/pokemontypes/water.svg"
+                  alt=""
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -46,15 +69,36 @@ const Leaderboard = () => {
             <img
               className="top-3-pokemon-image"
               src="/assets/pokemon/004.png"
-              alt="silver medal"
+              alt=""
             />
             <div className="pokemon-text-container">
+              <h3 className="pokemon-text-container-header">Charmander</h3>
+              <div className="stats">
+                <p>Hp:</p>
+                <p>Atk:</p>
+                <p>Def:</p>
+                <p>Spd:</p>
+                <p>Rating:</p>
+              </div>
+            </div>
+            <div className="medal-type-container">
               <img
                 className="medal"
                 src="/assets/medals/bronze.svg"
                 alt="bronze medal"
               />
-              <h3>Charmander</h3>
+              <div className="type-container">
+                <img
+                  className="tile-type"
+                  src="/assets/pokemontypes/fire.svg"
+                  alt=""
+                />
+                <img
+                  className="tile-type"
+                  src="/assets/pokemontypes/water.svg"
+                  alt=""
+                />
+              </div>
             </div>
           </div>
         </div>
