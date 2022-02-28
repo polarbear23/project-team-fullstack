@@ -1,6 +1,9 @@
 const { faker } = require('@faker-js/faker');
-const { CATEGORIES } = require('../config');
+const { CATEGORIES, NUMBER_OF_COMMENTS_TO_GENERATE } = require('../config');
 const { generateRandomInt } = require('./utils');
+
+const MAX_NUMBER_OF_TAGS_WANTED = 3;
+const MAX_NUMBER_OF_CATEGORIES_WANTED = 2;
 
 const fakeUser = () => {
     const fakedUsername = faker.internet.userName();
@@ -16,20 +19,18 @@ const fakeUser = () => {
     return fakedUser;
 }
 
-const fakeProfile = () => {
+const fakeProfile = (userId) => {
     const fakedProfilePicture = faker.image.avatar();
     const fakedLocation = faker.address.city();
 
     const fakedProfile = {
+        userId: userId,
         profilePicture: fakedProfilePicture,
         location: fakedLocation
     }
 
     return fakedProfile;
 }
-
-const MAX_NUMBER_OF_TAGS_WANTED = 3;
-const MAX_NUMBER_OF_CATEGORIES_WANTED = 2;
 
 const fakePost = () => {
     const fakedTitle = faker.lorem.sentence();
@@ -74,8 +75,6 @@ const fakeComment = () => {
     return fakedComment;
 }
 
-const NUMBER_OF_COMMENTS_TO_GENERATE = 10;
-
 const fakeCommentWithParent = () => {
     const fakedComment = fakeComment();
     const randomParentId = generateRandomInt(NUMBER_OF_COMMENTS_TO_GENERATE);
@@ -88,8 +87,10 @@ const fakeCommentWithParent = () => {
     return fakedCommentWithParent;
 }
 
-const user = fakeUser();
-const profile = fakeProfile();
-const post = fakePost();
-const comment = fakeComment();
-const commentWithParent = fakeCommentWithParent();
+module.exports = {
+    fakeUser,
+    fakeProfile,
+    fakePost,
+    fakeComment,
+    fakeCommentWithParent
+}
