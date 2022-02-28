@@ -1,6 +1,16 @@
 import React from "react";
+import { useState } from "react";
+import { Rating } from "react-simple-star-rating";
+const LeaderboardItem = (props) => {
+  const [rating, setRating] = useState(0); // initial rating value
+  const { pokemon } = props;
 
-const LeaderboardItem = () => {
+  // Catch Rating value
+  const handleRating = (rate) => {
+    setRating(rate);
+    // other logic
+  };
+
   return (
     <tr className="leaderboard-list-item">
       <td
@@ -9,7 +19,7 @@ const LeaderboardItem = () => {
       >
         <img
           className="leaderboard-pokemon-icon"
-          src="assets/pokemon/001.png"
+          src={pokemon.pictureUrl}
           alt=""
         />
       </td>
@@ -17,57 +27,56 @@ const LeaderboardItem = () => {
         data-column="pokemon-name"
         className="leaderboard-pokemon-name leaderboard-text"
       >
-        Bulbasaur
+        {pokemon.name}
       </td>
       <td data-column="pokemon-type" className="leaderboard-pokemon-type">
-        <img
-          className="type-icon"
-          src="/assets/pokemontypes/grass.svg"
-          alt=""
-        />
-        <img
-          className="type-icon"
-          src="/assets/pokemontypes/poison.svg"
-          alt=""
-        />
+        {pokemon.types.map((type) => {
+          return (
+            <img
+              className="type-icon"
+              src={`/assets/pokemontypes/${type.type.name.toLowerCase()}.svg`}
+              alt=""
+            />
+          );
+        })}
       </td>
       <td
         data-column="health"
         className="leaderboard-average-rating leaderboard-text"
       >
-        45
+        {pokemon.baseHP}
       </td>
       <td
         data-column="attack"
         className="leaderboard-average-rating leaderboard-text"
       >
-        49
+        {pokemon.baseAttack}
       </td>
       <td
         data-column="defense"
         className="leaderboard-average-rating leaderboard-text"
       >
-        49
+        {pokemon.baseDefense}
       </td>
 
       <td
         data-column="special-attack"
         className="leaderboard-average-rating leaderboard-text"
       >
-        65
+        {pokemon.specialAttack}
       </td>
 
       <td
         data-column="special-defense"
         className="leaderboard-average-rating leaderboard-text"
       >
-        65
+        {pokemon.specialDefense}
       </td>
       <td
         data-column="speed"
         className="leaderboard-average-rating leaderboard-text"
       >
-        45
+        {pokemon.speed}
       </td>
       <td
         data-column="average-rating"
@@ -76,7 +85,10 @@ const LeaderboardItem = () => {
         4.5
       </td>
       <td data-column="rating" className="leaderboard-rating leaderboard-text">
-        Rating
+        <Rating
+          onClick={handleRating}
+          ratingValue={rating} /* Available Props */
+        />
       </td>
     </tr>
   );

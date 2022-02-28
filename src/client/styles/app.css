@@ -486,6 +486,7 @@ section {
 .leaderboard {
   grid-area: main;
   margin-top: 4rem;
+  margin-bottom: 8rem;
 }
 
 table {
@@ -592,11 +593,13 @@ table td {
 }
 
 .stats {
+  display: grid;
+  grid-auto-flow: row;
+  gap: 3px;
 }
 
 .stats > p {
   /*border-bottom: 1px black solid;*/
-  margin-bottom: 3px;
   color: #669;
 }
 
