@@ -112,7 +112,7 @@ const initCategoriesDatabase = async (req, res) => {
     }
 };
 
-const seedUsersAndProfiles = async () => {
+const seedUsersAndProfiles = async (req, res) => {
     for(let i = 0; i < NUMBER_OF_USERS_AND_PROFILES_TO_GENERATE; i++){
         const fakedUser = fakeUser();
         const createdUser = await prisma.user.create({
@@ -132,6 +132,7 @@ const seedUsersAndProfiles = async () => {
                 ...fakedProfile
             }
         });
+        console.log('Created Profile:', createdProfile);
 
         if(!createdProfile){
             return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
@@ -141,7 +142,7 @@ const seedUsersAndProfiles = async () => {
     res.status(200).json('Users and profiles seeded successfully');
 }
 
-const seedPosts = async () => {
+const seedPosts = async (req, res) => {
     for(let i = 0; i < NUMBER_OF_POSTS_TO_GENERATE; i++){
         const fakedPost = fakePost();
         const createdPost = await prisma.post.create({
@@ -159,7 +160,7 @@ const seedPosts = async () => {
     res.status(200).json('Posts seeded successfully');
 }
 
-const seedComments = async () => {
+const seedComments = async (req, res) => {
     for(let i = 0; i < NUMBER_OF_COMMENTS_TO_GENERATE; i++){
         const fakedComment = fakeComment();
         const createdComment = await prisma.comment.create({
