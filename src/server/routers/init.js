@@ -5,14 +5,12 @@ const {
     initCategoriesDatabase,
 } = require('../controllers/init');
 
-const router = express.Router();
-
 const { isLoggedIn, isAdmin } = require('../utils/auth.js');
 
-//router.post('/all', isLoggedIn, isAdmin, initAllDatabases);
+const router = express.Router();
 
-router.post('/pokemon', initPokemonDatabase);
+router.post('/pokemon', isLoggedIn, isAdmin, initPokemonDatabase);
 
-router.post('/categories',initCategoriesDatabase);
+router.post('/categories', isLoggedIn, isAdmin, initCategoriesDatabase);
 
 module.exports = router;

@@ -2,18 +2,12 @@ const {
     checkPassword,
     hashedPassword,
     createToken,
+    removeKeys,
 } = require('../utils/auth.js');
 
-const {prisma} = require('../utils/prisma')
+const { prisma } = require('../utils/prisma');
 
-const { KEYS, SERVER_ERROR_MESSAGE } = require('../config.js');
-
-const removeKeys = (user, ...keys) => {
-    for (let key of keys) {
-        delete user[key];
-    }
-    return user;
-};
+const { KEYS, SERVER_ERROR_MESSAGE, FORUM_ROLES } = require('../config.js');
 
 const authenticateUser = async (req, res) => {
     let { username, password } = req.body;
@@ -25,17 +19,13 @@ const authenticateUser = async (req, res) => {
     });
 
     if (!foundUser) {
-        return res
-            .status(401)
-            .json({ error: SERVER_ERROR_MESSAGE.UNAUTHORIZED });
+        return res.status(401).json({ error: SERVER_ERROR_MESSAGE.UNAUTHORIZED });
     }
 
     const passwordsMatch = await checkPassword(password, foundUser.password);
 
     if (!passwordsMatch) {
-        return res
-            .status(401)
-            .json({ error: SERVER_ERROR_MESSAGE.UNAUTHORIZED });
+        return res.status(401).json({ error: SERVER_ERROR_MESSAGE.UNAUTHORIZED });
     }
 
     res.json(createToken({ id: foundUser.id, role: foundUser.role }));
@@ -52,13 +42,13 @@ const createUser = async (req, res) => {
         email: email,
     };
 
-    const createdUser = await prisma.user.create({
+    let createdUser = await prisma.user.create({
         data: {
             ...user,
         },
     });
 
-    delete createdUser.password;
+    createdUser = removeKeys(createdUser, KEYS.PASSWORD);
 
     res.status(200).json({ data: createdUser });
 };
@@ -68,6 +58,8 @@ const editUser = async (req, res) => {
 
     const id = parseInt(req.params.id, 10);
 
+    const decodedToken = decodedToken(req);
+
     let user = {};
 
     if (username) {
@@ -76,6 +68,7 @@ const editUser = async (req, res) => {
 
     if (password) {
         password = await hashedPassword(password);
+        
         user = { ...user, password };
     }
 
@@ -84,11 +77,20 @@ const editUser = async (req, res) => {
     }
 
     if (role) {
+        if (decodedToken.role !== FORUM_ROLES.ADMIN) {
+            return res.status(401).json({ error: SERVER_ERROR_MESSAGE.UNAUTHORIZED });
+        }
+
         role = role.toUpperCase();
+
         user = { ...user, role };
     }
 
     if (isBanned) {
+        if (decodedToken.role === FORUM_ROLES.USER) {
+            return res.status(401).json({ error: SERVER_ERROR_MESSAGE.UNAUTHORIZED });
+        }
+
         user = { ...user, isBanned };
     }
 
@@ -103,7 +105,7 @@ const editUser = async (req, res) => {
 
     updatedUser = removeKeys(updatedUser, KEYS.PASSWORD);
 
-    res.json(updatedUser);
+    res.json({ data: updatedUser });
 };
 
 const createProfile = async (req, res) => {
@@ -118,11 +120,10 @@ const createProfile = async (req, res) => {
     });
 
     if (!createdProfile) {
-        return res
-            .status(500)
-            .json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
+        return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
     }
-    return res.status(200).json({ data: createdProfile });
+
+    res.status(200).json({ data: createdProfile });
 };
 
 module.exports = {

@@ -19,6 +19,6 @@ router.put('/:id', isLoggedIn, editUser);
 
 router.patch('/:id', isLoggedIn, editUser);
 
-router.post('/profile', createProfile);
+router.post('/profile', isLoggedIn, createProfile);
 
 module.exports = router;

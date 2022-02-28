@@ -39,9 +39,7 @@ const createPost = async (req, res) => {
     });
 
     if (!createdPost) {
-        return res
-            .status(500)
-            .json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
+        return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
     }
     return res.status(200).json({ data: createdPost });
 };
@@ -117,9 +115,7 @@ const editPost = async (req, res) => {
     const tokenId = decodedToken.id;
 
     if (userId !== tokenId || !isModerator) {
-        return res
-            .status(401)
-            .json({ error: SERVER_ERROR_MESSAGE.UNAUTHORIZED });
+        return res.status(401).json({ error: SERVER_ERROR_MESSAGE.UNAUTHORIZED });
     }
 
     let post = {};
@@ -182,9 +178,7 @@ const createComment = async (req, res) => {
     });
 
     if (!createdComment) {
-        return res
-            .status(500)
-            .json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
+        return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
     }
 
     res.status(200).json({ data: createdComment });
@@ -209,24 +203,8 @@ const getComment = async (req, res) => {
 const editComment = async (req, res) => {
     const id = parseInt(req.params.id, 10);
 
-    console.log(req.path)
-
-    console.log('id', id)
-
-    console.log(req.body);
-
-    const comment = req.body;
-
-    const token = req.headers.authorization;
-
-    const decodedToken = jwt.decode(token);
-
-    const tokenId = decodedToken.id;
-
     if (comment.userId !== tokenId || !isModerator) {
-        return res
-            .status(401)
-            .json({ error: SERVER_ERROR_MESSAGE.UNAUTHORIZED });
+        return res.status(401).json({ error: SERVER_ERROR_MESSAGE.UNAUTHORIZED });
     }
 
     const updatedComment = await prisma.comment.update({
@@ -270,9 +248,7 @@ const createLike = async (req, res) => {
     });
 
     if (!createdLike) {
-        return res
-            .status(500)
-            .json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
+        return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
     }
     return res.status(200).json({ data: createdLike });
 };
@@ -299,30 +275,10 @@ const createTag = async (req, res) => {
     });
 
     if (!createdTag) {
-        return res
-            .status(500)
-            .json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
+        return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
     }
     return res.status(200).json({ data: createdTag });
 };
-
-// const createTag = async (req, res) => {
-//     const postId = parseInt(req.params.id, 10);
-
-//     const { tags } = req.body;
-
-//     if (!tags) {
-//         return res.status(401).json({ error: SERVER_ERROR_MESSAGE.NOT_FOUND });
-//     }
-
-//     const newTag = await prisma.tag.createMany({
-//         data: tags.map((tag) => {
-//             return {
-//                 name: tag,
-//             };
-//         }),
-//     });
-// };
 
 const deleteTag = async (req, res) => {
     const id = parseInt(req.params.id, 10);
@@ -335,36 +291,6 @@ const deleteTag = async (req, res) => {
 
     return res.status(200).json({ data: deletedTag });
 };
-
-// const createCategory = async (req, res) => {
-//     const postId = parseInt(req.params.id, 10);
-
-//     const { tags } = req.body;
-
-//     if (!tags) {
-//         return res.status(401).json({ error: SERVER_ERROR_MESSAGE.NOT_FOUND });
-//     }
-
-//     const newTag = await prisma.tag.createMany({
-//         data: tags.map((tag) => {
-//             return {
-//                 name: tag,
-//             };
-//         }),
-//     });
-// };
-
-// const deleteCategory = async (req, res) => {
-//     const id = parseInt(req.params.id, 10);
-
-//     const deletedCategory = await prisma.category.delete({
-//         where: {
-//             id: id,
-//         },
-//     });
-
-//     return res.status(200).json({ data: deletedCategory });
-// };
 
 module.exports = {
     createPost,
@@ -379,8 +305,5 @@ module.exports = {
     createLike,
     deleteLike,
     createTag,
-    // createTag,
     deleteTag,
-    // createCategory,
-    // deleteCategory,
 };
