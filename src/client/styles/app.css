@@ -407,27 +407,28 @@ section {
 /* sign in form */
 .signIn {
   grid-area: main;
-  background-image: url("/public/assets/pokemon2.jpg");
+  background-image: url("/public/assets/gen1.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 20% 50%;
   margin: 3rem;
-  padding: 3rem;
+  color: #000;
 }
 
 .signin-container {
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(0, 0, 0, 0.1);
   width: 23rem;
+  padding: 2rem;
 }
 
 .signin-form {
   width: 100%;
-  padding: 2rem;
   border-bottom: 1px solid #000;
+  padding-bottom: 2rem;
 }
 
 .signin-text {
-  margin-bottom: 5px;
+  margin-bottom: 1rem;
   font-size: 1.2rem;
 }
 
@@ -437,7 +438,7 @@ section {
   justify-content: space-between;
   align-items: flex-start;
   width: 23rem;
-  padding: 2rem;
+  padding: 2rem 0;
 }
 
 .new-register-btn {
@@ -646,7 +647,7 @@ table td {
   align-items: center;
 }
 .comment-cards {
-  background-color: #ebebeb;
+  background-color: #f4f4f4;
   padding: 1rem;
   border-radius: 1rem;
   margin: 1rem;
@@ -677,10 +678,11 @@ table td {
 
 .card-comment {
   display: flex;
+  font-size: 1rem;
 }
 
 .card-comment-icon {
-  margin-right: 5px;
+  margin-right: 1rem;
   cursor: pointer;
 }
 .card-vote {
@@ -709,4 +711,74 @@ table td {
 .comment-icon {
   padding-right: 5px;
   cursor: pointer;
+}
+
+.comment-form-container{
+  padding: 1rem;
+  margin-bottom: 4rem;
+}
+.comment-form{
+  position: relative;
+  
+}
+.textarea{
+  margin-left: 3rem;
+  padding: 1rem;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  outline: none;
+  border-top: 1px solid #999999;
+  border-left: 1px solid #999999;
+  border-right: 1px solid #999999;
+  border-bottom: none;
+}
+
+
+.group-btn{
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  width: 95.7%;
+  background-color: #f3f2f2;
+  position: absolute;
+  right: -5px;
+  bottom: -3rem;
+  padding: 14px 0;
+  border-left: 1px solid #999999;
+  border-right: 1px solid #999999;
+  border-bottom: 1px solid #999999;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  /* box-shadow:0 1px 1px rgba(97,127,152,.2), 1px 0 0 rgba(97,127,152,.1), -1px 0 0 rgba(97,127,152,.1);border:0; */
+  
+}
+
+.group-btn button{
+  width: 5rem;
+  font-size: 1rem;
+}
+
+.group-btn-cancel{
+  background-color: transparent;
+  border-radius: 1.5rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: background-color .2s ease-in;
+}
+
+.group-btn-cancel:hover{
+  background-color: rgb(206, 206, 206);
+  padding: 2px 4px;
+  border-radius: 1.5rem;
+}
+
+.group-btn-reply{
+  cursor: pointer;
+  border-radius: 1.5rem;
+  margin-right: 1rem;
+  outline: none;
+  background-color: rgb(206, 206, 206);
+  border: none;
+  padding: 2px 4px;
 }
