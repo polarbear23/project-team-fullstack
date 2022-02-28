@@ -193,9 +193,9 @@ const seedComments = async (req, res) => {
 }
 
 const initForumDatabase = async (req, res) => {
-    await seedUsersAndProfiles();
-    await seedPosts();
-    await seedComments();
+    await seedUsersAndProfiles(req, res);
+    await seedPosts(req, res);
+    await seedComments(req, res);
 }
 
 module.exports = {
