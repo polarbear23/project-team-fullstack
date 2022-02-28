@@ -64,13 +64,32 @@ const fakePost = () => {
     return fakedPost;
 }
 
+const fakeComment = () => {
+    const fakedContent = faker.lorem.sentences();
+    
+    const fakedComment = {
+        content: fakedContent
+    }
+
+    return fakedComment;
+}
+
+const NUMBER_OF_COMMENTS_TO_GENERATE = 10;
+
+const fakeCommentWithParent = () => {
+    const fakedComment = fakeComment();
+    const randomParentId = generateRandomInt(NUMBER_OF_COMMENTS_TO_GENERATE);
+
+    const fakedCommentWithParent = {
+        ...fakedComment,
+        parentId: randomParentId
+    }
+
+    return fakedCommentWithParent;
+}
+
 const user = fakeUser();
-console.log(user);
 const profile = fakeProfile();
-console.log(profile);
 const post = fakePost();
-console.log(post);
-//const comment = fakeComment();
-//console.log(comment);
-//const commentWithParent = fakeCommentWithParent();
-//console.log(commentWithParent);
+const comment = fakeComment();
+const commentWithParent = fakeCommentWithParent();
