@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const { EXTERNAL_API } = require('../config');
+const { EXTERNAL_API, CATEGORIES } = require('../config');
 
 const { prisma } = require('../utils/prisma');
 
@@ -90,16 +90,17 @@ const createNewPokemon = async (pokemonToCreate) => {
 };
 
 const initCategoriesDatabase = async (req, res) => {
-    const categories = ['Gaming', 'Fan-Fiction', 'Cosplay', 'Manga', 'TV/Film'];
+    //const categories = ['Gaming', 'Fan-Fiction', 'Cosplay', 'Manga', 'TV/Film'];
 
-    for (let i = 0; i < categories.length; i++) {
+    for (let i = 0; i < CATEGORIES.length; i++) {
         const createdCategory = await prisma.category.create({
             data: {
-                name: categories[i],
+                name: CATEGORIES[i],
             },
         });
 
         console.log('Created Category', createdCategory);
+        res.status(201).json('Categories seeded successfully');
     }
 };
 
