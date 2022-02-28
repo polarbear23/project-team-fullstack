@@ -14,7 +14,7 @@ const { fakeUser, fakeProfile, fakePost, fakeComment, fakeCommentWithParent } = 
 
 const { prisma } = require('../utils/prisma');
 
-const { capitalizeFirstLetter } = require('../utils/utils');
+const { capitalizeFirstLetter, generateRandomInt } = require('../utils/utils');
 
 const initPokemonDatabase = async (req, res) => {
     const numberOfPokemonToFetch = 151;
@@ -108,8 +108,9 @@ const initCategoriesDatabase = async (req, res) => {
         });
 
         console.log('Created Category', createdCategory);
-        res.status(201).json('Categories seeded successfully');
     }
+
+    res.status(201).json('Categories seeded successfully');
 };
 
 const seedUsersAndProfiles = async (req, res) => {
@@ -145,10 +146,37 @@ const seedUsersAndProfiles = async (req, res) => {
 const seedPosts = async (req, res) => {
     for(let i = 0; i < NUMBER_OF_POSTS_TO_GENERATE; i++){
         const fakedPost = fakePost();
+        const randomUserId = generateRandomInt(NUMBER_OF_USERS_AND_PROFILES_TO_GENERATE);
+
         const createdPost = await prisma.post.create({
             data: {
-                ...fakedPost
-            }
+                title: fakedPost.title,
+                content: fakedPost.content,
+                userId: randomUserId,
+                tags: {
+                    create: fakedPost.tags.map((tag) => {
+                        return {
+                            tag: {
+                                connectOrCreate: {
+                                    where: {
+                                        name: tag,
+                                    },
+                                    create: {
+                                        name: tag,
+                                    },
+                                },
+                            },
+                        };
+                    }),
+                },
+            },
+            include: {
+                tags: {
+                    include: {
+                        tag: true,
+                    },
+                },
+            },
         });
         console.log('Created Post:', createdPost);
 
@@ -163,9 +191,13 @@ const seedPosts = async (req, res) => {
 const seedComments = async (req, res) => {
     for(let i = 0; i < NUMBER_OF_COMMENTS_TO_GENERATE; i++){
         const fakedComment = fakeComment();
+        const randomUserId = generateRandomInt(NUMBER_OF_USERS_AND_PROFILES_TO_GENERATE);
+        const randomPostId = generateRandomInt(NUMBER_OF_POSTS_TO_GENERATE);
         const createdComment = await prisma.comment.create({
             data: {
-                ...fakedComment
+                ...fakedComment,
+                postId: randomPostId,
+                userId: randomUserId
             }
         });
         console.log('Created Comment:', createdComment);
@@ -179,7 +211,9 @@ const seedComments = async (req, res) => {
         const fakedCommentWithParent = fakeCommentWithParent();
         const createdCommentWithParent = await prisma.comment.create({
             data: {
-                ...fakedCommentWithParent
+                ...fakedCommentWithParent,
+                postId: randomPostId,
+                userId: randomUserId
             }
         });
         console.log('Created Comment with Parent:', createdCommentWithParent);
