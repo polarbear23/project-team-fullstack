@@ -7,12 +7,12 @@ const {
 
 const router = express.Router();
 
-const { isLoggedIn, isAdmin } = require('../utils');
+const { isLoggedIn, isAdmin } = require('../utils/auth.js');
 
 //router.post('/all', isLoggedIn, isAdmin, initAllDatabases);
 
 router.post('/pokemon', initPokemonDatabase);
 
-router.post('/categories', isLoggedIn, isAdmin, initCategoriesDatabase);
+router.post('/categories',initCategoriesDatabase);
 
 module.exports = router;

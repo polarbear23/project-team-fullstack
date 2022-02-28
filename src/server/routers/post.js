@@ -1,20 +1,27 @@
 const express = require('express');
 
-const { createPost, createComment, createLike, isLoggedIn } = require('../utils');
+const { isLoggedIn } = require('../utils/auth.js');
 
 const {
-    getPost,
+    createPost,
+    getAllPosts,
+    getPostbyId,
     editPost,
     deletePost,
+    createComment,
     getComment,
     editComment,
     deleteComment,
-    deleteLike
+    createLike,
+    deleteLike,
+    deleteTag,
 } = require('../controllers/post');
 
 const router = express.Router();
 
-router.get('/', getPost);
+router.get('/', getAllPosts);
+
+router.get('/:id', getPostbyId);
 
 router.post('/', isLoggedIn, createPost);
 
@@ -22,16 +29,20 @@ router.put('/:id', isLoggedIn, editPost);
 
 router.delete('/:id', isLoggedIn, deletePost);
 
-router.get('/:id/comment/', getComment);
+router.get('/comment/', getComment);
 
-router.post('/:id/comment/', isLoggedIn, createComment);
+router.post('/comment/', isLoggedIn, createComment);
 
-router.put('/:id/comment/:id', isLoggedIn, editComment);
+router.patch('/comment/:id', isLoggedIn, editComment);
 
-router.delete('/:id/comment/:id', isLoggedIn, deleteComment);
+router.put('/comment/:id', isLoggedIn, editComment);
+
+router.delete('/comment/:id', isLoggedIn, deleteComment);
 
 router.post('/like', isLoggedIn, createLike);
 
 router.delete('/like', isLoggedIn, deleteLike);
+
+router.delete('/tag/:id', deleteTag);
 
 module.exports = router;

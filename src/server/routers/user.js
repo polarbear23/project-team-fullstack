@@ -1,24 +1,23 @@
 const express = require('express');
 
-const {
-    createUser,
-    createProfile
-} = require('../utils');
+const { isLoggedIn } = require('../utils/auth.js');
 
 const {
     authenticateUser,
+    createUser,
     editUser,
+    createProfile,
 } = require('../controllers/user');
-
-const { isLoggedIn } = require('../utils');
 
 const router = express.Router();
 
-router.post('/login', authenticateUser)
+router.post('/login', authenticateUser);
 
 router.post('/register', createUser);
 
 router.put('/:id', isLoggedIn, editUser);
+
+router.patch('/:id', isLoggedIn, editUser);
 
 router.post('/profile', createProfile);
 

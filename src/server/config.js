@@ -9,8 +9,20 @@ const SERVER_ERROR_MESSAGE = {
     INTERNAL_SERVER: 'Internal server error',
 };
 
+const FORUM_ROLES = {
+    USER: 'USER',
+    MODERATOR: 'MODERATOR',
+    ADMIN: 'ADMIN',
+};
+
+const KEYS = {
+    PASSWORD: 'password',
+};
+
 module.exports = {
     EXTERNAL_API,
+    FORUM_ROLES,
+    KEYS,
     SECRET,
     SERVER_ERROR_MESSAGE,
 };

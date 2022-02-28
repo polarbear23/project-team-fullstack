@@ -1,19 +1,105 @@
-const { prisma, isModerator, jwt } = require('../utils');
+const { isModerator, jwt } = require('../utils/auth');
 
-const getPost = async (req, res) => {
-    const id = req.params.id;
+const { SERVER_ERROR_MESSAGE } = require('../config');
 
-    const selectedPost = await prisma.post.findUnique({
+const { prisma } = require('../utils/prisma');
+
+const createPost = async (req, res) => {
+    const { title, content, tags, userId } = req.body;
+
+    const createdPost = await prisma.post.create({
+        data: {
+            title: title,
+            content: content,
+            userId: userId,
+            tags: {
+                create: tags.map((tag) => {
+                    return {
+                        tag: {
+                            connectOrCreate: {
+                                where: {
+                                    name: tag,
+                                },
+                                create: {
+                                    name: tag,
+                                },
+                            },
+                        },
+                    };
+                }),
+            },
+        },
+        include: {
+            tags: {
+                include: {
+                    tag: true,
+                },
+            },
+        },
+    });
+
+    if (!createdPost) {
+        return res
+            .status(500)
+            .json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
+    }
+    return res.status(200).json({ data: createdPost });
+};
+
+const getAllPosts = async (req, res) => {
+    const selectedPosts = await prisma.post.findMany({
         where: {
-            id,
+            isRemoved: false,
+        },
+        // orderBy: {
+        //     comment: {
+        //         updatedAt: 'desc',
+        //     },
+        // },
+        include: {
+            like: true,
+            tags: {
+                include: {
+                    tag: true,
+                },
+            },
+            categories: {
+                include: {
+                    category: true,
+                },
+            },
+        },
+    });
+
+    res.status(200).json({ data: selectedPosts });
+};
+
+const getPostbyId = async (req, res) => {
+    const id = parseInt(req.params.id, 10);
+
+    const selectedPost = await prisma.post.findFirst({
+        where: {
+            id: id,
+            isRemoved: false,
         },
         include: {
             comment: true,
+            like: true,
+            tags: {
+                include: {
+                    tag: true,
+                },
+            },
+            categories: {
+                include: {
+                    category: true,
+                },
+            },
         },
     });
 
     if (!selectedPost) {
-        return res.status(400).json('error');
+        return res.status(404).json({ error: SERVER_ERROR_MESSAGE.NOT_FOUND });
     }
 
     res.status(200).json({ data: selectedPost });
@@ -22,7 +108,7 @@ const getPost = async (req, res) => {
 const editPost = async (req, res) => {
     const id = parseInt(req.params.id, 10);
 
-    const { title, content, userId } = req.body;
+    const { userId } = req.body;
 
     const token = req.headers.authorization;
 
@@ -31,22 +117,33 @@ const editPost = async (req, res) => {
     const tokenId = decodedToken.id;
 
     if (userId !== tokenId || !isModerator) {
-        return res.status(400).json('error');
+        return res
+            .status(401)
+            .json({ error: SERVER_ERROR_MESSAGE.UNAUTHORIZED });
     }
+
+    let post = {};
+
+    const entries = Object.entries(req.body);
+
+    entries.map((entry) => (post = { ...post, [entry[0]]: entry[1] }));
 
     const updatedPost = await prisma.post.update({
         where: {
-            id,
+            id: id,
         },
         data: {
-            title,
-            content,
-            userId,
+            ...post,
         },
         include: {
             tags: {
                 include: {
                     tag: true,
+                },
+            },
+            categories: {
+                include: {
+                    category: true,
                 },
             },
         },
@@ -60,16 +157,37 @@ const deletePost = async (req, res) => {
 
     const isRemoved = { isRemoved: true };
 
-    const deletedPost  = await prisma.post.update({
+    const deletedPost = await prisma.post.update({
         where: {
-            id,
+            id: id,
         },
         data: {
             ...isRemoved,
         },
     });
 
-    res.status(201).json(deletedPost);
+    res.status(201).json({ data: deletedPost });
+};
+
+const createComment = async (req, res) => {
+    const { userId, content, postId, parentId } = req.body;
+
+    const createdComment = await prisma.comment.create({
+        data: {
+            userId: userId,
+            content: content,
+            parentId: parentId,
+            postId: postId,
+        },
+    });
+
+    if (!createdComment) {
+        return res
+            .status(500)
+            .json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
+    }
+
+    res.status(200).json({ data: createdComment });
 };
 
 const getComment = async (req, res) => {
@@ -82,7 +200,7 @@ const getComment = async (req, res) => {
     });
 
     if (!selectedComment) {
-        return res.status(400).json('error');
+        return res.status(404).json({ error: SERVER_ERROR_MESSAGE.NOT_FOUND });
     }
 
     res.status(200).json({ data: selectedComment });
@@ -90,6 +208,12 @@ const getComment = async (req, res) => {
 
 const editComment = async (req, res) => {
     const id = parseInt(req.params.id, 10);
+
+    console.log(req.path)
+
+    console.log('id', id)
+
+    console.log(req.body);
 
     const comment = req.body;
 
@@ -100,7 +224,9 @@ const editComment = async (req, res) => {
     const tokenId = decodedToken.id;
 
     if (comment.userId !== tokenId || !isModerator) {
-        return res.status(400).json('error');
+        return res
+            .status(401)
+            .json({ error: SERVER_ERROR_MESSAGE.UNAUTHORIZED });
     }
 
     const updatedComment = await prisma.comment.update({
@@ -116,15 +242,15 @@ const editComment = async (req, res) => {
 };
 
 const deleteComment = async (req, res) => {
-    const id = req.params.id;
+    const id = parseInt(req.params.id, 10);
 
     const isRemoved = { isRemoved: true };
 
-    await prisma.post.update({
+    await prisma.comment.update({
         where: {
             id,
         },
-        update: {
+        data: {
             ...isRemoved,
         },
     });
@@ -132,8 +258,27 @@ const deleteComment = async (req, res) => {
     res.status(201).json('Comment deleted');
 };
 
+const createLike = async (req, res) => {
+    const { userId, postId, commentId } = req.body;
+
+    const createdLike = await prisma.like.create({
+        data: {
+            userId: userId,
+            postId: postId,
+            commentId: commentId,
+        },
+    });
+
+    if (!createdLike) {
+        return res
+            .status(500)
+            .json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
+    }
+    return res.status(200).json({ data: createdLike });
+};
+
 const deleteLike = async (req, res) => {
-    const { id } = req.params;
+    const id = parseInt(req.params.id, 10);
 
     await prisma.like.delete({
         where: {
@@ -144,12 +289,98 @@ const deleteLike = async (req, res) => {
     res.status(201).json('Like removed');
 };
 
+const createTag = async (req, res) => {
+    const { name } = req.body;
+
+    const createdTag = await prisma.tag.create({
+        data: {
+            name: name,
+        },
+    });
+
+    if (!createdTag) {
+        return res
+            .status(500)
+            .json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
+    }
+    return res.status(200).json({ data: createdTag });
+};
+
+// const createTag = async (req, res) => {
+//     const postId = parseInt(req.params.id, 10);
+
+//     const { tags } = req.body;
+
+//     if (!tags) {
+//         return res.status(401).json({ error: SERVER_ERROR_MESSAGE.NOT_FOUND });
+//     }
+
+//     const newTag = await prisma.tag.createMany({
+//         data: tags.map((tag) => {
+//             return {
+//                 name: tag,
+//             };
+//         }),
+//     });
+// };
+
+const deleteTag = async (req, res) => {
+    const id = parseInt(req.params.id, 10);
+
+    const deletedTag = await prisma.tagsOnPosts.delete({
+        where: {
+            id: id,
+        },
+    });
+
+    return res.status(200).json({ data: deletedTag });
+};
+
+// const createCategory = async (req, res) => {
+//     const postId = parseInt(req.params.id, 10);
+
+//     const { tags } = req.body;
+
+//     if (!tags) {
+//         return res.status(401).json({ error: SERVER_ERROR_MESSAGE.NOT_FOUND });
+//     }
+
+//     const newTag = await prisma.tag.createMany({
+//         data: tags.map((tag) => {
+//             return {
+//                 name: tag,
+//             };
+//         }),
+//     });
+// };
+
+// const deleteCategory = async (req, res) => {
+//     const id = parseInt(req.params.id, 10);
+
+//     const deletedCategory = await prisma.category.delete({
+//         where: {
+//             id: id,
+//         },
+//     });
+
+//     return res.status(200).json({ data: deletedCategory });
+// };
+
 module.exports = {
-    getPost,
+    createPost,
+    getAllPosts,
+    getPostbyId,
     editPost,
     deletePost,
+    createComment,
     getComment,
     editComment,
     deleteComment,
-    deleteLike
+    createLike,
+    deleteLike,
+    createTag,
+    // createTag,
+    deleteTag,
+    // createCategory,
+    // deleteCategory,
 };
