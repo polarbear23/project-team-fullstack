@@ -16,10 +16,24 @@ const fakeUser = () => {
     return fakedUser;
 }
 
+const fakeProfile = () => {
+    const fakedProfilePicture = faker.image.avatar();
+    const fakedLocation = faker.address.city();
+
+    const fakedProfile = {
+        profilePicture: fakedProfilePicture,
+        location: fakedLocation
+    }
+
+    return fakedProfile;
+}
+
+
+
 const user = fakeUser();
 console.log(user);
-// const profile = fakeProfile();
-// console.log(profile);
+const profile = fakeProfile();
+console.log(profile);
 // const post = fakePost();
 // console.log(post);
 //const comment = fakeComment();
