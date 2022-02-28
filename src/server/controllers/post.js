@@ -28,6 +28,22 @@ const createPost = async (req, res) => {
                     };
                 }),
             },
+            categories: {
+                create: categories.map((category) => {
+                    return {
+                        category: {
+                            connectOrCreate: {
+                                where: {
+                                    name: category,
+                                },
+                                create: {
+                                    name: category,
+                                },
+                            },
+                        },
+                    };
+                }),
+            },
         },
         include: {
             tags: {

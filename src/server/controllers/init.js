@@ -1,20 +1,28 @@
 const axios = require('axios');
 
-const { 
-    EXTERNAL_API, 
-    CATEGORIES, 
-    SERVER_ERROR_MESSAGE, 
-    NUMBER_OF_COMMENTS_WITH_PARENT_TO_GENERATE, 
-    NUMBER_OF_COMMENTS_TO_GENERATE, 
-    NUMBER_OF_POSTS_TO_GENERATE, 
-    NUMBER_OF_USERS_AND_PROFILES_TO_GENERATE 
+const {
+    EXTERNAL_API,
+    CATEGORIES,
+    SERVER_ERROR_MESSAGE,
+    NUMBER_OF_COMMENTS_WITH_PARENT_TO_GENERATE,
+    NUMBER_OF_COMMENTS_TO_GENERATE,
+    NUMBER_OF_POSTS_TO_GENERATE,
+    NUMBER_OF_USERS_AND_PROFILES_TO_GENERATE,
 } = require('../config');
 
-const { fakeUser, fakeProfile, fakePost, fakeComment, fakeCommentWithParent } = require('../utils/faker');
+const {
+    fakeUser,
+    fakeProfile,
+    fakePost,
+    fakeComment,
+    fakeCommentWithParent,
+} = require('../utils/faker');
 
 const { prisma } = require('../utils/prisma');
 
 const { capitalizeFirstLetter, generateRandomInt } = require('../utils/utils');
+
+const { getPokemonById } = require('./pokemon');
 
 const initPokemonDatabase = async (req, res) => {
     const numberOfPokemonToFetch = 151;
@@ -25,7 +33,7 @@ const initPokemonDatabase = async (req, res) => {
         const response = await axios(`${EXTERNAL_API}${pokemonId}`);
         const fetchedPokemon = response.data;
 
-        const filteredPokemon = await filterPokemonData(fetchedPokemon, pokemonId);
+        const filteredPokemon = await filterPokemonData(fetchedPokemon,getPokemonById);
 
         const createdPokemon = await createNewPokemon(filteredPokemon);
         console.log('Created Pokemon:', createdPokemon);
@@ -38,7 +46,9 @@ const filterPokemonData = async (pokemon, pokemonId) => {
     const pokemonName = capitalizeFirstLetter(pokemon.name);
 
     const types = [];
-    pokemon.types.forEach((type) => types.push(capitalizeFirstLetter(type.type.name)));
+    pokemon.types.forEach((type) =>
+        types.push(capitalizeFirstLetter(type.type.name))
+    );
 
     const pokedexId = pokemonId.toString().padStart(3, '0');
     const largeImageUrl = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokedexId}.png`;
@@ -114,38 +124,41 @@ const initCategoriesDatabase = async (req, res) => {
 };
 
 const seedUsersAndProfiles = async (req, res) => {
-    for(let i = 0; i < NUMBER_OF_USERS_AND_PROFILES_TO_GENERATE; i++){
+    for (let i = 0; i < NUMBER_OF_USERS_AND_PROFILES_TO_GENERATE; i++) {
         const fakedUser = fakeUser();
+
         const createdUser = await prisma.user.create({
             data: {
-                ...fakedUser
-            }
+                ...fakedUser,
+            },
         });
+
         console.log('Created User:', createdUser);
 
-        if(!createdUser){
+        if (!createdUser) {
             return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
         }
 
         const fakedProfile = fakeProfile(createdUser.id);
+
         const createdProfile = await prisma.profile.create({
             data: {
-                ...fakedProfile
-            }
+                ...fakedProfile,
+            },
         });
+
         console.log('Created Profile:', createdProfile);
 
-        if(!createdProfile){
+        if (!createdProfile) {
             return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
         }
     }
-
-    res.status(200).json('Users and profiles seeded successfully');
-}
+};
 
 const seedPosts = async (req, res) => {
-    for(let i = 0; i < NUMBER_OF_POSTS_TO_GENERATE; i++){
+    for (let i = 0; i < NUMBER_OF_POSTS_TO_GENERATE; i++) {
         const fakedPost = fakePost();
+
         const randomUserId = generateRandomInt(NUMBER_OF_USERS_AND_PROFILES_TO_GENERATE);
 
         const createdPost = await prisma.post.create({
@@ -169,6 +182,22 @@ const seedPosts = async (req, res) => {
                         };
                     }),
                 },
+                categories: {
+                    create: fakedPost.categories.map((category) => {
+                        return {
+                            category: {
+                                connectOrCreate: {
+                                    where: {
+                                        name: category,
+                                    },
+                                    create: {
+                                        name: category,
+                                    },
+                                },
+                            },
+                        };
+                    }),
+                },
             },
             include: {
                 tags: {
@@ -180,60 +209,67 @@ const seedPosts = async (req, res) => {
         });
         console.log('Created Post:', createdPost);
 
-        if(!createdPost){
+        if (!createdPost) {
             return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
         }
     }
-
-    res.status(200).json('Posts seeded successfully');
-}
+};
 
 const seedComments = async (req, res) => {
-    for(let i = 0; i < NUMBER_OF_COMMENTS_TO_GENERATE; i++){
+    for (let i = 0; i < NUMBER_OF_COMMENTS_TO_GENERATE; i++) {
         const fakedComment = fakeComment();
+
         const randomUserId = generateRandomInt(NUMBER_OF_USERS_AND_PROFILES_TO_GENERATE);
+
         const randomPostId = generateRandomInt(NUMBER_OF_POSTS_TO_GENERATE);
+
         const createdComment = await prisma.comment.create({
             data: {
                 ...fakedComment,
                 postId: randomPostId,
-                userId: randomUserId
-            }
+                userId: randomUserId,
+            },
         });
         console.log('Created Comment:', createdComment);
 
-        if(!createdComment){
+        if (!createdComment) {
             return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
         }
     }
 
-    for(let i = 0; i < NUMBER_OF_COMMENTS_WITH_PARENT_TO_GENERATE; i++){
+    for (let i = 0; i < NUMBER_OF_COMMENTS_WITH_PARENT_TO_GENERATE; i++) {
         const fakedCommentWithParent = fakeCommentWithParent();
+
+        const randomUserId = generateRandomInt(NUMBER_OF_USERS_AND_PROFILES_TO_GENERATE);
+
+        const randomPostId = generateRandomInt(NUMBER_OF_POSTS_TO_GENERATE);
+
         const createdCommentWithParent = await prisma.comment.create({
             data: {
                 ...fakedCommentWithParent,
                 postId: randomPostId,
-                userId: randomUserId
-            }
+                userId: randomUserId,
+            },
         });
+
         console.log('Created Comment with Parent:', createdCommentWithParent);
 
-        if(!createdCommentWithParent){
+        if (!createdCommentWithParent) {
             return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
         }
     }
-
-    res.status(200).json('Comments seeded successfully');
-}
+};
 
 const initForumDatabase = async (req, res) => {
     await seedUsersAndProfiles(req, res);
     await seedPosts(req, res);
     await seedComments(req, res);
-}
+
+    res.status(200).json('Database seeded successfully');
+};
 
 module.exports = {
     initPokemonDatabase,
     initCategoriesDatabase,
-    initForumDatabase
+    initForumDatabase,
 };
