@@ -570,7 +570,7 @@ table td {
 }
 
 .top-3-pokemon-image {
-  height: 200px;
+  height: 220px;
   padding: 1rem;
   background-color: #aabcfe;
   border-radius: 10px 0 0 10px;
@@ -594,13 +594,33 @@ table td {
 
 .stats {
   display: grid;
+  grid-template:
+    "left right" 1fr
+    "left right" 1fr
+    "rating rating" 1fr/
+    10rem 4rem;
+  gap: 1rem;
+}
+
+.stats-head {
+  grid-area: left;
+  display: grid;
   grid-auto-flow: row;
-  gap: 3px;
+  color: #669;
+  font-weight: bold;
+}
+
+.stats-values {
+  grid-area: right;
+  display: grid;
+  color: #669;
+  font-weight: bold;
 }
 
 .stats > p {
   /*border-bottom: 1px black solid;*/
   color: #669;
+  font-weight: bold;
 }
 
 .leaderboard-text {
@@ -625,6 +645,7 @@ table td {
 
 .type-icon {
   height: 40px;
+  padding-right: 0.5rem;
 }
 
 .leaderboard-pokemon-icon {

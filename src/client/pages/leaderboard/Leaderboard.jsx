@@ -16,9 +16,9 @@ const Leaderboard = () => {
     <div className="leaderboard">
       <h2 className="top-3-leaders">Best Rated Pokemon</h2>
       <div className="top-3-container">
-        <PokemonTile position={1} />
-        <PokemonTile position={2} />
-        <PokemonTile position={3} />
+        <PokemonTile position={0} pokemons={pokemons} />
+        <PokemonTile position={1} pokemons={pokemons} />
+        <PokemonTile position={2} pokemons={pokemons} />
       </div>
       <h1 className="leaderboard-title">Leaderboard</h1>
 
