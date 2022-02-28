@@ -19,10 +19,13 @@ const KEYS = {
     PASSWORD: 'password',
 };
 
+const CATEGORIES = ['Gaming', 'Fan-Fiction', 'Cosplay', 'Manga', 'TV/Film'];
+
 module.exports = {
     EXTERNAL_API,
     FORUM_ROLES,
     KEYS,
     SECRET,
     SERVER_ERROR_MESSAGE,
+    CATEGORIES
 };
