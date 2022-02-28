@@ -3,6 +3,7 @@ const {
     hashedPassword,
     createToken,
     removeKeys,
+    decodeToken
 } = require('../utils/auth.js');
 
 const { prisma } = require('../utils/prisma');
@@ -58,7 +59,7 @@ const editUser = async (req, res) => {
 
     const id = parseInt(req.params.id, 10);
 
-    const decodedToken = decodedToken(req);
+    const decodedToken = decodeToken(req);
 
     let user = {};
 
@@ -77,9 +78,9 @@ const editUser = async (req, res) => {
     }
 
     if (role) {
-        if (decodedToken.role !== FORUM_ROLES.ADMIN) {
-            return res.status(401).json({ error: SERVER_ERROR_MESSAGE.UNAUTHORIZED });
-        }
+        // if (decodedToken.role !== FORUM_ROLES.ADMIN) {
+        //     return res.status(401).json({ error: SERVER_ERROR_MESSAGE.UNAUTHORIZED });
+        // }
 
         role = role.toUpperCase();
 
