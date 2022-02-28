@@ -1,11 +1,15 @@
 import { FaArrowUp, FaArrowDown} from "react-icons/fa";
 import { BiCommentDots } from "react-icons/bi";
-
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Comment from "./Comment";
 import CommentForm from "./forms/CommentForm";
 
 const Post = () => {
+	const [showCommentParentForm, setShowCommentParentForm] = useState(false);
+
+	const [showAllComments, setShowAllComments] = useState(false);
+
 	const commentStyle = {fontSize: '1.3rem'}
 	return (
 		<div className="forum-container">
@@ -39,14 +43,21 @@ const Post = () => {
 								className="card-user-img"
 							/>
 							<span className="card-user-name">
-								Posted by
-								<Link to="/">Akash Raj</Link>
+								<span>Posted by</span>
+								<Link to="/" className="card-username-link">Akash Raj</Link>
 							</span>
 							<span className="card-user-time">.12h ago</span>
+							<span 
+								className="card-user-show"
+								onClick={() => setShowAllComments(!showAllComments)}
+							>Show comments</span>
 						</div>
 						<div className="card-comment">
 							<span className="card-comment-icon">
-								<BiCommentDots style={commentStyle}/>
+								<BiCommentDots 
+									style={commentStyle}
+									onClick={() => setShowCommentParentForm(!showCommentParentForm)}
+								/>
 							</span>
 							<span>50+</span>
 						</div>
@@ -54,11 +65,14 @@ const Post = () => {
 				</div>
 			</div>
 			{/* comment form */}
-			<CommentForm/>
+			{showCommentParentForm && <CommentForm 
+				setShowComment={setShowCommentParentForm}
+			/>}
+			{/* hardcoded for now- needs to change */}
 			{/* first commments */}
-			<Comment/>
+			{showAllComments && <Comment/>}
             {/* second comment */}
-			<Comment/>
+			{showAllComments && <Comment/>}
 		</div>
 	);
 };

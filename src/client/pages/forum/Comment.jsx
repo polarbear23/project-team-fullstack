@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { BsSave } from "react-icons/bs";
 import {GoReport} from "react-icons/go";
 import { FaArrowUp, FaArrowDown, FaShare} from "react-icons/fa";
@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import CommentForm from "./forms/CommentForm";
 
 const Comment = () => {
+	const [showCommentChildForm, setShowCommentChildForm] = useState(false);
+
 	return (
 		<>
 			<div className="comment-cards">
@@ -42,7 +44,7 @@ const Comment = () => {
 									<FaArrowDown />
 								</span>
 							</div>
-							<p>
+							<p onClick={() => setShowCommentChildForm(!showCommentChildForm)}>
 								<span className="comment-icon">
 									<BiCommentDetail />
 								</span>
@@ -71,7 +73,7 @@ const Comment = () => {
 				</div>
 			</div>
 			{/* reply to child comment */}
-			<CommentForm/>
+			{showCommentChildForm && <CommentForm setShowComment={setShowCommentChildForm}/>}
 		</>
 	);
 };

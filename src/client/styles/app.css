@@ -662,6 +662,18 @@ table td {
   height: 3rem;
   margin-right: 1rem;
 }
+.card-username-link{
+  padding-left: 5px;
+}
+
+.card-user-time{
+  margin-right: 1rem;
+}
+
+.card-user-show{
+  text-decoration: underline;
+  cursor: pointer;
+}
 
 .comment-user {
   display: flex;
@@ -715,10 +727,12 @@ table td {
 
 .comment-form-container{
   padding: 1rem;
-  margin-bottom: 4rem;
+  margin-bottom: 1rem;
 }
 .comment-form{
-  position: relative;
+  display: grid;
+  grid-template-rows: 2fr 1fr;
+  width: 95.7%;
   
 }
 .textarea{
@@ -731,6 +745,8 @@ table td {
   border-left: 1px solid #999999;
   border-right: 1px solid #999999;
   border-bottom: none;
+  width: 95.7%;
+  height: 7rem;
 }
 
 
@@ -740,17 +756,13 @@ table td {
   justify-content: flex-end;
   width: 95.7%;
   background-color: #f3f2f2;
-  position: absolute;
-  right: -5px;
-  bottom: -3rem;
+  margin-left: 3rem;
   padding: 14px 0;
   border-left: 1px solid #999999;
   border-right: 1px solid #999999;
   border-bottom: 1px solid #999999;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
-  /* box-shadow:0 1px 1px rgba(97,127,152,.2), 1px 0 0 rgba(97,127,152,.1), -1px 0 0 rgba(97,127,152,.1);border:0; */
-  
 }
 
 .group-btn button{
