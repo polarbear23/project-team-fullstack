@@ -70,7 +70,7 @@ const filterPokemonData = async (pokemon, pokemonId) => {
         filteredPokemon: filteredPokemon,
         types: types
     }
-    
+
     return pokemonToCreate;
 };
 
@@ -266,7 +266,7 @@ const initForumDatabase = async (req, res) => {
     await seedPosts(req, res);
     await seedComments(req, res);
 
-    res.status(SERVER_SUCCESS.OK).json('Database seeded successfully');
+    res.status(SERVER_SUCCESS.OK.CODE).json('Database seeded successfully');
 };
 
 module.exports = {

@@ -30,11 +30,11 @@ const LeaderboardItem = (props) => {
         {pokemon.name}
       </td>
       <td data-column="pokemon-type" className="leaderboard-pokemon-type">
-        {pokemon.types.map((type) => {
+        {pokemon.types.map((typeObj) => {
           return (
             <img
               className="type-icon"
-              src={`/assets/pokemontypes/${type.type.name.toLowerCase()}.svg`}
+              src={`/assets/pokemontypes/${typeObj.type.name.toLowerCase()}.svg`}
               alt=""
             />
           );
