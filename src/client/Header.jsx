@@ -16,10 +16,10 @@ const Header = () => {
 
         <ul className="navbar__lists">
           <li className="navbar__lists--item">
-            <Link to="/signin">Sign In</Link>
+            <Link to="/login">Sign In</Link>
           </li>
           <li className="navbar__lists--item">
-            <Link to="/signup">Sign Up</Link>
+            <Link to="/register/user">Sign Up</Link>
           </li>
         </ul>
       </nav>

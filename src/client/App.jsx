@@ -7,8 +7,8 @@ import Footer from './Footer';
 import LeftMenu from './LeftMenu';
 import Leaderboard from './pages/leaderboard/Leaderboard';
 import { CreateProfile } from './pages/register/CreateProfile';
-import Signup from './pages/forms/Signup';
-import SignIn from './pages/forms/SignIn';
+import { CreateUser } from './pages/register/CreateUser';
+import { Login } from './pages/login/Login';
 import Forum from './pages/forum/Forum';
 
 import '../client/styles/app.css';
@@ -22,9 +22,11 @@ export const App = () => {
             <Header user={user} />
             <LeftMenu />
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route 
+                    path="/" 
+                    element={<Home />} />
                 <Route
-                    path="/create-profile"
+                    path="/register/profile"
                     element={
                         <CreateProfile
                             token={token}
@@ -34,20 +36,38 @@ export const App = () => {
                     }
                 />
                 <Route
-                    path="/signup"
-                    element={<Signup setToken={setToken} setUser={setUser} />}
+                    path="/register/user"
+                    element={
+                        <CreateUser 
+                            setToken={setToken} 
+                            setUser={setUser} 
+                        />
+                    }
                 />
                 <Route
-                    path="/signin"
-                    element={<SignIn setToken={setToken} setUser={setUser} />}
+                    path="/login"
+                    element={
+                        <Login 
+                            setToken={setToken} 
+                            setUser={setUser} 
+                        />}
                 />
                 <Route
                     path="/forum"
-                    element={<Forum token={token} user={user} />}
+                    element={
+                    <Forum 
+                        token={token} 
+                        user={user} 
+                    />}
                 />
                 <Route
                     path="/leaderboard"
-                    element={<Leaderboard token={token} user={user} />}
+                    element={
+                        <Leaderboard 
+                            token={token} 
+                            user={user} 
+                        />
+                    }
                 />
             </Routes>
             <Footer />

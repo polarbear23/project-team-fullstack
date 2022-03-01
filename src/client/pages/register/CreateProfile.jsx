@@ -14,8 +14,7 @@ export const CreateProfile = (props) => {
     });
 
     const handleChange = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
+        const { name, value } = event.target;
 
         setForm({ ...form, [name]: value });
     };
@@ -30,7 +29,7 @@ export const CreateProfile = (props) => {
 
     const postForm = async () => {
         try {
-            const response = fetch('http://localhost:4000/user/profile', {
+            const response = await fetch('http://localhost:4000/user/profile', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
