@@ -3,7 +3,8 @@ const axios = require('axios');
 const {
     EXTERNAL_API,
     CATEGORIES,
-    SERVER_ERROR_MESSAGE,
+    SERVER_ERROR,
+    SERVER_SUCCESS,
     NUMBER_OF_COMMENTS_WITH_PARENT_TO_GENERATE,
     NUMBER_OF_COMMENTS_TO_GENERATE,
     NUMBER_OF_POSTS_TO_GENERATE,
@@ -33,13 +34,13 @@ const initPokemonDatabase = async (req, res) => {
         const response = await axios(`${EXTERNAL_API}${pokemonId}`);
         const fetchedPokemon = response.data;
 
-        const filteredPokemon = await filterPokemonData(fetchedPokemon,getPokemonById);
+        const filteredPokemon = await filterPokemonData(fetchedPokemon, pokemonId);
 
         const createdPokemon = await createNewPokemon(filteredPokemon);
         console.log('Created Pokemon:', createdPokemon);
     }
 
-    res.status(201).json('151 Pokemon seeded successfully');
+    res.status(SERVER_SUCCESS.POST_OK.CODE).json('151 Pokemon seeded successfully');
 };
 
 const filterPokemonData = async (pokemon, pokemonId) => {
@@ -67,10 +68,12 @@ const filterPokemonData = async (pokemon, pokemonId) => {
         speed: pokemon.stats[5].base_stat,
     };
 
-    return {
-        filteredPokemon,
-        types,
-    };
+    const pokemonToCreate = {
+        filteredPokemon: filteredPokemon,
+        types: types
+    }
+    
+    return pokemonToCreate;
 };
 
 const createNewPokemon = async (pokemonToCreate) => {
@@ -120,7 +123,7 @@ const initCategoriesDatabase = async (req, res) => {
         console.log('Created Category', createdCategory);
     }
 
-    res.status(201).json('Categories seeded successfully');
+    res.status(SERVER_SUCCESS.POST_OK.CODE).json('Categories seeded successfully');
 };
 
 const seedUsersAndProfiles = async (req, res) => {
@@ -150,7 +153,7 @@ const seedUsersAndProfiles = async (req, res) => {
         console.log('Created Profile:', createdProfile);
 
         if (!createdProfile) {
-            return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
+            return res.status(SERVER_ERROR.INTERNAL.CODE).json({ error: SERVER_ERROR.INTERNAL.MESSAGE });
         }
     }
 };
@@ -210,7 +213,7 @@ const seedPosts = async (req, res) => {
         console.log('Created Post:', createdPost);
 
         if (!createdPost) {
-            return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
+            return res.status(SERVER_ERROR.INTERNAL.CODE).json({ error: SERVER_ERROR.INTERNAL.MESSAGE });
         }
     }
 };
@@ -233,7 +236,7 @@ const seedComments = async (req, res) => {
         console.log('Created Comment:', createdComment);
 
         if (!createdComment) {
-            return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
+            return res.status(SERVER_ERROR.INTERNAL.CODE).json({ error: SERVER_ERROR.INTERNAL.MESSAGE });
         }
     }
 
@@ -255,7 +258,7 @@ const seedComments = async (req, res) => {
         console.log('Created Comment with Parent:', createdCommentWithParent);
 
         if (!createdCommentWithParent) {
-            return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
+            return res.status(SERVER_ERROR.INTERNAL.CODE).json({ error: SERVER_ERROR.INTERNAL.MESSAGE });
         }
     }
 };
@@ -265,11 +268,11 @@ const initForumDatabase = async (req, res) => {
     await seedPosts(req, res);
     await seedComments(req, res);
 
-    res.status(200).json('Database seeded successfully');
+    res.status(SERVER_SUCCESS.OK).json('Database seeded successfully');
 };
 
 module.exports = {
     initPokemonDatabase,
     initCategoriesDatabase,
-    initForumDatabase,
+    initForumDatabase
 };

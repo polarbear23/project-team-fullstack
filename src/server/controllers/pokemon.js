@@ -1,6 +1,6 @@
 const { prisma } = require('../utils/prisma');
 
-const { SERVER_ERROR_MESSAGE } = require('../config');
+const { SERVER_ERROR, SERVER_SUCCESS } = require('../config');
 
 const getAllPokemon = async (req, res) => {
     const fetchedPokemon = await prisma.pokemon.findMany({
@@ -13,7 +13,7 @@ const getAllPokemon = async (req, res) => {
         },
     });
 
-    res.status(200).json({ data: fetchedPokemon });
+    res.status(SERVER_SUCCESS.OK).json({ data: fetchedPokemon });
 };
 
 const getPokemonById = async (req, res) => {
@@ -33,20 +33,20 @@ const getPokemonById = async (req, res) => {
     });
 
     if (!foundPokemon) {
-        return res.status(404).json({ error: SERVER_ERROR_MESSAGE.NOT_FOUND });
+        return res.status(SERVER_ERROR.NOT_FOUND.CODE).json({ error: SERVER_ERROR.NOT_FOUND.MESSAGE });
     }
 
-    res.status(200).json({ data: foundPokemon });
+    res.status(SERVER_SUCCESS.OK).json({ data: foundPokemon });
 };
 
 const getAllPokemonRatings = async (req, res) => {
     const fetchedRatings = await prisma.rating.findMany({});
 
     if (!ratings) {
-        return res.status(404).json({ error: SERVER_ERROR_MESSAGE.NOT_FOUND });
+        return res.status(SERVER_ERROR.NOT_FOUND.CODE).json({ error: SERVER_ERROR.NOT_FOUND.MESSAGE });
     }
 
-    res.status(200).json({ data: fetchedRatings });
+    res.status(SERVER_SUCCESS.OK).json({ data: fetchedRatings });
 };
 
 const createPokemonRating = async (req, res) => {
@@ -76,16 +76,14 @@ const createPokemonRating = async (req, res) => {
     });
 
     if (!createdRating) {
-        return res
-            .status(500)
-            .json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
+        return res.status(SERVER_ERROR.INTERNAL.CODE).json({ error: SERVER_ERROR.INTERNAL.MESSAGE });
     }
-    return res.status(200).json({ data: createdRating });
+    return res.status(SERVER_SUCCESS.OK).json({ data: createdRating });
 };
 
 module.exports = {
     getAllPokemon,
     getPokemonById,
     getAllPokemonRatings,
-    createPokemonRating,
+    createPokemonRating
 };
