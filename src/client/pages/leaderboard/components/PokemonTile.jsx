@@ -14,7 +14,7 @@ const PokemonTile = (props) => {
       <div className="pokemon-tile">
         <img
           className="top-3-pokemon-image"
-          src={pokemons[position].pictureUrl}
+          src={pokemons[position].largeImageUrl}
           alt={pokemons[position].name}
         />
         <div className="pokemon-text-container">

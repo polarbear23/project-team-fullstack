@@ -19,7 +19,7 @@ const LeaderboardItem = (props) => {
       >
         <img
           className="leaderboard-pokemon-icon"
-          src={pokemon.pictureUrl}
+          src={pokemon.largeImageUrl}
           alt=""
         />
       </td>

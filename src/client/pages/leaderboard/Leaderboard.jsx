@@ -1,15 +1,20 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import LeaderboardItem from "./components/LeaderboardItem";
 import PokemonTile from "./components/PokemonTile";
 
 const Leaderboard = () => {
   const [pokemons, setPokemons] = useState([]);
+
+  const getPokemon = async () => {
+    const res = await fetch("http://localhost:4000/pokemon/");
+    const pokemon = await res.json();
+    console.log(pokemon.data);
+    setPokemons(pokemon.data);
+  };
+
   useEffect(() => {
-    fetch("http://localhost:4000/pokemon/")
-      .then((res) => res.json())
-      .then((res) => {
-        setPokemons(res.data);
-      });
+    getPokemon();
+    console.log(pokemons);
   }, []);
 
   return (
