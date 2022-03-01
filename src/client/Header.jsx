@@ -22,9 +22,7 @@ const Header = (props) => {
 
         username = username.toLowerCase();
 
-        username = capitaliseFirstLetter(username);
-
-        return username;
+        return capitaliseFirstLetter(username);
     };
 
     return (
@@ -43,9 +41,7 @@ const Header = (props) => {
                     {isLoggedIn && user && (
                         <>
                             <li className="navbar__lists--item">
-                                <Link to="/profile">
-                                    Hi {formatUserName(user)}
-                                </Link>
+                                <Link to="/profile">Hi {formatUserName(user)}</Link>
                             </li>
                             <li
                                 className="navbar__lists--item"
@@ -55,17 +51,16 @@ const Header = (props) => {
                             </li>
                         </>
                     )}
-                    {!isLoggedIn ||
-                        (!user && (
-                            <>
-                                <li className="navbar__lists--item">
-                                    <Link to="/login">Login</Link>
-                                </li>
-                                <li className="navbar__lists--item">
-                                    <Link to="/register/user">Register</Link>
-                                </li>
-                            </>
-                        ))}
+                    {(!isLoggedIn || !user) && (
+                        <>
+                            <li className="navbar__lists--item">
+                                <Link to="/login">Login</Link>
+                            </li>
+                            <li className="navbar__lists--item">
+                                <Link to="/register/user">Register</Link>
+                            </li>
+                        </>
+                    )}
                 </ul>
             </nav>
         </header>

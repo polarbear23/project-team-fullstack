@@ -8,7 +8,7 @@ const fetchConfig = (reqBody, method) => {
     };
 };
 
-const doFetch = async (endpoint, reqBody, method) => {
+export const doFetch = async (endpoint, reqBody, method) => {
     try {
         const response = await fetch(endpoint, fetchConfig(reqBody, method));
         return response.json();
@@ -17,9 +17,4 @@ const doFetch = async (endpoint, reqBody, method) => {
     }
 };
 
-const capitaliseFirstLetter = (string) => string.replace(/\b\w/g, (c) => c.toUpperCase());
-
-module.exports = {
-    doFetch,
-    capitaliseFirstLetter,
-};
+export const capitaliseFirstLetter = (string) => string.replace(/\b\w/g, (c) => c.toUpperCase());

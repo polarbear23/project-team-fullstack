@@ -11,6 +11,8 @@ import CreateUser from './pages/register/CreateUser';
 import Login from './pages/login/Login';
 import Forum from './pages/forum/Forum';
 
+import {LOCAL_STORAGE, INT_LINK} from './config'
+
 import '../client/styles/app.css';
 
 export const App = () => {
@@ -20,12 +22,12 @@ export const App = () => {
     //on page load / refresh, token persists but user details stored in state are lost
 
     useEffect(() => {
-        localStorage.getItem('token') ? setIsLoggedIn(true) : setIsLoggedIn(false);
+        localStorage.getItem(LOCAL_STORAGE.TOKEN) ? setIsLoggedIn(true) : setIsLoggedIn(false);
     }, []);
 
     useEffect(() => {
         if (user || !isLoggedIn) return
-        //fetchUser from id in token
+        //fetchUser from id in token decodeToken
     }, [isLoggedIn]);
 
     return (
@@ -34,10 +36,10 @@ export const App = () => {
             <LeftMenu />
             <Routes>
                 <Route 
-                    path="/" 
+                    path={INT_LINK.HOME}
                     element={<Home />} />
                 <Route
-                    path="/register/profile"
+                    path={INT_LINK.CREATE_PROFILE}
                     element={
                         <CreateProfile
                             user={user}
@@ -46,7 +48,7 @@ export const App = () => {
                     }
                 />
                 <Route
-                    path="/register/user"
+                    path={INT_LINK.CREATE_USER}
                     element={
                         <CreateUser 
                             setUser={setUser}
@@ -55,7 +57,7 @@ export const App = () => {
                     }
                 />
                 <Route
-                    path="/login"
+                    path={INT_LINK.LOGIN}
                     element={
                         <Login 
                             setUser={setUser}
@@ -63,14 +65,14 @@ export const App = () => {
                         />}
                 />
                 <Route
-                    path="/forum"
+                    path={INT_LINK.FORUM}
                     element={
                     <Forum 
                         user={user} 
                     />}
                 />
                 <Route
-                    path="/leaderboard"
+                    path={INT_LINK.LEADERBOARD}
                     element={
                         <Leaderboard 
                             user={user} 
