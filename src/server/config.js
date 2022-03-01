@@ -26,6 +26,7 @@ const KEYS = {
     PASSWORD: 'password',
 };
 
+//SEEDING
 const CATEGORIES = ['Gaming', 'Fan-Fiction', 'Cosplay', 'Manga', 'TV/Film'];
 
 const NUMBER_OF_USERS_AND_PROFILES_TO_GENERATE = 100;

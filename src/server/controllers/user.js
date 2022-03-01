@@ -50,8 +50,9 @@ const createUser = async (req, res) => {
     });
 
     createdUser = removeKeys(createdUser, KEYS.PASSWORD);
+    const token = createToken({ id: createdUser.id, role: createdUser.role });
 
-    res.status(SERVER_SUCCESS.OK.CODE).json({ data: createdUser });
+    res.status(SERVER_SUCCESS.OK.CODE).json({ data: createdUser, token: token });
 };
 
 const editUser = async (req, res) => {

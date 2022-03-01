@@ -1,43 +1,98 @@
+import React, { useEffect, useState } from 'react'
+import { USER_URLs } from '../../../client/config';
+import { doFetch } from '../../utils';
+
+const signUpInitialData = {
+	username: "",
+	email: "",
+	password: "",
+	termsAndConditions: false
+}
+
 const Signup = () => {
-  return (
-		<div className='signup'>
-			<form className='signup-form'>
+	const [signUpData, setSignUpData] = useState(signUpInitialData);
+
+	const registerUser = async () => {
+		const registeredUser = await doFetch(USER_URLs.REGISTER, signUpData, 'POST');
+		
+		return registeredUser;
+	}
+
+	const handleChange = event => {
+		let { name, value, type, checked } = event.target;
+		console.log(event.target);
+
+		type === "checkbox" && (value = checked);
+
+		setSignUpData({...signUpData, [name]: value});
+	}
+
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+
+		setSignUpData(signUpData);
+
+		if(signUpData.termsAndConditions){
+			const registeredUser = await registerUser();
+
+			if(registeredUser){
+				const registeredUserId = registeredUser.data.id;
+				const userGeneratedToken = registeredUser.token; 
+	
+				localStorage.setItem("userToken", userGeneratedToken);
+				localStorage.setItem("userId", registeredUserId);
+				
+				//redirect to profile!!
+			}
+		}
+	}
+
+  	return (
+		<div className="signup">
+			<form className="signup-form" onSubmit={handleSubmit}>
                 <h1>Register</h1>
 				<div className="input-groups">
 					<label htmlFor="username">Username:</label>
-					<input type="text" id='username' className='input'/>
+					<input 
+						type="text" 
+						id="username" 
+						className="input"
+						name="username"
+						value={signUpData.username}
+						onChange={handleChange}
+						required
+					/>
 				</div>
 				<div className="input-groups">
 					<label htmlFor="email">Email:</label>
-					<input type="text" id='email' className='input'/>
+					<input 
+						type="text" 
+						id="email" 
+						className="input"
+						name="email"
+						value={signUpData.email}
+						onChange={handleChange}
+						required
+					/>
 				</div>
 				<div className="input-groups">
 					<label htmlFor="password">Password:</label>
-					<input type="text" id='password' className='input'/>
+					<input 
+						type="text" 
+						id="password" 
+						className="input"
+						name="password"
+						value={signUpData.password}
+						onChange={handleChange}
+						required
+					/>
 				</div>
-				<div className="input-groups">
-					<label htmlFor="dob_month" className='dob_month'>Date of birth:</label>
-					<select name="dob_month" className="dob" aria-label="Month">
-						<option value="0" selected="selected">
-							&nbsp;
-						</option>
-						<option value="1">January</option>
-						<option value="2">February</option>
-						<option value="3">March</option>
-						<option value="4">April</option>
-						<option value="5">May</option>
-						<option value="6">June</option>
-						<option value="7">July</option>
-						<option value="8">August</option>
-						<option value="9">September</option>
-						<option value="10">October</option>
-						<option value="11">November</option>
-						<option value="12">December</option>
-					</select>
-                    <input type="text" className="dob" name="dob_day" pattern="\d*" size="4" maxlength="2" placeholder="Day"></input>
-                    <input type="text" className="dob" name="dob_year" pattern="\d*" size="6" maxlength="4" placeholder="Year"></input>
-				</div>
-				<input type="checkbox" />
+				<input 
+					type="checkbox"
+					name="termsAndConditions"
+					value={signUpData.termsAndConditions}
+					onChange={handleChange}
+				/>
 				<span className='terms'>I agree to the terms and privacy policy.</span>
                 <button type='submit' className='register-btn'>Register</button>
 			</form>

@@ -1,26 +1,74 @@
+import React, { useState } from 'react'
+
+const initialSignInData = {
+    username: "",
+    password: ""
+}
+
 const SignIn = () => {
+    const [signInData, setSignInData] = useState(initialSignInData);
+
+    const logInUser = async () => {
+
+    }
+
+    const handleChange = event => {
+        let { name, value } = event.target;
+
+        setSignInData({...signInData, [name]: value});
+    }
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        setSignInData(signInData);
+
+        const logInUser = await logInUser();
+        //FINISH
+    }
+
+    const redirectToRegister = () => {
+
+    }
+
     return (
-        <div className="signIn">
+		<div className="signIn">
             <div className="signin-container">
                 <form className="signin-form">
                     <h1>Sign In</h1>
                     <div className="input-groups">
                         <label htmlFor="username">Username:</label>
-                        <input type="text" id="username" className="input" />
-                    </div>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            className="input"
+                            name="username"
+                            value={signInData.username}
+                            onChange={handleChange}
+                            required
+                        />
+				    </div>
                     <div className="input-groups">
                         <label htmlFor="password">Password:</label>
-                        <input type="text" id="password" className="input" />
-                    </div>
-                    <button type="submit" className="signin-btn">
-                        Sign In
-                    </button>
+                        <input 
+                            type="text" 
+                            id="password" 
+                            className="input"
+                            name="password"
+                            value={signInData.password}
+                            onChange={handleChange}
+                            required
+                        />
+				    </div>
+                    <button type="submit" className="signin-btn">Sign In</button>
                 </form>
                 <div className="new-register">
                     <p className="signin-text">No account? No worries.</p>
-                    <button type="submit" className="new-register-btn">
-                        New Account
-                    </button>
+                    <button 
+                        type="submit" 
+                        className="new-register-btn"
+                        onClick={redirectToRegister}    
+                    >New Account</button>
                 </div>
             </div>
         </div>
