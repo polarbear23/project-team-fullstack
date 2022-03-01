@@ -5,10 +5,12 @@ import { Link } from "react-router-dom";
 import Comment from "./Comment";
 import CommentForm from "./forms/CommentForm";
 
-const Post = () => {
-	const [showCommentParentForm, setShowCommentParentForm] = useState(false);
 
+const Post = (props) => {
+	const { post } = props;
+	const [showCommentParentForm, setShowCommentParentForm] = useState(false);
 	const [showAllComments, setShowAllComments] = useState(false);
+
 
 	const commentStyle = {fontSize: '1.3rem'}
 	return (
@@ -25,28 +27,21 @@ const Post = () => {
 				</div>
 				<div className="card-text">
 					<div className="card-header">
-						<h2 className="card-header-title">
-							What’s your all time favorite starter Pokémon?
-						</h2>
-						<p className="card-header-text">
-							Based on the basic stage alone, I'm inclined to pick Chikorita
-							since it was my original in-game Starter (though I have to admit
-							that its anatomy is pretty weird). Oshawott is also up there, and
-							Mudkip would get my vote for cutest base Starter.
-						</p>
+						<h2 className="card-header-title">{post.title}</h2>
+						<p className="card-header-text">{post.content}</p>
 					</div>
 					<div className="card-footer">
 						<div className="card-user">
 							<img
-								src="./assets/user.jpg"
+								src={post.user.profile.profilePicture}
 								alt="user image"
 								className="card-user-img"
 							/>
 							<span className="card-user-name">
 								<span>Posted by</span>
-								<Link to="/" className="card-username-link">Akash Raj</Link>
+								<Link to="/" className="card-username-link">{post.user.username}</Link>
 							</span>
-							<span className="card-user-time">.12h ago</span>
+							<span className="card-user-time">{post.createdAt}</span>
 							<span 
 								className="card-user-show"
 								onClick={() => setShowAllComments(!showAllComments)}

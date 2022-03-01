@@ -82,6 +82,11 @@ const getAllPosts = async (req, res) => {
                     category: true,
                 },
             },
+            user: {
+                include:{
+                    profile: true
+                }
+            }
         },
     });
 
