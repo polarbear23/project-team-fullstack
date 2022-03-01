@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-const { SERVER_ERROR, SECRET, FORUM_ROLES } = require('../config');
+const { SERVER_ERROR_MESSAGE, SECRET, FORUM_ROLES } = require('../config');
 
 const { prisma } = require('./prisma');
 
@@ -29,7 +29,7 @@ const hasEditingPermissions = (req, res, next) => {
     const decodedToken = decodeToken(req);
 
     if (decodedToken.id !== postId || decodedToken.role === FORUM_ROLES.USER) {
-        return res.status(SERVER_ERROR.FORBIDDEN.CODE).json({ error: SERVER_ERROR.FORBIDDEN.MESSAGE });
+        return res.status(403).json({ error: SERVER_ERROR_MESSAGE.FORBIDDEN });
     }
 
     next();
@@ -41,7 +41,7 @@ const isLoggedIn = (req, res, next) => {
     try {
         jwt.verify(token, SECRET);
     } catch (error) {
-        return res.status(SERVER_ERROR.UNAUTHORIZED.CODE).json({ error: SERVER_ERROR.UNAUTHORIZED.MESSAGE });
+        return res.status(401).json({ error: SERVER_ERROR_MESSAGE.UNAUTHORIZED });
     }
 
     next();
@@ -57,7 +57,7 @@ const isAdmin = async (req, res, next) => {
     });
 
     if (fetchedUser.role !== FORUM_ROLES.ADMIN) {
-        return res.status(SERVER_ERROR.FORBIDDEN.CODE).json({ error: SERVER_ERROR.FORBIDDEN.MESSAGE });
+        return res.status(403).json({ error: SERVER_ERROR_MESSAGE.FORBIDDEN });
     }
 
     next();
@@ -73,7 +73,7 @@ const isModerator = async (req, res, next) => {
     });
 
     if (fetchedUser.role === FORUM_ROLES.USER) {
-        return res.status(SERVER_ERROR.FORBIDDEN.CODE).json({ error: SERVER_ERROR.FORBIDDEN.MESSAGE });
+        return res.status(403).json({ error: SERVER_ERROR_MESSAGE.FORBIDDEN });
     }
 
     next();

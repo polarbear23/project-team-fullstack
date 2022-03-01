@@ -8,7 +8,7 @@ const {
 
 const { prisma } = require('../utils/prisma');
 
-const { KEYS, SERVER_ERROR, SERVER_SUCCESS, FORUM_ROLES } = require('../config.js');
+const { KEYS, SERVER_ERROR_MESSAGE, FORUM_ROLES } = require('../config.js');
 
 const authenticateUser = async (req, res) => {
     let { username, password } = req.body;
@@ -20,13 +20,13 @@ const authenticateUser = async (req, res) => {
     });
 
     if (!foundUser) {
-        return res.status(SERVER_ERROR.UNAUTHORIZED.CODE).json({ error: SERVER_ERROR.UNAUTHORIZED.MESSAGE });
+        return res.status(401).json({ error: SERVER_ERROR_MESSAGE.UNAUTHORIZED });
     }
 
     const passwordsMatch = await checkPassword(password, foundUser.password);
 
     if (!passwordsMatch) {
-        return res.status(SERVER_ERROR.UNAUTHORIZED.CODE).json({ error: SERVER_ERROR.UNAUTHORIZED.MESSAGE });
+        return res.status(401).json({ error: SERVER_ERROR_MESSAGE.UNAUTHORIZED });
     }
 
     res.json(createToken({ id: foundUser.id, role: foundUser.role }));
@@ -51,7 +51,7 @@ const createUser = async (req, res) => {
 
     createdUser = removeKeys(createdUser, KEYS.PASSWORD);
 
-    res.status(SERVER_SUCCESS.OK.CODE).json({ data: createdUser });
+    res.status(200).json({ data: createdUser });
 };
 
 const editUser = async (req, res) => {
@@ -89,7 +89,7 @@ const editUser = async (req, res) => {
 
     if (isBanned) {
         if (decodedToken.role === FORUM_ROLES.USER) {
-            return res.status(SERVER_ERROR.UNAUTHORIZED.CODE).json({ error: SERVER_ERROR.UNAUTHORIZED.MESSAGE });
+            return res.status(401).json({ error: SERVER_ERROR_MESSAGE.UNAUTHORIZED });
         }
 
         user = { ...user, isBanned };
@@ -121,15 +121,15 @@ const createProfile = async (req, res) => {
     });
 
     if (!createdProfile) {
-        return res.status(SERVER_ERROR.INTERNAL.CODE).json({ error: SERVER_ERROR.INTERNAL.MESSAGE });
+        return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
     }
 
-    res.status(SERVER_SUCCESS.OK.CODE).json({ data: createdProfile });
+    res.status(200).json({ data: createdProfile });
 };
 
 module.exports = {
     authenticateUser,
     createUser,
     editUser,
-    createProfile
+    createProfile,
 };

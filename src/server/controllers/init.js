@@ -72,7 +72,6 @@ const filterPokemonData = async (pokemon, pokemonId) => {
         filteredPokemon: filteredPokemon,
         types: types
     }
- 
     return pokemonToCreate;
 };
 

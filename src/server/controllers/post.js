@@ -1,6 +1,6 @@
 const { isModerator, jwt } = require('../utils/auth');
 
-const { SERVER_ERROR, SERVER_SUCCESS } = require('../config');
+const { SERVER_ERROR_MESSAGE } = require('../config');
 
 const { prisma } = require('../utils/prisma');
 
@@ -55,9 +55,9 @@ const createPost = async (req, res) => {
     });
 
     if (!createdPost) {
-        return res.status(SERVER_ERROR.INTERNAL.CODE).json({ error: SERVER_ERROR.INTERNAL.MESSAGE });
+        return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
     }
-    return res.status(SERVER_SUCCESS.OK.CODE).json({ data: createdPost });
+    return res.status(200).json({ data: createdPost });
 };
 
 const getAllPosts = async (req, res) => {
@@ -85,7 +85,7 @@ const getAllPosts = async (req, res) => {
         },
     });
 
-    res.status(SERVER_SUCCESS.OK.CODE).json({ data: selectedPosts });
+    res.status(200).json({ data: selectedPosts });
 };
 
 const getPostbyId = async (req, res) => {
@@ -113,10 +113,10 @@ const getPostbyId = async (req, res) => {
     });
 
     if (!selectedPost) {
-        return res.status(SERVER_ERROR.NOT_FOUND.CODE).json({ error: SERVER_ERROR.NOT_FOUND.MESSAGE });
+        return res.status(404).json({ error: SERVER_ERROR_MESSAGE.NOT_FOUND });
     }
 
-    res.status(SERVER_SUCCESS.OK.CODE).json({ data: selectedPost });
+    res.status(200).json({ data: selectedPost });
 };
 
 const editPost = async (req, res) => {
@@ -131,7 +131,7 @@ const editPost = async (req, res) => {
     const tokenId = decodedToken.id;
 
     if (userId !== tokenId || !isModerator) {
-        return res.status(SERVER_ERROR.UNAUTHORIZED.CODE).json({ error: SERVER_ERROR.UNAUTHORIZED.MESSAGE });
+        return res.status(401).json({ error: SERVER_ERROR_MESSAGE.UNAUTHORIZED });
     }
 
     let post = {};
@@ -161,7 +161,7 @@ const editPost = async (req, res) => {
         },
     });
 
-    res.status(SERVER_SUCCESS.OK.CODE).json({ data: updatedPost });
+    res.status(200).json({ data: updatedPost });
 };
 
 const deletePost = async (req, res) => {
@@ -178,7 +178,7 @@ const deletePost = async (req, res) => {
         },
     });
 
-    res.status(SERVER_SUCCESS.POST_OK.CODE).json({ data: deletedPost });
+    res.status(201).json({ data: deletedPost });
 };
 
 const createComment = async (req, res) => {
@@ -194,10 +194,10 @@ const createComment = async (req, res) => {
     });
 
     if (!createdComment) {
-        return res.status(SERVER_ERROR.INTERNAL.CODE).json({ error: SERVER_ERROR.INTERNAL.MESSAGE });
+        return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
     }
 
-    res.status(SERVER_SUCCESS.OK.CODE).json({ data: createdComment });
+    res.status(200).json({ data: createdComment });
 };
 
 const getComment = async (req, res) => {
@@ -210,17 +210,17 @@ const getComment = async (req, res) => {
     });
 
     if (!selectedComment) {
-        return res.status(SERVER_ERROR.NOT_FOUND.CODE).json({ error: SERVER_ERROR.NOT_FOUND.MESSAGE });
+        return res.status(404).json({ error: SERVER_ERROR_MESSAGE.NOT_FOUND });
     }
 
-    res.status(SERVER_SUCCESS.OK.CODE).json({ data: selectedComment });
+    res.status(200).json({ data: selectedComment });
 };
 
 const editComment = async (req, res) => {
     const id = parseInt(req.params.id, 10);
 
     if (comment.userId !== tokenId || !isModerator) {
-        return res.status(SERVER_ERROR.UNAUTHORIZED.CODE).json({ error: SERVER_ERROR.UNAUTHORIZED.MESSAGE });
+        return res.status(401).json({ error: SERVER_ERROR_MESSAGE.UNAUTHORIZED });
     }
 
     const updatedComment = await prisma.comment.update({
@@ -232,7 +232,7 @@ const editComment = async (req, res) => {
         },
     });
 
-    res.status(SERVER_SUCCESS.OK.CODE).json({ data: updatedComment });
+    res.status(200).json({ data: updatedComment });
 };
 
 const deleteComment = async (req, res) => {
@@ -249,7 +249,7 @@ const deleteComment = async (req, res) => {
         },
     });
 
-    res.status(SERVER_SUCCESS.UPDATE_OK.CODE).json(SERVER_SUCCESS.UPDATE_OK.MESSAGE);
+    res.status(201).json('Comment deleted');
 };
 
 const createLike = async (req, res) => {
@@ -264,9 +264,9 @@ const createLike = async (req, res) => {
     });
 
     if (!createdLike) {
-        return res.status(SERVER_ERROR.INTERNAL.CODE).json({ error: SERVER_ERROR.INTERNAL.MESSAGE });
+        return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
     }
-    return res.status(SERVER_SUCCESS.OK.CODE).json({ data: createdLike });
+    return res.status(200).json({ data: createdLike });
 };
 
 const deleteLike = async (req, res) => {
@@ -278,7 +278,7 @@ const deleteLike = async (req, res) => {
         },
     });
 
-    res.status(SERVER_SUCCESS.UPDATE_OK.CODE).json(SERVER_SUCCESS.UPDATE_OK.MESSAGE);
+    res.status(201).json('Like removed');
 };
 
 const createTag = async (req, res) => {
@@ -291,9 +291,9 @@ const createTag = async (req, res) => {
     });
 
     if (!createdTag) {
-        return res.status(SERVER_ERROR.INTERNAL.CODE).json({ error: SERVER_ERROR.INTERNAL.MESSAGE });
+        return res.status(500).json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
     }
-    return res.status(SERVER_SUCCESS.OK.CODE).json({ data: createdTag });
+    return res.status(200).json({ data: createdTag });
 };
 
 const deleteTag = async (req, res) => {
@@ -305,7 +305,7 @@ const deleteTag = async (req, res) => {
         },
     });
 
-    return res.status(SERVER_SUCCESS.DELETE_OK.CODE).json(SERVER_SUCCESS.DELETE_OK.MESSAGE);
+    return res.status(200).json({ data: deletedTag });
 };
 
 module.exports = {
@@ -321,5 +321,5 @@ module.exports = {
     createLike,
     deleteLike,
     createTag,
-    deleteTag
+    deleteTag,
 };
