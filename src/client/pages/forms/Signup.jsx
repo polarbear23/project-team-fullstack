@@ -49,7 +49,7 @@ const Signup = () => {
 
   	return (
 		<div className="signup">
-			<form className="signup-form">
+			<form className="signup-form" onSubmit={handleSubmit}>
                 <h1>Register</h1>
 				<div className="input-groups">
 					<label htmlFor="username">Username:</label>
