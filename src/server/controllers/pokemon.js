@@ -13,7 +13,7 @@ const getAllPokemon = async (req, res) => {
         },
     });
 
-    res.status(SERVER_SUCCESS.OK).json({ data: fetchedPokemon });
+    res.status(SERVER_SUCCESS.OK.CODE).json({ data: fetchedPokemon });
 };
 
 const getPokemonById = async (req, res) => {
@@ -36,7 +36,7 @@ const getPokemonById = async (req, res) => {
         return res.status(SERVER_ERROR.NOT_FOUND.CODE).json({ error: SERVER_ERROR.NOT_FOUND.MESSAGE });
     }
 
-    res.status(SERVER_SUCCESS.OK).json({ data: foundPokemon });
+    res.status(SERVER_SUCCESS.OK.CODE).json({ data: foundPokemon });
 };
 
 const getAllPokemonRatings = async (req, res) => {
@@ -46,7 +46,7 @@ const getAllPokemonRatings = async (req, res) => {
         return res.status(SERVER_ERROR.NOT_FOUND.CODE).json({ error: SERVER_ERROR.NOT_FOUND.MESSAGE });
     }
 
-    res.status(SERVER_SUCCESS.OK).json({ data: fetchedRatings });
+    res.status(SERVER_SUCCESS.OK.CODE).json({ data: fetchedRatings });
 };
 
 const createPokemonRating = async (req, res) => {
@@ -78,7 +78,7 @@ const createPokemonRating = async (req, res) => {
     if (!createdRating) {
         return res.status(SERVER_ERROR.INTERNAL.CODE).json({ error: SERVER_ERROR.INTERNAL.MESSAGE });
     }
-    return res.status(SERVER_SUCCESS.OK).json({ data: createdRating });
+    return res.status(SERVER_SUCCESS.OK.CODE).json({ data: createdRating });
 };
 
 module.exports = {
