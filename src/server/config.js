@@ -26,11 +26,6 @@ const KEYS = {
     PASSWORD: 'password',
 };
 
-const USER_URLs = {
-    REGISTER: "http://localhost:4000/user/register",
-    LOGIN: "http://localhost:4000/user/login"
-}
-
 //SEEDING
 const CATEGORIES = ['Gaming', 'Fan-Fiction', 'Cosplay', 'Manga', 'TV/Film'];
 
@@ -50,6 +45,5 @@ module.exports = {
     NUMBER_OF_USERS_AND_PROFILES_TO_GENERATE,
     NUMBER_OF_POSTS_TO_GENERATE,
     NUMBER_OF_COMMENTS_TO_GENERATE,
-    NUMBER_OF_COMMENTS_WITH_PARENT_TO_GENERATE,
-    USER_URLs
+    NUMBER_OF_COMMENTS_WITH_PARENT_TO_GENERATE
 };
