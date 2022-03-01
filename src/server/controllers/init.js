@@ -22,8 +22,6 @@ const { prisma } = require('../utils/prisma');
 
 const { capitalizeFirstLetter, generateRandomInt } = require('../utils/utils');
 
-const { getPokemonById } = require('./pokemon');
-
 const initPokemonDatabase = async (req, res) => {
     const numberOfPokemonToFetch = 151;
 
@@ -33,7 +31,7 @@ const initPokemonDatabase = async (req, res) => {
         const response = await axios(`${EXTERNAL_API}${pokemonId}`);
         const fetchedPokemon = response.data;
 
-        const filteredPokemon = await filterPokemonData(fetchedPokemon,getPokemonById);
+        const filteredPokemon = await filterPokemonData(fetchedPokemon, pokemonId);
 
         const createdPokemon = await createNewPokemon(filteredPokemon);
         console.log('Created Pokemon:', createdPokemon);
@@ -67,10 +65,8 @@ const filterPokemonData = async (pokemon, pokemonId) => {
         speed: pokemon.stats[5].base_stat,
     };
 
-    return {
-        filteredPokemon,
-        types,
-    };
+    const pokemonToCreate = { filteredPokemon, types }
+    return pokemonToCreate;
 };
 
 const createNewPokemon = async (pokemonToCreate) => {
