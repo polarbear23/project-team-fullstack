@@ -34,7 +34,7 @@ const initPokemonDatabase = async (req, res) => {
         const response = await axios(`${EXTERNAL_API}${pokemonId}`);
         const fetchedPokemon = response.data;
 
-        const filteredPokemon = await filterPokemonData(fetchedPokemon,getPokemonById);
+        const filteredPokemon = await filterPokemonData(fetchedPokemon, pokemonId);
 
         const createdPokemon = await createNewPokemon(filteredPokemon);
         console.log('Created Pokemon:', createdPokemon);
