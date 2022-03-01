@@ -12,7 +12,7 @@ const signUpInitialData = {
 const Signup = () => {
 	const [signUpData, setSignUpData] = useState(signUpInitialData);
 
-	const registerUser = async (signUpData) => {
+	const registerUser = async () => {
 		const registeredUser = await doFetch(USER_URLs.REGISTER, signUpData, 'POST');
 		
 		return registeredUser;
@@ -33,7 +33,7 @@ const Signup = () => {
 		setSignUpData(signUpData);
 
 		if(signUpData.termsAndConditions){
-			const registeredUser = await registerUser(signUpData);
+			const registeredUser = await registerUser();
 
 			if(registeredUser){
 				const registeredUserId = registeredUser.data.id;
