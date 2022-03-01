@@ -1,4 +1,4 @@
-import React from 'react'
+import {Link} from 'react-router-dom'
 
 const SignIn = () => {
   return (
@@ -18,7 +18,8 @@ const SignIn = () => {
                 </form>
                 <div className="new-register">
                     <p className='signin-text'>No account? No worries.</p>
-                    <button type='submit' className='new-register-btn'>New Account</button>
+                    <Link to='/signup' className='new-register-btn'>
+                        New Account</Link>
                 </div>
             </div>
 		</div>

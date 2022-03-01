@@ -136,11 +136,12 @@ aside {
   margin-left: 5rem;
   justify-content: space-between;
   grid-area: leftMenu;
-  position: fixed;
+  position: sticky;
   top: 7rem;
   left: 0;
   z-index: 99;
   width: 25rem;
+  padding-right: 2rem;
   height: calc(100vh - 16rem);
 }
 .aside-nav ul {
@@ -402,6 +403,7 @@ section {
   outline: none;
   border: #7c6d86;
   font-size: 1.2rem;
+  box-shadow:0 .5em 1em -.125em rgba(10,10,10,.1),0 0 0 1px rgba(10,10,10,.02);border:0;
 }
 
 /* sign in form */
@@ -452,6 +454,9 @@ section {
   box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
     0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
   border: 0;
+  text-decoration: none;
+  color: #000;
+  text-align: center;
 }
 
 .signin-form h1 {
@@ -571,14 +576,14 @@ table td {
 }
 
 .top-3-pokemon-image {
-  height: 220px;
+  height: 176px;
   padding: 1rem;
   background-color: #aabcfe;
   border-radius: 10px 0 0 10px;
 }
 
 .pokemon-text-container {
-  padding: 1rem 0 0 1rem;
+  padding: 5px 0 0 5px;
   /*
   display: grid;
   grid-template:
@@ -597,10 +602,9 @@ table td {
   display: grid;
   grid-template:
     "left right" 1fr
-    "left right" 1fr
     "rating rating" 1fr/
     10rem 4rem;
-  gap: 1rem;
+  /* gap: 1rem; */
 }
 
 .stats-head {
