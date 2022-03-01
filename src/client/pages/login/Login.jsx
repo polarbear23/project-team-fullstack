@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = (props) => {
+    const { setUser, setIsLoggedIn } = props;
+
     const intialForm = {
         username: '',
         password: '',
@@ -26,11 +28,15 @@ const Login = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const token = await postForm();
+        const data = await postForm();
 
-        localStorage.setItem('token', token);
+        localStorage.setItem('token', data.token);
 
         setForm(intialForm);
+
+        setIsLoggedIn(true);
+
+        setUser(data.data);
     };
 
     const postForm = async () => {
@@ -64,7 +70,7 @@ const Login = () => {
         <div className="signIn">
             <div className="signin-container">
                 <form className="signin-form">
-                    <h1>Sign In</h1>
+                    <h1>Login</h1>
                     <div className="input-groups">
                         <label htmlFor="username">Username:</label>
                         <input

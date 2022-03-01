@@ -40,7 +40,6 @@ export const App = () => {
                     path="/register/profile"
                     element={
                         <CreateProfile
-                            token={token}
                             user={user}
                             setUser={setUser}
                         />
@@ -50,8 +49,8 @@ export const App = () => {
                     path="/register/user"
                     element={
                         <CreateUser 
-                            setToken={setToken} 
-                            setUser={setUser} 
+                            setUser={setUser}
+                            setIsLoggedIn={setIsLoggedIn} 
                         />
                     }
                 />
@@ -59,15 +58,14 @@ export const App = () => {
                     path="/login"
                     element={
                         <Login 
-                            setToken={setToken} 
-                            setUser={setUser} 
+                            setUser={setUser}
+                            setIsLoggedIn={setIsLoggedIn} 
                         />}
                 />
                 <Route
                     path="/forum"
                     element={
                     <Forum 
-                        token={token} 
                         user={user} 
                     />}
                 />
@@ -75,7 +73,6 @@ export const App = () => {
                     path="/leaderboard"
                     element={
                         <Leaderboard 
-                            token={token} 
                             user={user} 
                         />
                     }

@@ -1,7 +1,19 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Header = (props) => {
     const { isLoggedIn, setIsLoggedIn, user } = props;
+
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        localStorage.removeItem('token');
+
+        setIsLoggedIn(false);
+
+        setUser(null);
+
+        navigate(URL.HOME);
+    };
 
     return (
         <header>
@@ -16,18 +28,29 @@ const Header = (props) => {
                 </Link>
 
                 <ul className="navbar__lists">
-                    <li>
-                        <Link to="/profile">Hi, {user.username}!</Link>
-                    </li>
-                    <li onclick={handleClick}>
-                        <Link to="/">Logout</Link>
-                    </li>
-                    <li className="navbar__lists--item">
-                        <Link to="/login">Login</Link>
-                    </li>
-                    <li className="navbar__lists--item">
-                        <Link to="/register/user">Register</Link>
-                    </li>
+                    {isLoggedIn && user && (
+                        <>
+                            <li className="navbar__lists--item">
+                                <Link to="/profile">Hi, {user.username}!</Link>
+                            </li>
+                            <li
+                                className="navbar__lists--item"
+                                onClick={handleClick}
+                            >
+                                <Link to="/">Logout</Link>
+                            </li>
+                        </>
+                    )}
+                    {!isLoggedIn && (
+                        <>
+                            <li className="navbar__lists--item">
+                                <Link to="/login">Login</Link>
+                            </li>
+                            <li className="navbar__lists--item">
+                                <Link to="/register/user">Register</Link>
+                            </li>
+                        </>
+                    )}
                 </ul>
             </nav>
         </header>
