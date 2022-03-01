@@ -26,6 +26,6 @@ app.get('*', (req, res) => {
     res.json('server running');
 });
 
-app.listen(port, () => {
+app.listen(4000, () => {
     console.log(`server started on port ${port}`);
 });
