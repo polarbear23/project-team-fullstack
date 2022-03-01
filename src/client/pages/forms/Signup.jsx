@@ -1,20 +1,28 @@
 import React, { useEffect, useState } from 'react'
+import { USER_URLs } from '../../../client/config';
+import { doFetch } from '../../utils';
 
 const signUpInitialData = {
 	username: "",
 	email: "",
 	password: "",
+	termsAndConditions: false
 }
 
 const Signup = () => {
 	const [signUpData, setSignUpData] = useState(signUpInitialData);
 
 	const registerUser = async (signUpData) => {
+		const registeredUser = await doFetch(USER_URLs.REGISTER, signUpData, 'POST');
 		
+		return registeredUser;
 	}
 
 	const handleChange = event => {
-		const { name, value } = event.target;
+		let { name, value, type, checked } = event.target;
+		console.log(event.target);
+
+		type === "checkbox" && (value = checked);
 
 		setSignUpData({...signUpData, [name]: value});
 	}
@@ -24,9 +32,19 @@ const Signup = () => {
 
 		setSignUpData(signUpData);
 
-		const registeredUser = await registerUser(signUpData);
-		//registeredUser.data.id & registeredUser.token
-		//save token in localStorage
+		if(signUpData.termsAndConditions){
+			const registeredUser = await registerUser(signUpData);
+
+			if(registeredUser){
+				const registeredUserId = registeredUser.data.id;
+				const userGeneratedToken = registeredUser.token; 
+	
+				localStorage.setItem("userToken", userGeneratedToken);
+				localStorage.setItem("userId", registeredUserId);
+				
+				//redirect to profile!!
+			}
+		}
 	}
 
   	return (
@@ -40,6 +58,7 @@ const Signup = () => {
 						id="username" 
 						className="input"
 						name="username"
+						value={signUpData.username}
 						onChange={handleChange}
 						required
 					/>
@@ -51,6 +70,7 @@ const Signup = () => {
 						id="email" 
 						className="input"
 						name="email"
+						value={signUpData.email}
 						onChange={handleChange}
 						required
 					/>
@@ -62,11 +82,17 @@ const Signup = () => {
 						id="password" 
 						className="input"
 						name="password"
+						value={signUpData.password}
 						onChange={handleChange}
 						required
 					/>
 				</div>
-				<input type="checkbox" />
+				<input 
+					type="checkbox"
+					name="termsAndConditions"
+					value={signUpData.termsAndConditions}
+					onChange={handleChange}
+				/>
 				<span className='terms'>I agree to the terms and privacy policy.</span>
                 <button type='submit' className='register-btn'>Register</button>
 			</form>
