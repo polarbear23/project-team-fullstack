@@ -40,11 +40,11 @@ const CreateUser = () => {
             const registeredUser = await registerUser();
 
             if (registeredUser) {
-                //const registeredUserId = registeredUser.data.id; ID can be fetched from the token
-                const userGeneratedToken = registeredUser.token;
-
-                localStorage.setItem('token', userGeneratedToken);
-                localStorage.setItem('user', registeredUser);
+				const registeredUserId = registeredUser.data.id;
+				const userGeneratedToken = registeredUser.token; 
+	
+				localStorage.setItem("userToken", userGeneratedToken);
+				localStorage.setItem("userId", registeredUserId);
 
                 //redirect to profile!!
             }

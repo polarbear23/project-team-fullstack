@@ -40,7 +40,6 @@ const CreateProfile = (props) => {
             const data = await response.json();
             setMessage('Profile Updated');
         } catch (error) {
-            //setMessage(data.error);
             console.log(error);
         }
     };
