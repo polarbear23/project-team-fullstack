@@ -1,13 +1,22 @@
 const express = require('express');
 
-const { initPokemonDatabase } = require('../controllers/pokemon')
-const { getPokemons } = require('../controllers/getPokemon')
+const {
+    getPokemonById,
+    getAllPokemon,
+    createPokemonRating,
+    getAllPokemonRatings,
+} = require('../controllers/pokemon');
+
+const { isLoggedIn } = require('../utils/auth.js');
 
 const router = express.Router();
 
-//will need elevated (owner) role
+router.get('/', getAllPokemon);
 
-router.post('/init', initPokemonDatabase)
-router.get('/', getPokemons);
+router.get('/:id', getPokemonById);
 
-module.exports = router
+router.get('/rating', getAllPokemonRatings);
+
+router.post('/rating', isLoggedIn, createPokemonRating);
+
+module.exports = router;

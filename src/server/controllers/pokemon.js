@@ -1,102 +1,91 @@
-const axios = require('axios');
+const { prisma } = require('../utils/prisma');
 
-const { URL } = require('../config');
+const { SERVER_ERROR_MESSAGE } = require('../config');
 
-const { prisma, capitalizeFirstLetter } = require('../utils');
-
-const populateDatabase = async (pokemon) => {
-    const {
-        name,
-        number,
-        baseHP,
-        baseAttack,
-        baseDefense,
-        specialAttack,
-        specialDefense,
-        speed,
-        types,
-    } = pokemon;
-
-    const pokedexId = number.toString().padStart(3, '0');
-
-    const pictureUrl = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokedexId}.png`;
-
-    const createdPokemon = await prisma.pokemon.create({
-        data: {
-            name,
-            number,
-            pictureUrl,
-            baseHP,
-            baseAttack,
-            baseDefense,
-            specialAttack,
-            specialDefense,
-            speed,
-            types: {
-                create: types.map((type) => {
-                    return {
-                        type: {
-                            connectOrCreate: {
-                                where: {
-                                    name: type,
-                                },
-                                create: {
-                                    name: type,
-                                },
-                            },
-                        },
-                    };
-                }),
-            },
-        },
+const getAllPokemon = async (req, res) => {
+    const fetchedPokemon = await prisma.pokemon.findMany({
         include: {
-            types: true,
-            types: {
+            ratings: {
                 include: {
-                    type: true,
+                    rating: true,
                 },
             },
         },
     });
+
+    res.status(200).json({ data: fetchedPokemon });
 };
 
-const initPokemonDatabase = async (req, res) => {
-    const filterPokemonData = async (pokemon, pokemonId) => {
-        const pokemonName = capitalizeFirstLetter(pokemon.name);
+const getPokemonById = async (req, res) => {
+    const id = parseInt(req.params.id, 10);
 
-        const pokemonTypes = [];
-        pokemon.types.forEach((type) => pokemonTypes.push(capitalizeFirstLetter(type.type.name)));
+    const foundPokemon = await prisma.pokemon.findUnique({
+        where: {
+            id: id,
+        },
+        include: {
+            ratings: {
+                include: {
+                    rating: true,
+                },
+            },
+        },
+    });
 
-        return {
-            name: pokemonName,
-            number: pokemonId,
-            types: pokemonTypes,
-            baseHP: pokemon.stats[0].base_stat,
-            baseAttack: pokemon.stats[1].base_stat,
-            baseDefense: pokemon.stats[2].base_stat,
-            specialAttack: pokemon.stats[3].base_stat,
-            specialDefense: pokemon.stats[4].base_stat,
-            speed: pokemon.stats[5].base_stat,
-        };
-    };
+    if (!foundPokemon) {
+        return res.status(404).json({ error: SERVER_ERROR_MESSAGE.NOT_FOUND });
+    }
 
-    const catchPokemon = async () => {
-        const numberOfPokemonToFetch = 151;
-        let pokemonId = 1;
-        for (let i = 0; i < numberOfPokemonToFetch; i++, pokemonId++) {
-            const response = await axios(`${URL}${pokemonId}`);
-            
-            const fetchedPokemon = response.data;
+    res.status(200).json({ data: foundPokemon });
+};
 
-            const pokemonCleanData = await filterPokemonData(fetchedPokemon, pokemonId);
+const getAllPokemonRatings = async (req, res) => {
+    const fetchedRatings = await prisma.rating.findMany({});
 
-            await populateDatabase(pokemonCleanData);
-        }
-    };
+    if (!ratings) {
+        return res.status(404).json({ error: SERVER_ERROR_MESSAGE.NOT_FOUND });
+    }
 
-    catchPokemon();
+    res.status(200).json({ data: fetchedRatings });
+};
+
+const createPokemonRating = async (req, res) => {
+    const { profileId, rating, pokemonId } = req.body;
+
+    const createdRating = await prisma.rating.create({
+        data: {
+            profileId: profileId,
+            rating: rating,
+            pokemons: {
+                create: {
+                    pokemon: {
+                        connect: {
+                            id: pokemonId,
+                        },
+                    },
+                },
+            },
+        },
+        include: {
+            pokemons: {
+                include: {
+                    pokemon: true,
+                },
+            },
+        },
+    });
+
+    if (!createdRating) {
+        return res
+            .status(500)
+            .json({ error: SERVER_ERROR_MESSAGE.INTERNAL_SERVER });
+    }
+    return res.status(200).json({ data: createdRating });
 };
 
 module.exports = {
-    initPokemonDatabase,
+    getAllPokemon,
+    getPokemonById,
+    getAllPokemonRatings,
+    createPokemonRating,
 };
