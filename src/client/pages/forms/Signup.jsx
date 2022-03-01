@@ -9,7 +9,9 @@ const signUpInitialData = {
 const Signup = () => {
 	const [signUpData, setSignUpData] = useState(signUpInitialData);
 
-
+	const registerUser = async (signUpData) => {
+		
+	}
 
 	const handleChange = event => {
 		const { name, value } = event.target;
@@ -21,6 +23,10 @@ const Signup = () => {
 		event.preventDefault();
 
 		setSignUpData(signUpData);
+
+		const registeredUser = await registerUser(signUpData);
+		//registeredUser.data.id & registeredUser.token
+		//save token in localStorage
 	}
 
   	return (
