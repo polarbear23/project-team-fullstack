@@ -68,10 +68,12 @@ const filterPokemonData = async (pokemon, pokemonId) => {
         speed: pokemon.stats[5].base_stat,
     };
 
-    return {
-        filteredPokemon,
-        types,
-    };
+    const pokemonToCreate = {
+        filteredPokemon: filteredPokemon,
+        types: types
+    }
+    
+    return pokemonToCreate;
 };
 
 const createNewPokemon = async (pokemonToCreate) => {
