@@ -71,8 +71,8 @@ const SignIn = () => {
                     >New Account</button>
                 </div>
             </div>
-		</div>
-	);
-}
+        </div>
+    );
+};
 
-export default SignIn
+export default SignIn;
