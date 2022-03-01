@@ -14,17 +14,23 @@ import Forum from './pages/forum/Forum';
 import '../client/styles/app.css';
 
 export const App = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [user, setUser] = useState(null);
+
+    //on page load / refresh, token persists but user details stored in state are lost
 
     useEffect(() => {
         localStorage.getItem('token') ? setIsLoggedIn(true) : setIsLoggedIn(false);
-    }, [isLoggedIn]);
+    }, []);
 
-    //second useEffect for fetchUser if needed
+    useEffect(() => {
+        if (user || !isLoggedIn) return
+        //fetchUser from id in token
+    }, [isLoggedIn]);
 
     return (
         <div className="app">
-            <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+            <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} user={user}/>
             <LeftMenu />
             <Routes>
                 <Route 

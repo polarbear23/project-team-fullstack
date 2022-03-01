@@ -1,30 +1,37 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
-const Header = () => {
-  return (
-    <header>
-      <nav className="navbar-container">
-        <Link to="/" className="navbar__logo">
-          <img
-            className="logo"
-            src="/assets/pokemon/pokeball.png"
-            alt="pokeball"
-          />
-          <span>Pokimo & King</span>
-        </Link>
+const Header = (props) => {
+    const { isLoggedIn, setIsLoggedIn, user } = props;
 
-        <ul className="navbar__lists">
-          <li className="navbar__lists--item">
-            <Link to="/login">Sign In</Link>
-          </li>
-          <li className="navbar__lists--item">
-            <Link to="/register/user">Sign Up</Link>
-          </li>
-        </ul>
-      </nav>
-    </header>
-  );
+    return (
+        <header>
+            <nav className="navbar-container">
+                <Link to="/" className="navbar__logo">
+                    <img
+                        className="logo"
+                        src="/assets/pokemon/pokeball.png"
+                        alt="pokeball"
+                    />
+                    <span>Pokimo & King</span>
+                </Link>
+
+                <ul className="navbar__lists">
+                    <li>
+                        <Link to="/profile">Hi, {user.username}!</Link>
+                    </li>
+                    <li onclick={handleClick}>
+                        <Link to="/">Logout</Link>
+                    </li>
+                    <li className="navbar__lists--item">
+                        <Link to="/login">Login</Link>
+                    </li>
+                    <li className="navbar__lists--item">
+                        <Link to="/register/user">Register</Link>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+    );
 };
 
 export default Header;
