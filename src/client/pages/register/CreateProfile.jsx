@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export const CreateProfile = (props) => {
+const CreateProfile = (props) => {
     const { token } = props;
 
     const initialForm = { location: '', picture: '' };
@@ -83,3 +83,5 @@ export const CreateProfile = (props) => {
         </div>
     );
 };
+
+export default CreateProfile;

@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const Login = () => {
+const Login = () => {
     const intialForm = {
         username: '',
         password: '',
     };
 
     const [form, setForm] = useState(intialForm);
-    const [message, setMessage] = useState('');
+    const [error, setError] = useState(null);
 
     const navigate = useNavigate();
 
     console.log('state', {
         form,
-        message,
+        error,
     });
 
     const handleChange = (event) => {
@@ -44,11 +44,13 @@ export const Login = () => {
             });
 
             const data = await response.json();
-            
+
             if (!response.ok) {
-                setMessage(data.error);
+                setError(data.error);
+                return;
             }
 
+            return data;
         } catch (error) {
             console.log(error);
         }
@@ -95,6 +97,7 @@ export const Login = () => {
                         Sign In
                     </button>
                 </form>
+                {error && <p className="error">{error}</p>}
                 <div className="new-register">
                     <p className="signin-text">No account? Create one Here!</p>
                     <button
@@ -105,12 +108,9 @@ export const Login = () => {
                         New Account
                     </button>
                 </div>
-                <div>
-                 {message && (
-                     <p>{message}</p>
-                 )} 
-                </div>
             </div>
         </div>
     );
 };
+
+export default Login;

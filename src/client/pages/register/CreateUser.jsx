@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { USER_URLs } from '../../config';
 import { doFetch } from '../../utils';
 
-export const CreateUser = () => {
+const CreateUser = () => {
     const signUpInitialData = {
         username: '',
         email: '',
@@ -107,3 +107,5 @@ export const CreateUser = () => {
         </div>
     );
 };
+
+export default CreateUser;
