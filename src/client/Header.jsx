@@ -1,5 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 
+import { capitaliseFirstLetter } from './utils';
+
 const Header = (props) => {
     const { isLoggedIn, setIsLoggedIn, user } = props;
 
@@ -12,7 +14,17 @@ const Header = (props) => {
 
         setUser(null);
 
-        navigate(URL.HOME);
+        navigate('/');
+    };
+
+    const formatUserName = (user) => {
+        let username = user.username;
+
+        username = username.toLowerCase();
+
+        username = capitaliseFirstLetter(username);
+
+        return username;
     };
 
     return (
@@ -31,7 +43,9 @@ const Header = (props) => {
                     {isLoggedIn && user && (
                         <>
                             <li className="navbar__lists--item">
-                                <Link to="/profile">Hi, {user.username}!</Link>
+                                <Link to="/profile">
+                                    Hi {formatUserName(user)}
+                                </Link>
                             </li>
                             <li
                                 className="navbar__lists--item"
@@ -41,16 +55,17 @@ const Header = (props) => {
                             </li>
                         </>
                     )}
-                    {!isLoggedIn && (
-                        <>
-                            <li className="navbar__lists--item">
-                                <Link to="/login">Login</Link>
-                            </li>
-                            <li className="navbar__lists--item">
-                                <Link to="/register/user">Register</Link>
-                            </li>
-                        </>
-                    )}
+                    {!isLoggedIn ||
+                        (!user && (
+                            <>
+                                <li className="navbar__lists--item">
+                                    <Link to="/login">Login</Link>
+                                </li>
+                                <li className="navbar__lists--item">
+                                    <Link to="/register/user">Register</Link>
+                                </li>
+                            </>
+                        ))}
                 </ul>
             </nav>
         </header>
