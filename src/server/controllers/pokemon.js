@@ -10,6 +10,12 @@ const getAllPokemon = async (req, res) => {
                     rating: true,
                 },
             },
+            types: {
+                include: {
+                    type: true
+                }
+            }
+
         },
     });
 
@@ -40,7 +46,7 @@ const getPokemonById = async (req, res) => {
 };
 
 const getAllPokemonRatings = async (req, res) => {
-    const fetchedRatings = await prisma.rating.findMany({});
+    const fetchedRatings = await prisma.rating.findMany();
 
     if (!ratings) {
         return res.status(SERVER_ERROR.NOT_FOUND.CODE).json({ error: SERVER_ERROR.NOT_FOUND.MESSAGE });
