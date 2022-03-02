@@ -16,6 +16,15 @@ const SERVER_SUCCESS = {
     UPDATE_OK: { MESSAGE: 'Update Successful', CODE: 201 }
 }
 
+const PRISMA_ERROR = {
+    UNIQUE_CONSTRAINT_VIOLATION: { 
+        SERVER_MESSAGE: 'There is a unique constraint violation, a new user cannot be created with this email or username',
+        CLIENT_MESSAGE_REGISTER: 'Username or email associated with existing account',
+        CLIENT_MESSAGE_PROFILE: 'User already has a profile',
+        CODE: 'P2002'
+    }
+}
+
 const FORUM_ROLES = {
     USER: 'USER',
     MODERATOR: 'MODERATOR',
@@ -26,6 +35,7 @@ const KEYS = {
     PASSWORD: 'password',
 };
 
+//SEEDING
 const CATEGORIES = ['Gaming', 'Fan-Fiction', 'Cosplay', 'Manga', 'TV/Film'];
 
 const NUMBER_OF_USERS_AND_PROFILES_TO_GENERATE = 100;
@@ -40,6 +50,7 @@ module.exports = {
     SECRET,
     SERVER_ERROR,
     SERVER_SUCCESS,
+    PRISMA_ERROR,
     CATEGORIES,
     NUMBER_OF_USERS_AND_PROFILES_TO_GENERATE,
     NUMBER_OF_POSTS_TO_GENERATE,
