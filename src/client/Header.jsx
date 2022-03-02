@@ -5,7 +5,7 @@ import { LOCAL_STORAGE, INT_LINK } from './config';
 import { capitaliseFirstLetter } from './utils';
 
 const Header = (props) => {
-    const { isLoggedIn, setIsLoggedIn, user } = props;
+    const { isLoggedIn, setIsLoggedIn, user, setUser } = props;
 
     const navigate = useNavigate();
 

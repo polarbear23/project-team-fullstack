@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import {FETCH_METHOD, LOCAL_STORAGE, INT_LINK, USER_URL } from '../../config'
+import { FETCH_METHOD, LOCAL_STORAGE, INT_LINK, USER_URL } from '../../config';
+
+import { doFetch } from '../../utils';
 
 const Login = (props) => {
     const { setUser, setIsLoggedIn } = props;
@@ -30,7 +32,13 @@ const Login = (props) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const data = await postForm();
+        const data = await doFetch(USER_URL.LOGIN, form, FETCH_METHOD.POST);
+
+        if (data.error) {
+            setError(data.error);
+
+            return;
+        }
 
         localStorage.setItem(LOCAL_STORAGE.TOKEN, data.token);
 
@@ -41,29 +49,6 @@ const Login = (props) => {
         setUser(data.data);
 
         navigate(INT_LINK.HOME);
-    };
-
-    const postForm = async () => {
-        try {
-            const response = await fetch(USER_URL.LOGIN, {
-                method: FETCH_METHOD.POST,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(form),
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                setError(data.error);
-                return;
-            }
-
-            return data;
-        } catch (error) {
-            console.log(error);
-        }
     };
 
     const handleRedirectToRegister = () => {
