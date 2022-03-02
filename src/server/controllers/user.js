@@ -8,7 +8,8 @@ const {
 
 const { prisma } = require('../utils/prisma');
 
-const { KEYS, SERVER_ERROR, SERVER_SUCCESS, FORUM_ROLES } = require('../config.js');
+const { KEYS, SERVER_ERROR, SERVER_SUCCESS, FORUM_ROLES, PRISMA_ERROR } = require('../config.js');
+const { Prisma } = require('@prisma/client');
 
 const authenticateUser = async (req, res) => {
     let { username, password } = req.body;
@@ -45,17 +46,26 @@ const createUser = async (req, res) => {
         email: email,
     };
 
-    let createdUser = await prisma.user.create({
-        data: {
-            ...user,
-        },
-    });
+    try{
+        let createdUser = await prisma.user.create({
+            data: {
+                ...user,
+            },
+        });
 
-    createdUser = removeKeys(createdUser, KEYS.PASSWORD);
+        createdUser = removeKeys(createdUser, KEYS.PASSWORD);
     
-    const token = createToken({ id: createdUser.id, role: createdUser.role });
+        const token = createToken({ id: createdUser.id, role: createdUser.role });
 
-    res.status(SERVER_SUCCESS.OK.CODE).json({ data: createdUser, token: token });
+        res.status(SERVER_SUCCESS.OK.CODE).json({ data: createdUser, token: token });
+    }
+    catch(error){
+        if(error instanceof Prisma.PrismaClientKnownRequestError){
+            if(error.code === PRISMA_ERROR.UNIQUE_CONSTRAINT_VIOLATION.CODE){
+                return res.status(SERVER_ERROR.INTERNAL.CODE).json({ error: PRISMA_ERROR.UNIQUE_CONSTRAINT_VIOLATION.CLIENT_MESSAGE });
+            }
+        }
+    }
 };
 
 const editUser = async (req, res) => {
@@ -114,7 +124,12 @@ const editUser = async (req, res) => {
 };
 
 const createProfile = async (req, res) => {
-    const { userId, profilePicture, location } = req.body;
+    const { userId, location } = req.body;
+    let { profilePicture } = req.body;
+
+    if(!profilePicture){
+        profilePicture = 'https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png';
+    }
 
     const createdProfile = await prisma.profile.create({
         data: {

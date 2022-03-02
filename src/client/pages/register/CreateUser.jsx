@@ -54,13 +54,13 @@ const CreateUser = props => {
         const registeredUser = await registerUser();
 
         if (registeredUser.error) {
-            setError(data.error);
+            setError(registeredUser.error);
 
             return;
         }
 
         localStorage.setItem(LOCAL_STORAGE.TOKEN, registeredUser.token);
-        
+
         setUser(registeredUser.data);
         setIsLoggedIn(true);
 
@@ -95,6 +95,12 @@ const CreateUser = props => {
                         required
                     />
                 </div>
+                {error &&
+                    <>
+                        <p className="error">{error}</p>
+                        <br></br>
+                    </>
+                }
                 <div className="input-groups">
                     <label htmlFor="password">Password:</label>
                     <input
