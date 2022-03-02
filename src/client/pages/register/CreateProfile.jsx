@@ -7,8 +7,6 @@ import { FETCH_METHOD, LOCAL_STORAGE, INT_LINK, USER_URL } from '../../config';
 const CreateProfile = (props) => {
     const { user, setUser } = props;
 
-    console.log("id", typeof parseInt(localStorage.getItem(LOCAL_STORAGE.USER_ID), 10));
-
     const initialForm = { 
         location: "", 
         profilePicture: "", 
@@ -25,12 +23,6 @@ const CreateProfile = (props) => {
     useEffect(() => {
         setError(null);
     }, [form]);
-
-    console.log('state', {
-        user, 
-        form,
-        error
-    });
 
     const SubmitForm = async () => {
         const fetchedProfile = await postForm();

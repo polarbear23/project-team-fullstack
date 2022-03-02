@@ -24,12 +24,6 @@ const CreateUser = props => {
         setError(null);
     }, [form]);
 
-    console.log('state', {
-        user, 
-        form,
-        error,
-    });
-
     const registerUser = async () => {
         const registeredUser = await doFetch(
             USER_URL.REGISTER,

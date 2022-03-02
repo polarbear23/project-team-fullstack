@@ -22,11 +22,6 @@ const Login = (props) => {
         setError(null);
     }, [form]);
 
-    console.log('state', {
-        form,
-        error,
-    });
-
     const handleChange = (event) => {
         const { name, value } = event.target;
 
