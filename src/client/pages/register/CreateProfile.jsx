@@ -6,7 +6,11 @@ import { FETCH_METHOD, LOCAL_STORAGE, INT_LINK, USER_URL } from '../../config';
 const CreateProfile = (props) => {
     const { user, setUser } = props;
 
-    const initialForm = { location: null, profilePicture: null, userId: null };
+    const initialForm = { 
+        location: "", 
+        profilePicture: "", 
+        userId: null 
+    };
 
     const [form, setForm] = useState(initialForm);
     const [error, setError] = useState(null);
@@ -49,7 +53,7 @@ const CreateProfile = (props) => {
                 body: JSON.stringify(form),
             });
 
-            return (data = await response.json());
+            return await response.json();
         } catch (error) {
             console.log(error);
         }
@@ -60,7 +64,7 @@ const CreateProfile = (props) => {
 
         setForm(initialForm);
 
-        setForm({ ...form, userId: user.id });
+        setForm({ ...form, userId: localStorage.getItem(LOCAL_STORAGE.USER_ID) });
 
         await SubmitForm();
     };
@@ -69,8 +73,8 @@ const CreateProfile = (props) => {
         const fetchedProfile = await postForm();
 
         if (fetchedProfile.error) {
-            //setError(fetchedProfile.error);
-            // console.log('error', error)
+            setError(fetchedProfile.error);
+            console.log('error', error)
 
             return;
         }
@@ -106,6 +110,12 @@ const CreateProfile = (props) => {
                         onChange={handleChange}
                     />
                 </div>
+                {error &&
+                    <>
+                        <p className="error">{error}</p>
+                        <br></br>
+                    </>
+                }
                 <button
                     type="submit"
                     className="register-btn"
