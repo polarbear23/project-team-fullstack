@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import "../../styles/forum.css";
 import PostForm from "./forms/PostForm";
 
-const Forum = () => {
+const Forum = (props) => {
+    const {user} = props;
     const [posts, setPosts] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [newComment, setNewComment] = useState({});
@@ -33,7 +34,12 @@ const Forum = () => {
             </div>
             <div className="forum-list">
                 {posts && posts.map((post, index) => {
-                    return <Post key={index} post={post} setNewComment={setNewComment}/>
+                        return <Post 
+                        key={index} 
+                        post={post} 
+                        setNewComment={setNewComment}
+                        user={user}
+                    />
                 })}
             </div>
             

@@ -261,3 +261,23 @@
 	gap: 5px;
 	justify-content: flex-end;
 }
+
+.tag-container input{
+	outline: none;
+	padding: 5px;
+
+}
+
+.tag-container button{
+	outline: none;
+	padding: 5px;
+	background-color: rgb(206, 206, 206);
+	margin-left: 5px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.tag-list{
+	list-style: none;
+}

@@ -1,6 +1,8 @@
-
+import {useState} from 'react';
 
 const PostForm = () => {
+	const [tags, setTags] = useState([]);
+
 	return (
 		<form className="create-post-form">
 			<input type="text" placeholder="Title" />
@@ -14,6 +16,16 @@ const PostForm = () => {
 				<option value="Manga">Manga</option>
 				<option value="Tv/Film">Tv/Film</option>
 			</select>
+
+			<div className="tag-container">
+				<input type="text" id="tag" placeholder="Tag" value={}/>
+				<button onClick={}>Add</button>
+				<ul className="tag-list">
+					<li>#sdff</li>
+					<li>#dfsdff</li>
+				</ul>
+			</div>
+
 			<div className="group-post-btn">
 				<button type="button" className="save-post-btn">
 					Save

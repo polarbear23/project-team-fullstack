@@ -9,7 +9,7 @@ import "../../styles/forum.css";
 
 
 const Post = (props) => {
-	const { post, setNewComment } = props;
+	const { post, setNewComment, user} = props;
 	const [showCommentParentForm, setShowCommentParentForm] = useState(false);
 	const [showAllComments, setShowAllComments] = useState(false);
 
@@ -85,6 +85,7 @@ const Post = (props) => {
 				setShowComment={setShowCommentParentForm}
 				postId={post.id}
 				setNewComment={setNewComment}
+				user={user}
 			/>}
 
 			{/* comment */}

@@ -1,7 +1,7 @@
 import { useState, useEffect} from 'react';
 
 const commentForm = (props) => {
-	const { setShowComment, postId, setNewComment, commentId } = props;
+	const { setShowComment, postId, setNewComment, commentId, user } = props;
 	const [comment, setcomment] = useState('');
 	
 	
@@ -17,6 +17,7 @@ const commentForm = (props) => {
 				body: JSON.stringify({
 					content: comment,
 					userId: 1,
+					// userId: user.id,
 					postId,
 					parentId: commentId ? commentId : ''
 				}),
@@ -26,7 +27,7 @@ const commentForm = (props) => {
 			setNewComment(data);
 		}
 		catch(e){
-			console.log('error',);
+			console.log('Unuthorize');
 		}
 		
 	}
