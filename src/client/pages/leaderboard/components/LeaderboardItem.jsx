@@ -3,8 +3,12 @@ import { Rating } from "react-simple-star-rating";
 const LeaderboardItem = (props) => {
   const [rating, setRating] = useState(); // initial rating value
   const [averageRating, setAverageRating] = useState(0);
-  const [savedPokemon, setSavedPokemon] = useState({});
-  const { pokemon } = props;
+  const {
+    pokemon,
+    setUpdateLeaderboard,
+    updateLeaderboard,
+    findAverageRating,
+  } = props;
 
   // Catch Rating value
 
@@ -16,15 +20,8 @@ const LeaderboardItem = (props) => {
 
   useEffect(() => {
     console.log("inside useEffect for averagepokemons");
-    if (!savedPokemon.ratings) {
-      setSavedPokemon(pokemon);
-      setAverageRating(findAverageRating(pokemon.ratings));
-    }
-    if (savedPokemon.ratings) {
-      console.log("saved pokemons ratings", savedPokemon.ratings);
-      setAverageRating(findAverageRating(savedPokemon.ratings));
-    }
-  }, [savedPokemon]);
+    setAverageRating(findAverageRating(pokemon.ratings));
+  }, [updateLeaderboard]);
 
   const postRating = async (rating) => {
     const ratingToAdd = rating / 20;
@@ -46,21 +43,7 @@ const LeaderboardItem = (props) => {
 
     console.log("response back after rating", data);
 
-    setSavedPokemon(data.data.pokemons[0].pokemon);
-  };
-
-  const findAverageRating = (ratings) => {
-    console.log("insideAvrgRating", ratings);
-
-    if (ratings.length > 0) {
-      let total = ratings.reduce(
-        (prevVal, curVal) => prevVal + curVal.rating.rating,
-        0
-      );
-      console.log("total", total);
-      return (total / ratings.length).toFixed(1);
-    }
-    return 0;
+    setUpdateLeaderboard(data);
   };
 
   const handleRating = (rate) => {
