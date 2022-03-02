@@ -122,5 +122,3 @@ const CreateProfile = (props) => {
 };
 
 export default CreateProfile;
-
-//new branch setup
