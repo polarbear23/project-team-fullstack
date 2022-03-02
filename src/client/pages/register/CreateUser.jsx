@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { INT_LINK, USER_URL } from '../../config';
+import { INT_LINK, LOCAL_STORAGE, USER_URL } from '../../config';
 
 import { doFetch } from '../../utils';
 
@@ -53,12 +54,13 @@ const CreateUser = props => {
         const registeredUser = await registerUser();
 
         if (registeredUser.error) {
-            setError(data.error);
+            setError(registeredUser.error);
 
             return;
         }
 
-        setUser(registeredUser);
+        localStorage.setItem(LOCAL_STORAGE.TOKEN, registeredUser.token);
+        setUser(registeredUser.data);
         setIsLoggedIn(true);
 
         navigate(INT_LINK.CREATE_PROFILE);
@@ -75,7 +77,7 @@ const CreateUser = props => {
                         id="username"
                         className="input"
                         name="username"
-                        value={signUpData.username}
+                        value={form.username}
                         onChange={handleChange}
                         required
                     />
@@ -87,11 +89,17 @@ const CreateUser = props => {
                         id="email"
                         className="input"
                         name="email"
-                        value={signUpData.email}
+                        value={form.email}
                         onChange={handleChange}
                         required
                     />
                 </div>
+                {error &&
+                    <>
+                        <p className="error">{error}</p>
+                        <br></br>
+                    </>
+                }
                 <div className="input-groups">
                     <label htmlFor="password">Password:</label>
                     <input
@@ -99,7 +107,7 @@ const CreateUser = props => {
                         id="password"
                         className="input"
                         name="password"
-                        value={signUpData.password}
+                        value={form.password}
                         onChange={handleChange}
                         required
                     />
@@ -107,7 +115,7 @@ const CreateUser = props => {
                 <input
                     type="checkbox"
                     name="termsAndConditions"
-                    value={signUpData.termsAndConditions}
+                    value={form.termsAndConditions}
                     onChange={handleChange}
                     required
                 />
