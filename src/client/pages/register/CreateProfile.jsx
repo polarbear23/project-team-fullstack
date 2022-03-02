@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { PRISMA_ERROR } from '../../../server/config';
 
 import { FETCH_METHOD, LOCAL_STORAGE, INT_LINK, USER_URL } from '../../config';
 
@@ -113,6 +114,7 @@ const CreateProfile = (props) => {
                 {error &&
                     <>
                         <p className="error">{error}</p>
+                        {error === PRISMA_ERROR.UNIQUE_CONSTRAINT_VIOLATION.CLIENT_MESSAGE_PROFILE ? navigate(INT_LINK.HOME) : null}
                         <br></br>
                     </>
                 }
