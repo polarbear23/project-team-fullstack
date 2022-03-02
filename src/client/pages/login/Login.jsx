@@ -50,8 +50,6 @@ const Login = (props) => {
 
         setIsLoggedIn(true);
 
-        setUser(fetchedUser.data);
-
         navigate(INT_LINK.HOME, { replace: true });
     };
 
