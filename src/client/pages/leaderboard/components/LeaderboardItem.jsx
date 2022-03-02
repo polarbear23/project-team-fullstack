@@ -1,14 +1,71 @@
-import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Rating } from "react-simple-star-rating";
 const LeaderboardItem = (props) => {
-  const [rating, setRating] = useState(0); // initial rating value
+  const [rating, setRating] = useState(); // initial rating value
+  const [averageRating, setAverageRating] = useState(0);
+  const [savedPokemon, setSavedPokemon] = useState({});
   const { pokemon } = props;
 
   // Catch Rating value
+
+  useEffect(() => {
+    if (rating) {
+      postRating(rating);
+    }
+  }, [rating]);
+
+  useEffect(() => {
+    console.log("inside useEffect for averagepokemons");
+    if (!savedPokemon.ratings) {
+      setSavedPokemon(pokemon);
+      setAverageRating(findAverageRating(pokemon.ratings));
+    }
+    if (savedPokemon.ratings) {
+      console.log("saved pokemons ratings", savedPokemon.ratings);
+      setAverageRating(findAverageRating(savedPokemon.ratings));
+    }
+  }, [savedPokemon]);
+
+  const postRating = async (rating) => {
+    const ratingToAdd = rating / 20;
+    const res = await fetch("http://localhost:4000/pokemon/rating", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkFETUlOIiwiaWF0IjoxNjQ2MjIyNTAxfQ.TQk7tYn4zjQVCFGRIe_LEYJA9L4KaHP6_yxLhLQaeUg", //localStorage.getItem("token"), //need a jwt token to verify if user is logged in to make the post request
+      },
+      body: JSON.stringify({
+        profileId: 1, //need to get profile id from state
+        rating: ratingToAdd,
+        pokemonId: savedPokemon.id,
+      }),
+    });
+
+    const data = await res.json();
+
+    console.log("response back after rating", data);
+
+    setSavedPokemon(data.data.pokemons[0].pokemon);
+  };
+
+  const findAverageRating = (ratings) => {
+    console.log("insideAvrgRating", ratings);
+
+    if (ratings.length > 0) {
+      let total = ratings.reduce(
+        (prevVal, curVal) => prevVal + curVal.rating.rating,
+        0
+      );
+      console.log("total", total);
+      return (total / ratings.length).toFixed(1);
+    }
+    return 0;
+  };
+
   const handleRating = (rate) => {
+    console.log("rate in handleRating", rate);
     setRating(rate);
-    // other logic
   };
 
   return (
@@ -82,7 +139,7 @@ const LeaderboardItem = (props) => {
         data-column="average-rating"
         className="leaderboard-average-rating leaderboard-text"
       >
-        4.5
+        {averageRating}
       </td>
       <td data-column="rating" className="leaderboard-rating leaderboard-text">
         <Rating
