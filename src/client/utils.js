@@ -11,7 +11,7 @@ const fetchConfig = (reqBody, method) => {
 export const doFetch = async (endpoint, reqBody, method) => {
     try {
         const response = await fetch(endpoint, fetchConfig(reqBody, method));
-        return response.json();
+        return await response.json();
     } catch (error) {
         console.log(error);
     }
