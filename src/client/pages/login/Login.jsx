@@ -36,21 +36,19 @@ const Login = (props) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const data = await doFetch(USER_URL.LOGIN, form, FETCH_METHOD.POST);
+        const fetchedUser = await doFetch(USER_URL.LOGIN, form, FETCH_METHOD.POST);
 
-        if (data.error) {
-            setError(data.error);
+        if (fetchedUser.error) {
+            setError(fetchedUser.error);
 
             return;
         }
 
-        localStorage.setItem(LOCAL_STORAGE.TOKEN, data.token);
-
-        setForm(intialForm);
+        localStorage.setItem(LOCAL_STORAGE.TOKEN, fetchedUser.token);
 
         setIsLoggedIn(true);
 
-        setUser(data.data);
+        setUser(fetchedUser.data);
 
         navigate(INT_LINK.HOME);
     };
