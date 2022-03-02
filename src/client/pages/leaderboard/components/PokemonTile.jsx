@@ -51,16 +51,12 @@ const PokemonTile = (props) => {
                                         <span>{pokemon.baseAttack}</span>
                                         <span> {pokemon.baseDefense}</span>
                                         <span>{pokemon.speed}</span>
-                                        <span>
-                                            {calcAverageRating(pokemon.ratings)}
-                                        </span>
+                                        <span>{calcAverageRating(pokemon.ratings)}</span>
                                     </div>
 
                                     <Rating
                                         onClick={handleRating}
-                                        ratingValue={
-                                            rating
-                                        } /* Available Props */
+                                        ratingValue={rating}
                                     />
                                 </div>
                             </div>
