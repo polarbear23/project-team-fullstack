@@ -11,8 +11,25 @@ const Post = (props) => {
 	const [showCommentParentForm, setShowCommentParentForm] = useState(false);
 	const [showAllComments, setShowAllComments] = useState(false);
 
+	
+	const today = new Date();
+	const postDate = new Date(post.createdAt);
 
-	const commentStyle = {fontSize: '1.3rem'}
+
+	const dateDiffInDays = (a, b) => {
+		const day = 1000 * 60 * 60 * 24;
+		const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate(), a.getHours());
+		const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate(), b.getHours());
+		const showDay = Math.floor((utc2 - utc1) / day);
+		if(showDay < 24){
+			return `.${Math.abs(utc2 - utc1) / 36e5}hr. ago`;
+		}
+		return `.${Math.floor((utc2 - utc1) / day)}day ago`;
+	}
+
+	
+	const commentStyle = {fontSize: '1.3rem'};
+	
 	return (
 		<div className="forum-container">
 			<div className="card">
@@ -33,7 +50,7 @@ const Post = (props) => {
 					<div className="card-footer">
 						<div className="card-user">
 							<img
-								src={post.user.profile.profilePicture}
+								src={!post.user.profile ? './assets/default-user.jpg' : post.user.profile["profilePicture"]}
 								alt="user image"
 								className="card-user-img"
 							/>
@@ -41,7 +58,7 @@ const Post = (props) => {
 								<span>Posted by</span>
 								<Link to="/" className="card-username-link">{post.user.username}</Link>
 							</span>
-							<span className="card-user-time">{post.createdAt}</span>
+							<span className="card-user-time">{dateDiffInDays(postDate, today)}</span>
 							<span 
 								className="card-user-show"
 								onClick={() => setShowAllComments(!showAllComments)}
@@ -54,7 +71,7 @@ const Post = (props) => {
 									onClick={() => setShowCommentParentForm(!showCommentParentForm)}
 								/>
 							</span>
-							<span>50+</span>
+							<span>{post.comment.length} comments</span>
 						</div>
 					</div>
 				</div>
@@ -63,11 +80,11 @@ const Post = (props) => {
 			{showCommentParentForm && <CommentForm 
 				setShowComment={setShowCommentParentForm}
 			/>}
-			{/* hardcoded for now- needs to change */}
-			{/* first commments */}
-			{showAllComments && <Comment/>}
-            {/* second comment */}
-			{showAllComments && <Comment/>}
+
+
+			{showAllComments && post.comment && post.comment.map((cm, index) => {
+				return <Comment key={index} comment={cm} dateDiffInDays={dateDiffInDays}/>
+			})}
 		</div>
 	);
 };

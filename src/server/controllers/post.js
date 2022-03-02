@@ -50,7 +50,7 @@ const createPost = async (req, res) => {
                 include: {
                     tag: true,
                 },
-            },
+            }
         },
     });
 
@@ -85,7 +85,16 @@ const getAllPosts = async (req, res) => {
             user: {
                 include:{
                     profile: true
-                }
+                },
+            },
+            comment: {
+                include: {
+                    user: {
+                        include: {
+                            profile: true
+                        }
+                    }
+                },
             }
         },
     });

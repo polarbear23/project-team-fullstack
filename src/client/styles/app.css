@@ -680,10 +680,15 @@ table td {
   gap: 2rem;
   padding: 1rem;
 }
-
+/* .card-header{
+  width: 35rem;
+} */
 .card-header-title,
 .card-header-text {
   margin-bottom: 1rem;
+}
+.card-text{
+  width: 59rem;
 }
 
 .card-footer {

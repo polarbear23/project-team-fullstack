@@ -6,8 +6,11 @@ import {BiCommentDetail } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import CommentForm from "./forms/CommentForm";
 
-const Comment = () => {
+const Comment = (props) => {
+	const { comment, dateDiffInDays } = props;
 	const [showCommentChildForm, setShowCommentChildForm] = useState(false);
+	const today = new Date();
+	const commentDate = new Date(comment.createdAt);
 
 	return (
 		<>
@@ -16,24 +19,18 @@ const Comment = () => {
 					<div className="comment-card-header">
 						<div className="comment-user">
 							<img
-								src="./assets/pokemon3.png"
+								src={comment.user.profile ? comment.user.profile.profilePicture : './assets/default-user.jpg'}
 								alt="user image"
 								className="comment-user-img"
 							/>
 							<span className="comment-user-name">
-								<Link to="/">SpinyShell</Link>
+								<Link to="/">{comment.user.username}</Link>
 							</span>
-							<span className="comment-user-time">.3h ago</span>
+							<span className="comment-user-time">{dateDiffInDays(commentDate,  today)}</span>
 						</div>
 					</div>
 					<div className="comment-card-container">
-						<p className="comment-card">
-							I'm already annoyed with Hop, he's a more annoying version of Hau.I
-							did my first.. I guess it's called Max Raid?.. with my longcat
-							Meowth. My team hasn't changed, I haven't invested much time in the
-							game yet. I think I put more time into Community Day than I have the
-							game so far.
-						</p>
+						<p className="comment-card">{comment.content}</p>
 						<div className="card-comment-footer">
 							<div className="card-comment-vote">
 								<span className="card-vote-up">
