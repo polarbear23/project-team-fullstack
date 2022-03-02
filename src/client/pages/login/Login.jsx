@@ -46,6 +46,8 @@ const Login = (props) => {
 
         localStorage.setItem(LOCAL_STORAGE.TOKEN, fetchedUser.token);
 
+        localStorage.setItem(LOCAL_STORAGE.USER_ID, fetchedUser.data.id);
+
         setIsLoggedIn(true);
 
         setUser(fetchedUser.data);

@@ -12,6 +12,8 @@ const Header = (props) => {
     const handleClick = () => {
         localStorage.removeItem(LOCAL_STORAGE.TOKEN);
 
+        localStorage.removeItem(LOCAL_STORAGE.USER_ID);
+
         setIsLoggedIn(false);
 
         setUser(null);
@@ -55,7 +57,7 @@ const Header = (props) => {
                             </li>
                         </>
                     )}
-                    {(!isLoggedIn || !user) && (
+                    {(!isLoggedIn) && (
                         <>
                             <li className="navbar__lists--item">
                                 <Link to={INT_LINK.LOGIN}>Login</Link>
