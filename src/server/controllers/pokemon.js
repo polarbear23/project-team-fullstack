@@ -75,7 +75,15 @@ const createPokemonRating = async (req, res) => {
         include: {
             pokemons: {
                 include: {
-                    pokemon: true,
+                    pokemon: {
+                        include: {
+                            ratings: {
+                                include: {
+                                    rating: true
+                                }
+                            }
+                        }
+                    },
                 },
             },
         },
