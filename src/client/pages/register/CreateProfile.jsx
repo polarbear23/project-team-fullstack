@@ -7,10 +7,12 @@ import { FETCH_METHOD, LOCAL_STORAGE, INT_LINK, USER_URL } from '../../config';
 const CreateProfile = (props) => {
     const { user, setUser } = props;
 
+    console.log("id", typeof parseInt(localStorage.getItem(LOCAL_STORAGE.USER_ID), 10));
+
     const initialForm = { 
         location: "", 
         profilePicture: "", 
-        userId: null 
+        userId: parseInt(localStorage.getItem(LOCAL_STORAGE.USER_ID), 10)
     };
 
     const [form, setForm] = useState(initialForm);
@@ -25,9 +27,25 @@ const CreateProfile = (props) => {
     }, [form]);
 
     console.log('state', {
+        user, 
         form,
-        error,
+        error
     });
+
+    const SubmitForm = async () => {
+        const fetchedProfile = await postForm();
+
+        if (fetchedProfile.error) {
+            setError(fetchedProfile.error);
+            console.log('error', error)
+
+            return;
+        }
+
+        setUser({...user, profile: fetchedProfile.data});
+
+        navigate(INT_LINK.HOME, { replace: true });
+    };
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -37,8 +55,6 @@ const CreateProfile = (props) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        setForm({ ...form, userId: user.id });
 
         await SubmitForm();
     };
@@ -65,24 +81,7 @@ const CreateProfile = (props) => {
 
         setForm(initialForm);
 
-        setForm({ ...form, userId: localStorage.getItem(LOCAL_STORAGE.USER_ID) });
-
         await SubmitForm();
-    };
-
-    const SubmitForm = async () => {
-        const fetchedProfile = await postForm();
-
-        if (fetchedProfile.error) {
-            setError(fetchedProfile.error);
-            console.log('error', error)
-
-            return;
-        }
-
-        setUser(fetchedProfile.data);
-
-        navigate(INT_LINK.HOME, { replace: true });
     };
 
     return (
