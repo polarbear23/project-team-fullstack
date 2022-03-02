@@ -6,12 +6,14 @@ import { FETCH_METHOD, LOCAL_STORAGE, INT_LINK, USER_URL } from '../../config';
 const CreateProfile = (props) => {
     const { user, setUser } = props;
 
-    const initialForm = { location: '', picture: '', userId: null };
+    const initialForm = { location: null, profilePicture: null, userId: null };
 
     const [form, setForm] = useState(initialForm);
     const [error, setError] = useState(null);
 
     const navigate = useNavigate();
+
+    const token = localStorage.getItem(LOCAL_STORAGE.TOKEN)
 
     useEffect(() => {
         setError(null);
@@ -29,21 +31,11 @@ const CreateProfile = (props) => {
     };
 
     const handleSubmit = async (event) => {
-        setForm({...form, userId: user.id})
+        setForm({ ...form, userId: user.id });
 
         event.preventDefault();
 
-        const fetchedProfile = await postForm();
-
-        if (fetchedProfile.error) {
-            setError(fetchedProfile.error);
-
-            return;
-        }
-
-        setUser(fetchedProfile.data);
-
-        navigate(INT_LINK.HOME);
+        await SubmitForm();
     };
 
     const postForm = async () => {
@@ -52,42 +44,62 @@ const CreateProfile = (props) => {
                 method: FETCH_METHOD.POST,
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': LOCAL_STORAGE.TOKEN,
+                    Authorization: token,
                 },
                 body: JSON.stringify(form),
             });
 
-            return data = await response.json();
-
+            return (data = await response.json());
         } catch (error) {
             console.log(error);
         }
     };
 
-    const handleRedirect = () => {
-        navigate(INT_LINK.HOME);
-    }
+    const handleCancel = async () => {
+        setForm(initialForm);
+
+        setForm({ ...form, userId: user.id });
+
+        
+
+        await SubmitForm();
+    };
+
+    const SubmitForm = async () => {
+        const fetchedProfile = await postForm();
+
+        if (fetchedProfile.error) {
+            //setError(fetchedProfile.error);
+            // console.log('error', error)
+
+            return;
+        }
+
+        setUser(fetchedProfile.data);
+
+        navigate(INT_LINK.HOME, { replace: true });
+    };
 
     return (
         <div className="signup">
             <form className="signup-form">
                 <h1>Create Profile</h1>
                 <div className="input-groups">
-                    <label htmlFor="username">Profile Picture:</label>
+                    <label htmlFor="profilePicture">Profile Picture:</label>
                     <input
                         type="text"
-                        id="username"
+                        id="profilePicture"
                         className="input"
-                        name="picture"
-                        value={form.picture}
+                        name="profilePicture"
+                        value={form.profilePicture}
                         onChange={handleChange}
                     />
                 </div>
                 <div className="input-groups">
-                    <label htmlFor="email">Location:</label>
+                    <label htmlFor="location">Location:</label>
                     <input
                         type="text"
-                        id="email"
+                        id="location"
                         className="input"
                         name="location"
                         value={form.location}
@@ -101,10 +113,7 @@ const CreateProfile = (props) => {
                 >
                     Create Profile
                 </button>
-                <button
-                    className="register-btn"
-                    onClick={handleRedirect}
-                >
+                <button onClick={handleCancel}>
                     Skip
                 </button>
             </form>

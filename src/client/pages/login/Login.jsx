@@ -50,7 +50,7 @@ const Login = (props) => {
 
         setUser(fetchedUser.data);
 
-        navigate(INT_LINK.HOME);
+        navigate(INT_LINK.HOME, { replace: true });
     };
 
     const handleRedirectToRegister = () => {

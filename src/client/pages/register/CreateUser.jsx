@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { INT_LINK, LOCAL_STORAGE, USER_URL } from '../../config';
+import { LOCAL_STORAGE, INT_LINK, USER_URL } from '../../config';
 
 import { doFetch } from '../../utils';
 
@@ -60,6 +60,7 @@ const CreateUser = props => {
         }
 
         localStorage.setItem(LOCAL_STORAGE.TOKEN, registeredUser.token);
+
         setUser(registeredUser.data);
         setIsLoggedIn(true);
 
