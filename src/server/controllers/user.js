@@ -123,6 +123,25 @@ const editUser = async (req, res) => {
     res.json({ data: updatedUser });
 };
 
+const getUserById = async (req, res) => {
+    const id = parseInt(req.params.id, 10);
+
+    const selectedUser = await prisma.user.findUnique({
+        where: { 
+            id: id,
+        }, 
+        include: {
+            profile: true,
+        },
+    })
+
+    if (!selectedUser) {
+        return res.status(SERVER_ERROR.NOT_FOUND.CODE).json({ error: SERVER_ERROR.NOT_FOUND.MESSAGE });
+    }
+
+    res.status(SERVER_SUCCESS.OK.CODE).json({ data: selectedUser });
+} 
+
 const createProfile = async (req, res) => {
     const userId = parseInt(req.body.userId, 10);
     console.log(typeof userId);
@@ -156,5 +175,6 @@ module.exports = {
     authenticateUser,
     createUser,
     editUser,
-    createProfile
+    createProfile,
+    getUserById,
 };

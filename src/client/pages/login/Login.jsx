@@ -46,9 +46,9 @@ const Login = (props) => {
 
         localStorage.setItem(LOCAL_STORAGE.TOKEN, fetchedUser.token);
 
-        setIsLoggedIn(true);
+        localStorage.setItem(LOCAL_STORAGE.USER_ID, fetchedUser.data.id);
 
-        setUser(fetchedUser.data);
+        setIsLoggedIn(true);
 
         navigate(INT_LINK.HOME, { replace: true });
     };
