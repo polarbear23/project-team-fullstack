@@ -8,12 +8,6 @@ const Leaderboard = () => {
     const [topRatedPokemon, setTopRatedPokemon] = useState([]);
     const [fetchPokemon, setFetchPokemon] = useState(false);
 
-    console.log('states', {
-        pokemons,
-        topRatedPokemon,
-        fetchPokemon,
-    });
-
     useEffect(() => {
         const getPokemon = async () => {
             const response = await fetch('http://localhost:4000/pokemon/');
@@ -83,7 +77,10 @@ const Leaderboard = () => {
     return (
         <div className="leaderboard">
             {topRatedPokemon && (
-                <PokemonTile topRatedPokemon={topRatedPokemon} />
+                <PokemonTile
+                    topRatedPokemon={topRatedPokemon}
+                    calcAverageRating={calcAverageRating}
+                />
             )}
 
             <h1 className="leaderboard-title">Leaderboard</h1>
