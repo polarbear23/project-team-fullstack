@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { FETCH_METHOD, LOCAL_STORAGE, INT_LINK, USER_URL } from '../../config';
 
-import { doFetch } from '../../utils';
+import { fetchFromServer } from '../../utils';
 
 const Login = (props) => {
     const { setUser, setIsLoggedIn } = props;
@@ -31,7 +31,7 @@ const Login = (props) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const fetchedUser = await doFetch(USER_URL.LOGIN, form, FETCH_METHOD.POST);
+        const fetchedUser = await fetchFromServer(USER_URL.LOGIN, form, FETCH_METHOD.POST);
 
         if (fetchedUser.error) {
             setError(fetchedUser.error);

@@ -8,7 +8,7 @@ const fetchConfig = (reqBody, method) => {
     };
 };
 
-export const doFetch = async (endpoint, reqBody, method) => {
+export const fetchFromServer = async (endpoint, reqBody, method) => {
     try {
         const response = await fetch(endpoint, fetchConfig(reqBody, method));
         return await response.json();

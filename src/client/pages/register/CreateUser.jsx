@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { LOCAL_STORAGE, INT_LINK, USER_URL } from '../../config';
 
-import { doFetch } from '../../utils';
+import { fetchFromServer } from '../../utils';
 
 const CreateUser = props => {
     const { user, setUser, setIsLoggedIn } = props;
@@ -25,11 +25,7 @@ const CreateUser = props => {
     }, [form]);
 
     const registerUser = async () => {
-        const registeredUser = await doFetch(
-            USER_URL.REGISTER,
-            form,
-            'POST'
-        );
+        const registeredUser = await fetchFromServer(USER_URL.REGISTER, form, 'POST');
 
         return registeredUser;
     };
