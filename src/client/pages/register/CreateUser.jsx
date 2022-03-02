@@ -6,7 +6,7 @@ import { LOCAL_STORAGE, INT_LINK, USER_URL } from '../../config';
 import { doFetch } from '../../utils';
 
 const CreateUser = props => {
-    const { setUser, setIsLoggedIn } = props;
+    const { user, setUser, setIsLoggedIn } = props;
 
     const formInitialData = {
         username: '',
@@ -25,6 +25,7 @@ const CreateUser = props => {
     }, [form]);
 
     console.log('state', {
+        user, 
         form,
         error,
     });
@@ -41,7 +42,6 @@ const CreateUser = props => {
 
     const handleChange = (event) => {
         let { name, value, type, checked } = event.target;
-        console.log(event.target);
 
         type === 'checkbox' && value === checked;
 
