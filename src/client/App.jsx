@@ -37,6 +37,7 @@ const App = () => {
                 isLoggedIn={isLoggedIn} 
                 setIsLoggedIn={setIsLoggedIn} 
                 user={user}
+                setUser={setUser}
             />
             <LeftMenu />
             <Routes>

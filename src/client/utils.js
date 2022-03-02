@@ -17,10 +17,4 @@ export const doFetch = async (endpoint, reqBody, method) => {
     }
 };
 
-export const decodeToken = (req) => {
-    const token = req.headers.authorization;
-
-    return jwt.decode(token);
-};
-
 export const capitaliseFirstLetter = (string) => string.replace(/\b\w/g, (c) => c.toUpperCase());
