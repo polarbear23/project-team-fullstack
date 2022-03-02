@@ -62,7 +62,7 @@ const createUser = async (req, res) => {
     catch(error){
         if(error instanceof Prisma.PrismaClientKnownRequestError){
             if(error.code === PRISMA_ERROR.UNIQUE_CONSTRAINT_VIOLATION.CODE){
-                return res.status(SERVER_ERROR.INTERNAL.CODE).json({ error: PRISMA_ERROR.UNIQUE_CONSTRAINT_VIOLATION.CLIENT_MESSAGE });
+                res.status(SERVER_ERROR.INTERNAL.CODE).json({ error: PRISMA_ERROR.UNIQUE_CONSTRAINT_VIOLATION.CLIENT_MESSAGE_REGISTER });
             }
         }
     }
@@ -124,26 +124,32 @@ const editUser = async (req, res) => {
 };
 
 const createProfile = async (req, res) => {
-    const { userId, location } = req.body;
-    let { profilePicture } = req.body;
+    const userId = parseInt(req.body.userId, 10);
+    console.log(typeof userId);
+    let { profilePicture, location } = req.body;
 
     if(!profilePicture){
-        profilePicture = 'https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png';
+        profilePicture = "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png";
     }
 
-    const createdProfile = await prisma.profile.create({
-        data: {
-            userId: userId,
-            profilePicture: profilePicture,
-            location: location,
-        },
-    });
+    try{
+        const createdProfile = await prisma.profile.create({
+            data: {
+                userId: userId,
+                profilePicture: profilePicture,
+                location: location,
+            },
+        });
 
-    if (!createdProfile) {
-        return res.status(SERVER_ERROR.INTERNAL.CODE).json({ error: SERVER_ERROR.INTERNAL.MESSAGE });
+        res.status(SERVER_SUCCESS.OK.CODE).json({ data: createdProfile });
     }
-
-    res.status(SERVER_SUCCESS.OK.CODE).json({ data: createdProfile });
+    catch(error){
+        if(error instanceof Prisma.PrismaClientKnownRequestError){
+            if(error.code === PRISMA_ERROR.UNIQUE_CONSTRAINT_VIOLATION.CODE){
+                res.status(SERVER_ERROR.INTERNAL.CODE).json({ error: PRISMA_ERROR.UNIQUE_CONSTRAINT_VIOLATION.CLIENT_MESSAGE_PROFILE });
+            }
+        }
+    }
 };
 
 module.exports = {
