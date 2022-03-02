@@ -1,17 +1,20 @@
 import { FaArrowUp, FaArrowDown} from "react-icons/fa";
-import { BiCommentDots } from "react-icons/bi";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Comment from "./Comment";
 import CommentForm from "./forms/CommentForm";
+import {GoReport} from "react-icons/go";
+import {BiCommentDetail } from "react-icons/bi";
+import "../../styles/forum.css";
 
 
 const Post = (props) => {
-	const { post } = props;
+	const { post, setNewComment } = props;
 	const [showCommentParentForm, setShowCommentParentForm] = useState(false);
 	const [showAllComments, setShowAllComments] = useState(false);
 
-	
+	let padding = 0;
+
 	const today = new Date();
 	const postDate = new Date(post.createdAt);
 
@@ -66,10 +69,11 @@ const Post = (props) => {
 						</div>
 						<div className="card-comment">
 							<span className="card-comment-icon">
-								<BiCommentDots 
+								<BiCommentDetail
 									style={commentStyle}
 									onClick={() => setShowCommentParentForm(!showCommentParentForm)}
 								/>
+								Reply
 							</span>
 							<span>{post.comment.length} comments</span>
 						</div>
@@ -79,11 +83,20 @@ const Post = (props) => {
 			{/* comment form */}
 			{showCommentParentForm && <CommentForm 
 				setShowComment={setShowCommentParentForm}
+				postId={post.id}
+				setNewComment={setNewComment}
 			/>}
 
-
+			{/* comment */}
 			{showAllComments && post.comment && post.comment.map((cm, index) => {
-				return <Comment key={index} comment={cm} dateDiffInDays={dateDiffInDays}/>
+				return <Comment 
+					key={index} 
+					comment={cm}
+					postId={post.id}
+					dateDiffInDays={dateDiffInDays}
+					setNewComment={setNewComment}
+					padding={padding}
+				/>
 			})}
 		</div>
 	);

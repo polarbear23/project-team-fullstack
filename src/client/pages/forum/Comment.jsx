@@ -5,9 +5,10 @@ import { FaArrowUp, FaArrowDown, FaShare} from "react-icons/fa";
 import {BiCommentDetail } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import CommentForm from "./forms/CommentForm";
+import "../../styles/forum.css";
 
 const Comment = (props) => {
-	const { comment, dateDiffInDays } = props;
+	const { comment, dateDiffInDays, setNewComment, postId, padding } = props;
 	const [showCommentChildForm, setShowCommentChildForm] = useState(false);
 	const today = new Date();
 	const commentDate = new Date(comment.createdAt);
@@ -68,9 +69,18 @@ const Comment = (props) => {
 						</div>
 					</div>
 				</div>
+				{/* reply to child comment */}
+				{showCommentChildForm && <CommentForm 
+					setShowComment={setShowCommentChildForm}
+					setNewComment={setNewComment}
+					postId={postId}
+					commentId={comment.id}
+				/>}
+				<div className="comment-card-reply">
+					{/* <Comment/> */}
+				</div>
 			</div>
-			{/* reply to child comment */}
-			{showCommentChildForm && <CommentForm setShowComment={setShowCommentChildForm}/>}
+			
 		</>
 	);
 };

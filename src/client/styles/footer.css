@@ -1,0 +1,42 @@
+.footer-container {
+	width: 100%;
+	background-color: #dbdbdb;
+	grid-area: footer;
+	position: absolute;
+	bottom: 0;
+}
+
+.footer {
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	/* padding: 2rem 0; */
+}
+.footer__lists {
+	list-style: none;
+	display: flex;
+}
+
+.footer__lists--item {
+	margin-right: 5rem;
+}
+.footer__lists--item a {
+	text-decoration: none;
+	color: #000;
+}
+
+.footer__icons {
+	display: flex;
+	gap: 1rem;
+	margin-right: 5rem;
+	font-size: 1.5rem;
+}
+
+.footer__icon i {
+	font-size: 2rem;
+}
+
+.disabled-link {
+	cursor: pointer;
+}
