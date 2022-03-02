@@ -1,16 +1,25 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { FETCH_METHOD, LOCAL_STORAGE, INT_LINK, USER_URL } from '../../config';
 
 const CreateProfile = (props) => {
-    const { token } = props;
+    const { user, setUser } = props;
 
-    const initialForm = { location: '', picture: '' };
+    const initialForm = { location: '', picture: '', userId: null };
 
     const [form, setForm] = useState(initialForm);
-    const [message, setMessage] = useState('');
+    const [error, setError] = useState(null);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        setError(null);
+    }, [form]);
 
     console.log('state', {
         form,
-        message,
+        error,
     });
 
     const handleChange = (event) => {
@@ -20,29 +29,44 @@ const CreateProfile = (props) => {
     };
 
     const handleSubmit = async (event) => {
+        setForm({...form, userId: user.id})
+
         event.preventDefault();
 
-        await postForm();
+        const fetchedProfile = await postForm();
 
-        setForm(initialForm);
+        if (fetchedProfile.error) {
+            setError(fetchedProfile.error);
+
+            return;
+        }
+
+        setUser(fetchedProfile.data);
+
+        navigate(INT_LINK.HOME);
     };
 
     const postForm = async () => {
         try {
-            const response = await fetch('http://localhost:4000/user/profile', {
-                method: 'POST',
+            const response = await fetch(USER_URL.PROFILE, {
+                method: FETCH_METHOD.POST,
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: token,
+                    'Authorization': LOCAL_STORAGE.TOKEN,
                 },
                 body: JSON.stringify(form),
             });
-            const data = await response.json();
-            setMessage('Profile Updated');
+
+            return data = await response.json();
+
         } catch (error) {
             console.log(error);
         }
     };
+
+    const handleRedirect = () => {
+        navigate(INT_LINK.HOME);
+    }
 
     return (
         <div className="signup">
@@ -77,7 +101,12 @@ const CreateProfile = (props) => {
                 >
                     Create Profile
                 </button>
-                {}
+                <button
+                    className="register-btn"
+                    onClick={handleRedirect}
+                >
+                    Skip
+                </button>
             </form>
         </div>
     );

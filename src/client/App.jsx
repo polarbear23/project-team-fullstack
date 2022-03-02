@@ -19,6 +19,11 @@ const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
 
+    console.log('state', {
+        user,
+        isLoggedIn,
+    });
+
     //on page load / refresh, token persists but user details stored in state are lost, useEffects restore previous session
 
     useEffect(() => {

@@ -1,6 +1,7 @@
 export class USER_URL {
     static REGISTER = 'http://localhost:4000/user/register'
     static LOGIN = 'http://localhost:4000/user/login'
+    static PROFILE = 'http://localhost:4000/user/profile'
 }
 
 export class INT_LINK {
