@@ -11,6 +11,7 @@ export class INT_LINK {
     static FORUM = '/forum'
     static LEADERBOARD = '/leaderboard'
     static NOT_FOUND = '*'
+    static PROFILE = '/profile'
 }
 
 export class LOCAL_STORAGE {

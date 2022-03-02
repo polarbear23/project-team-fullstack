@@ -79,6 +79,9 @@ export const App = () => {
                         />
                     }
                 />
+                                <Route 
+                    path={INT_LINK.NOT_FOUND}
+                    element={<Home />} />
             </Routes>
             <Footer />
         </div>
