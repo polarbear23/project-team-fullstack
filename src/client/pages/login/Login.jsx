@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import {FETCH_METHOD, LOCAL_STORAGE, INT_LINK, USER_URL } from './config'
+
 const Login = (props) => {
     const { setUser, setIsLoggedIn } = props;
 
@@ -30,19 +32,21 @@ const Login = (props) => {
 
         const data = await postForm();
 
-        localStorage.setItem('token', data.token);
+        localStorage.setItem(LOCAL_STORAGE.TOKEN, data.token);
 
         setForm(intialForm);
 
         setIsLoggedIn(true);
 
         setUser(data.data);
+
+        navigate(INT_LINK.HOME);
     };
 
     const postForm = async () => {
         try {
-            const response = await fetch('http://localhost:4000/user/login', {
-                method: 'POST',
+            const response = await fetch(USER_URL.LOGIN, {
+                method: FETCH_METHOD.POST,
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -63,7 +67,7 @@ const Login = (props) => {
     };
 
     const handleRedirectToRegister = () => {
-        navigate('/register/user');
+        navigate(INT_LINK.CREATE_USER);
     };
 
     return (
