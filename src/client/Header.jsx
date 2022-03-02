@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 
-import {LOCAL_STORAGE, INT_LINK} from './config'
+import { LOCAL_STORAGE, INT_LINK } from './config';
 
 import { capitaliseFirstLetter } from './utils';
 
@@ -43,7 +43,9 @@ const Header = (props) => {
                     {isLoggedIn && user && (
                         <>
                             <li className="navbar__lists--item">
-                                <Link to={INT_LINK.PROFILE}>Hi {formatUserName(user)}</Link>
+                                <Link to={INT_LINK.PROFILE}>
+                                    Hi {formatUserName(user)}
+                                </Link>
                             </li>
                             <li
                                 className="navbar__lists--item"
