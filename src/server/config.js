@@ -16,6 +16,13 @@ const SERVER_SUCCESS = {
     UPDATE_OK: { MESSAGE: 'Update Successful', CODE: 201 }
 }
 
+const PRISMA_ERROR = {
+    UNIQUE_CONSTRAINT_VIOLATION: { 
+        MESSAGE: 'There is a unique constraint violation, a new user cannot be created with this email or username',
+        CODE: 'P2002'
+    }
+}
+
 const FORUM_ROLES = {
     USER: 'USER',
     MODERATOR: 'MODERATOR',
@@ -41,6 +48,7 @@ module.exports = {
     SECRET,
     SERVER_ERROR,
     SERVER_SUCCESS,
+    PRISMA_ERROR,
     CATEGORIES,
     NUMBER_OF_USERS_AND_PROFILES_TO_GENERATE,
     NUMBER_OF_POSTS_TO_GENERATE,
