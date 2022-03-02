@@ -1,105 +1,124 @@
-import { useEffect, useState } from "react";
-import LeaderboardItem from "./components/LeaderboardItem";
-import PokemonTile from "./components/PokemonTile";
+import { useEffect, useState } from 'react';
+
+import LeaderboardItem from './components/LeaderboardItem';
+import PokemonTile from './components/PokemonTile';
 
 const Leaderboard = () => {
-  const [pokemons, setPokemons] = useState([]);
-  const [updateLeaderboard, setUpdateLeaderboard] = useState([]);
-  const [topThreePokemon, setTopThreePokemon] = useState([]);
+    const [pokemons, setPokemons] = useState([]);
+    const [topRatedPokemon, setTopRatedPokemon] = useState([]);
+    const [fetchPokemon, setFetchPokemon] = useState(false);
 
-  const sortPokemon = (pokemonsa) => {
-    return pokemonsa.sort((firstEl, secondEl) => {
-      const firstPokemonRating = findAverageRating(firstEl.ratings);
-      console.log("firstPokemonRating", firstPokemonRating);
-      const secondPokemonRating = findAverageRating(secondEl.ratings);
-      console.log("secondPokemonRating", secondPokemonRating);
-
-      if (firstPokemonRating < secondPokemonRating) {
-        return -1;
-      }
-      if (firstPokemonRating > secondPokemonRating) {
-        return 1;
-      }
-      return 0;
+    console.log('states', {
+        pokemons,
+        topRatedPokemon,
+        fetchPokemon,
     });
-  };
 
-  const getPokemon = async () => {
-    const res = await fetch("http://localhost:4000/pokemon/");
-    const pokemon = await res.json();
-    console.log("pokemon", pokemon.data);
-    const sortedPokemon = sortPokemon(pokemon.data);
-    console.log("sortedPokemon", sortedPokemon);
-    setPokemons(sortedPokemon);
-  };
+    useEffect(() => {
+        const getPokemon = async () => {
+            const response = await fetch('http://localhost:4000/pokemon/');
 
-  const findAverageRating = (ratings) => {
-    //console.log("insideAvrgRating", ratings);
+            const data = await response.json();
 
-    if (ratings.length > 0) {
-      let total = ratings.reduce(
-        (prevVal, curVal) => prevVal + curVal.rating.rating,
-        0
-      );
-      //console.log("total", total);
-      return (total / ratings.length).toFixed(1);
-    }
-    return 0;
-  };
+            const fetchedPokemon = data.data;
 
-  useEffect(() => {
-    getPokemon();
-  }, [updateLeaderboard]);
+            const sortedPokemon = sortPokemon(fetchedPokemon);
 
-  useEffect(() => {
-    setTopThreePokemon([]);
-  }, [pokemons]);
+            setPokemons(sortedPokemon);
+        };
 
-  return (
-    <div className="leaderboard">
-      <h2 className="top-3-leaders">Best Rated Pokemon</h2>
-      <div className="top-3-container">
-        {topThreePokemon &&
-          topThreePokemon.map((pokemon, index) => {
-            <PokemonTile
-              pokemon={pokemon}
-              index={index}
-              findAverageRating={findAverageRating}
-            />;
-          })}
-      </div>
-      <h1 className="leaderboard-title">Leaderboard</h1>
+        getPokemon();
+    }, [fetchPokemon]);
 
-      <table className="leaderboard-list">
-        <thead>
-          <th></th>
-          <th>Name</th>
-          <th>Type</th>
-          <th>HP</th>
-          <th>Attack</th>
-          <th>Defense</th>
-          <th>Special Atk</th>
-          <th>Special Def</th>
-          <th>Speed</th>
-          <th>Average Rating</th>
-          <th>Rating</th>
-        </thead>
-        <tbody>
-          {pokemons &&
-            pokemons.map((pokemon) => {
-              return (
-                <LeaderboardItem
-                  pokemon={pokemon}
-                  findAverageRating={findAverageRating}
-                  setUpdateLeaderboard={setUpdateLeaderboard}
-                  updateLeaderboard={updateLeaderboard}
-                />
-              );
-            })}
-        </tbody>
-      </table>
-    </div>
-  );
+    useEffect(() => {
+        if (!pokemons) {
+            return;
+        }
+
+        const numberOfPokemon = 3;
+
+        const slicedArray = pokemons.slice(0, numberOfPokemon);
+
+        setTopRatedPokemon(slicedArray);
+    }, [pokemons]);
+
+    const calcAverageRating = (ratings) => {
+        if (!ratings.length) return 0;
+
+        const pokemonRatingsArr = ratings.map((rating) => rating.rating.rating);
+
+        const initialValue = 0;
+
+        let sumOfRatings = pokemonRatingsArr.reduce(
+            (previousValue, currentValue) => previousValue + currentValue,
+            initialValue
+        );
+
+        const avarageRating = (sumOfRatings / ratings.length).toFixed(1);
+
+        return avarageRating;
+    };
+
+    const sortPokemon = (pokemon) => {
+        return pokemon.sort((firstPokemon, secondPokemon) => {
+            const firstPokemonAvgRating = calcAverageRating(
+                firstPokemon.ratings
+            );
+            const secondPokemonAvgRating = calcAverageRating(
+                secondPokemon.ratings
+            );
+
+            if (firstPokemonAvgRating < secondPokemonAvgRating) {
+                return 1;
+            }
+
+            if (firstPokemonAvgRating > secondPokemonAvgRating) {
+                return -1;
+            }
+
+            return 0;
+        });
+    };
+
+    return (
+        <div className="leaderboard">
+            {topRatedPokemon && (
+                <PokemonTile topRatedPokemon={topRatedPokemon} />
+            )}
+
+            <h1 className="leaderboard-title">Leaderboard</h1>
+
+            <table className="leaderboard-list">
+                <thead>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>HP</th>
+                    <th>Attack</th>
+                    <th>Defense</th>
+                    <th>Special Atk</th>
+                    <th>Special Def</th>
+                    <th>Speed</th>
+                    <th>Average Rating</th>
+                    <th>Rating</th>
+                </thead>
+                <tbody>
+                    {pokemons &&
+                        pokemons.map((pokemon) => {
+                            return (
+                                <LeaderboardItem
+                                    pokemon={pokemon}
+                                    fetchPokemon={fetchPokemon}
+                                    setFetchPokemon={setFetchPokemon}
+                                    calcAverageRating={calcAverageRating}
+                                    key={pokemon.id}
+                                />
+                            );
+                        })}
+                </tbody>
+            </table>
+        </div>
+    );
 };
 
 export default Leaderboard;
