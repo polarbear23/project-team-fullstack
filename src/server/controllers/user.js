@@ -129,7 +129,10 @@ const getUserById = async (req, res) => {
     const selectedUser = await prisma.user.findUnique({
         where: { 
             id: id,
-        }
+        }, 
+        include: {
+            profile: true,
+        },
     })
 
     if (!selectedUser) {
