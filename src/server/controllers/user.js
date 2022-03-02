@@ -73,7 +73,7 @@ const createUser = async (req, res) => {
 const editUser = async (req, res) => {
     let { username, password, email, role, isBanned } = req.body;
 
-    const id = parseInt(req.params.id, 10);
+    const id = Number(req.params.id);
 
     const decodedToken = decodeToken(req);
 
@@ -126,7 +126,7 @@ const editUser = async (req, res) => {
 };
 
 const getUserById = async (req, res) => {
-    const id = parseInt(req.params.id, 10);
+    const id = Number(req.params.id);
 
     let selectedUser = await prisma.user.findUnique({
         where: { 
@@ -147,7 +147,7 @@ const getUserById = async (req, res) => {
 } 
 
 const createProfile = async (req, res) => {
-    const userId = parseInt(req.body.userId, 10);
+    const userId = Number(req.body.userId);
 
     let { profilePicture, location } = req.body;
 

@@ -10,7 +10,7 @@ const CreateProfile = (props) => {
     const initialForm = { 
         location: "", 
         profilePicture: "", 
-        userId: parseInt(localStorage.getItem(LOCAL_STORAGE.USER_ID), 10)
+        userId: Number(localStorage.getItem(LOCAL_STORAGE.USER_ID))
     };
 
     const [form, setForm] = useState(initialForm);
