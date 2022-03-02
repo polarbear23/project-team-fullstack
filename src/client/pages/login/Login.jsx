@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { FETCH_METHOD, LOCAL_STORAGE, INT_LINK, USER_URL } from '../../config';
@@ -17,6 +17,10 @@ const Login = (props) => {
     const [error, setError] = useState(null);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        setError(null);
+    }, [form]);
 
     console.log('state', {
         form,
