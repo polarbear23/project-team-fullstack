@@ -29,7 +29,9 @@ const authenticateUser = async (req, res) => {
         return res.status(SERVER_ERROR.UNAUTHORIZED.CODE).json({ error: SERVER_ERROR.UNAUTHORIZED.MESSAGE });
     }
 
-    res.json(createToken({ id: foundUser.id, role: foundUser.role }));
+    const token = createToken({ id: foundUser.id, role: foundUser.role });
+
+    res.status(SERVER_SUCCESS.OK.CODE).json({ data: foundUser, token: token });
 };
 
 const createUser = async (req, res) => {
@@ -50,6 +52,7 @@ const createUser = async (req, res) => {
     });
 
     createdUser = removeKeys(createdUser, KEYS.PASSWORD);
+    
     const token = createToken({ id: createdUser.id, role: createdUser.role });
 
     res.status(SERVER_SUCCESS.OK.CODE).json({ data: createdUser, token: token });
