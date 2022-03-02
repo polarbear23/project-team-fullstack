@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { LOCAL_STORAGE, INT_LINK } from './config';
 
-import { capitaliseFirstLetter } from './utils';
+import { capitaliseFirstLetter } from './utils/format';
 
 const Header = (props) => {
     const { isLoggedIn, setIsLoggedIn, user, setUser } = props;

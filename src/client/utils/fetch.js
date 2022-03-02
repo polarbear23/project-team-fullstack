@@ -16,5 +16,3 @@ export const fetchFromServer = async (endpoint, reqBody, method) => {
         console.log(error);
     }
 };
-
-export const capitaliseFirstLetter = (string) => string.replace(/\b\w/g, (c) => c.toUpperCase());

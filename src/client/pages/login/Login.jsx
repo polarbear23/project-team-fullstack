@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { FETCH_METHOD, LOCAL_STORAGE, INT_LINK, USER_URL } from '../../config';
 
-import { fetchFromServer } from '../../utils';
+import { fetchFromServer } from '../../utils/fetch';
 
 const Login = (props) => {
     const { setUser, setIsLoggedIn } = props;
