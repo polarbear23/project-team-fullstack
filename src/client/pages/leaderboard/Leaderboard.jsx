@@ -3,14 +3,18 @@ import { useEffect, useState } from 'react';
 import LeaderboardItem from './components/LeaderboardItem';
 import PokemonTile from './components/PokemonTile';
 
-const Leaderboard = () => {
+import { USER_URL } from '../../config';
+
+const Leaderboard = (props) => {
+    const { user } = props;
+
     const [pokemons, setPokemons] = useState([]);
     const [topRatedPokemon, setTopRatedPokemon] = useState([]);
     const [fetchPokemon, setFetchPokemon] = useState(false);
 
     useEffect(() => {
         const getPokemon = async () => {
-            const response = await fetch('http://localhost:4000/pokemon/');
+            const response = await fetch(`${USER_URL.POKEMON}`);
 
             const data = await response.json();
 
@@ -36,6 +40,12 @@ const Leaderboard = () => {
         setTopRatedPokemon(slicedArray);
     }, [pokemons]);
 
+    let profileId;
+    
+    if (user) {
+        profileId = user.profile.id;
+    }
+
     const calcAverageRating = (ratings) => {
         if (!ratings.length) return 0;
 
@@ -44,8 +54,7 @@ const Leaderboard = () => {
         const initialValue = 0;
 
         let sumOfRatings = pokemonRatingsArr.reduce(
-            (previousValue, currentValue) => previousValue + currentValue,
-            initialValue
+            (previousValue, currentValue) => previousValue + currentValue, initialValue
         );
 
         const avarageRating = (sumOfRatings / ratings.length).toFixed(1);
@@ -55,12 +64,8 @@ const Leaderboard = () => {
 
     const sortPokemon = (pokemon) => {
         return pokemon.sort((firstPokemon, secondPokemon) => {
-            const firstPokemonAvgRating = calcAverageRating(
-                firstPokemon.ratings
-            );
-            const secondPokemonAvgRating = calcAverageRating(
-                secondPokemon.ratings
-            );
+            const firstPokemonAvgRating = calcAverageRating(firstPokemon.ratings);
+            const secondPokemonAvgRating = calcAverageRating(secondPokemon.ratings);
 
             if (firstPokemonAvgRating < secondPokemonAvgRating) {
                 return 1;
@@ -87,23 +92,26 @@ const Leaderboard = () => {
 
             <table className="leaderboard-list">
                 <thead>
-                    <th></th>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>HP</th>
-                    <th>Attack</th>
-                    <th>Defense</th>
-                    <th>Special Atk</th>
-                    <th>Special Def</th>
-                    <th>Speed</th>
-                    <th>Average Rating</th>
-                    <th>Rating</th>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>HP</th>
+                        <th>Attack</th>
+                        <th>Defense</th>
+                        <th>Special Atk</th>
+                        <th>Special Def</th>
+                        <th>Speed</th>
+                        <th>Average Rating</th>
+                        <th>Rating</th>
+                    </tr>
                 </thead>
                 <tbody>
                     {pokemons &&
                         pokemons.map((pokemon) => {
                             return (
                                 <LeaderboardItem
+                                    profileId={profileId}
                                     pokemon={pokemon}
                                     fetchPokemon={fetchPokemon}
                                     setFetchPokemon={setFetchPokemon}

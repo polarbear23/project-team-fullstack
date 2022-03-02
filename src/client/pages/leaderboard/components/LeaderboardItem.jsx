@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Rating } from 'react-simple-star-rating';
 
+import { LOCAL_STORAGE, USER_URL } from '../../../config';
+
 const LeaderboardItem = (props) => {
-    const { pokemon, fetchPokemon, setFetchPokemon, calcAverageRating } = props;
+    const { pokemon, fetchPokemon, setFetchPokemon, calcAverageRating, profileId } = props;
 
     const [rating, setRating] = useState(0);
     const [averageRating, setAverageRating] = useState(0);
@@ -13,15 +15,14 @@ const LeaderboardItem = (props) => {
         }
 
         const postRating = async (ratingToPost) => {
-            await fetch('http://localhost:4000/pokemon/rating', {
+            await fetch(`${USER_URL.POKEMON_RATING}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization:
-                        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkFETUlOIiwiaWF0IjoxNjQ2MjQ0NjM0fQ.GxUsUa2zVXWrzMEP1cwjvD91aexPijH1UCTsJNp4RpQ', //localStorage.getItem("token"), //need a jwt token to verify if user is logged in to make the post request
+                    Authorization: localStorage.getItem(LOCAL_STORAGE.TOKEN),
                 },
                 body: JSON.stringify({
-                    profileId: 1, //need to get profile id from state
+                    profileId: profileId,
                     rating: ratingToPost,
                     pokemonId: pokemon.id,
                 }),
@@ -30,7 +31,9 @@ const LeaderboardItem = (props) => {
             setFetchPokemon(!fetchPokemon);
         };
 
-        postRating(rating / 20);
+        const ratingToPost = rating /20;
+        
+        postRating(ratingToPost);
     }, [rating]);
 
     useEffect(() => {
@@ -48,7 +51,7 @@ const LeaderboardItem = (props) => {
                 <img
                     className="leaderboard-pokemon-icon"
                     src={pokemon.largeImageUrl}
-                    alt=""
+                    alt={`${pokemon.name}`}
                 />
             </td>
             <td
@@ -58,12 +61,13 @@ const LeaderboardItem = (props) => {
                 {pokemon.name}
             </td>
             <td data-column="pokemon-type" className="leaderboard-pokemon-type">
-                {pokemon.types.map((typeObj) => {
+                {pokemon.types.map((typeObj, index) => {
                     return (
                         <img
                             className="type-icon"
                             src={`/assets/pokemontypes/${typeObj.type.name.toLowerCase()}.svg`}
-                            alt=""
+                            alt={`${typeObj.type.name.toLowerCase()}`}
+                            key={index}
                         />
                     );
                 })}

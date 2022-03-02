@@ -67,12 +67,13 @@ const PokemonTile = (props) => {
                                     alt=""
                                 />
                                 <div className="type-container">
-                                    {pokemon.types.map((type) => {
+                                    {pokemon.types.map((type, index) => {
                                         return (
                                             <img
                                                 className="tile-type"
                                                 src={`/assets/pokemontypes/${type.type.name.toLowerCase()}.svg`}
                                                 alt={`${type.type.name.toLowerCase()}`}
+                                                key={index}
                                             />
                                         );
                                     })}
