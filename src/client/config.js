@@ -17,6 +17,7 @@ export class INT_LINK {
 
 export class LOCAL_STORAGE {
     static TOKEN = 'token'
+    static USER_ID = 'userId'
 }
 
 export class FETCH_METHOD {

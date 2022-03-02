@@ -31,9 +31,9 @@ const CreateProfile = (props) => {
     };
 
     const handleSubmit = async (event) => {
-        setForm({ ...form, userId: user.id });
-
         event.preventDefault();
+
+        setForm({ ...form, userId: user.id });
 
         await SubmitForm();
     };
@@ -55,12 +55,12 @@ const CreateProfile = (props) => {
         }
     };
 
-    const handleCancel = async () => {
+    const handleCancel = async (event) => {
+        event.preventDefault();
+
         setForm(initialForm);
 
         setForm({ ...form, userId: user.id });
-
-        
 
         await SubmitForm();
     };

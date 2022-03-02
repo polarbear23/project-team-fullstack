@@ -60,6 +60,7 @@ const CreateUser = props => {
         }
 
         localStorage.setItem(LOCAL_STORAGE.TOKEN, registeredUser.token);
+        localStorage.setItem(LOCAL_STORAGE.USER_ID, registeredUser.data.id);
 
         setUser(registeredUser.data);
         setIsLoggedIn(true);
