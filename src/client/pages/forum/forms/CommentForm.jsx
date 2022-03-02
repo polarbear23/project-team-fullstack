@@ -5,26 +5,30 @@ const commentForm = (props) => {
 	const [comment, setcomment] = useState('');
 	
 	
-	const postComment = async(props) => {
-		const localAuth = localStorage.getItem("user");
+	const postComment = async() => {
 		
-		const res = await fetch("http://localhost:4000/post/comment", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IlVTRVIiLCJpYXQiOjE2NDYxNTEwODJ9.lLX_saj7lEnl_kSIGeznpLhUMy1JyNgiajNa94bbJIk",
-			},
-			body: JSON.stringify({
-				content: comment,
-				userId: 1,
-				postId,
-				parentId: commentId ? commentId : ''
-			}),
-		});
-
-		const data = await res.json();
-		console.log(data);
-		setNewComment(data);
+		try{
+			const res = await fetch("http://localhost:4000/post/comment", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IlVTRVIiLCJpYXQiOjE2NDYxNTEwODJ9.lLX_saj7lEnl_kSIGeznpLhUMy1JyNgiajNa94bbJIk",
+				},
+				body: JSON.stringify({
+					content: comment,
+					userId: 1,
+					postId,
+					parentId: commentId ? commentId : ''
+				}),
+			});
+			const data = await res.json();
+			console.log(data);
+			setNewComment(data);
+		}
+		catch(e){
+			console.log('error',);
+		}
+		
 	}
 	
 	
