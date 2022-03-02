@@ -126,7 +126,7 @@ const editUser = async (req, res) => {
 const getUserById = async (req, res) => {
     const id = parseInt(req.params.id, 10);
 
-    const selectedUser = await prisma.user.findUnique({
+    let selectedUser = await prisma.user.findUnique({
         where: { 
             id: id,
         }, 
@@ -138,6 +138,8 @@ const getUserById = async (req, res) => {
     if (!selectedUser) {
         return res.status(SERVER_ERROR.NOT_FOUND.CODE).json({ error: SERVER_ERROR.NOT_FOUND.MESSAGE });
     }
+
+    selectedUser = removeKeys(selectedUser, KEYS.PASSWORD);
 
     res.status(SERVER_SUCCESS.OK.CODE).json({ data: selectedUser });
 } 
