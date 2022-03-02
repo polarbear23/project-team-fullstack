@@ -18,7 +18,8 @@ const SERVER_SUCCESS = {
 
 const PRISMA_ERROR = {
     UNIQUE_CONSTRAINT_VIOLATION: { 
-        MESSAGE: 'There is a unique constraint violation, a new user cannot be created with this email or username',
+        SERVER_MESSAGE: 'There is a unique constraint violation, a new user cannot be created with this email or username',
+        CLIENT_MESSAGE: 'Username or email associated with existing account',
         CODE: 'P2002'
     }
 }
