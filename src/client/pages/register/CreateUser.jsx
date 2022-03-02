@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import { USER_URLs } from '../../config';
+
+import { USER_URL } from '../../config';
+
 import { doFetch } from '../../utils';
 
 const CreateUser = () => {
@@ -14,7 +16,7 @@ const CreateUser = () => {
 
     const registerUser = async () => {
         const registeredUser = await doFetch(
-            USER_URLs.REGISTER,
+            USER_URL.REGISTER,
             signUpData,
             'POST'
         );

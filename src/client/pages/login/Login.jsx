@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import {FETCH_METHOD, LOCAL_STORAGE, INT_LINK, USER_URL } from './config'
+import {FETCH_METHOD, LOCAL_STORAGE, INT_LINK, USER_URL } from '../../config'
 
 const Login = (props) => {
     const { setUser, setIsLoggedIn } = props;
