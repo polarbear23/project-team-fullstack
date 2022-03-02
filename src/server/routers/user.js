@@ -7,9 +7,12 @@ const {
     createUser,
     editUser,
     createProfile,
+    getUserById,
 } = require('../controllers/user');
 
 const router = express.Router();
+
+router.get("/:id", isLoggedIn, getUserById)
 
 router.post('/login', authenticateUser);
 

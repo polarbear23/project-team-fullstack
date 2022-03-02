@@ -89,7 +89,7 @@ const getAllPosts = async (req, res) => {
 };
 
 const getPostbyId = async (req, res) => {
-    const id = parseInt(req.params.id, 10);
+    const id = Number(req.params.id);
 
     const selectedPost = await prisma.post.findFirst({
         where: {
@@ -120,7 +120,7 @@ const getPostbyId = async (req, res) => {
 };
 
 const editPost = async (req, res) => {
-    const id = parseInt(req.params.id, 10);
+    const id = Number(req.params.id);
 
     const { userId } = req.body;
 
@@ -165,7 +165,7 @@ const editPost = async (req, res) => {
 };
 
 const deletePost = async (req, res) => {
-    const id = parseInt(req.params.id, 10);
+    const id = Number(req.params.id);
 
     const isRemoved = { isRemoved: true };
 
@@ -201,7 +201,7 @@ const createComment = async (req, res) => {
 };
 
 const getComment = async (req, res) => {
-    const id = parseInt(req.params.id, 10);
+    const id = Number(req.params.id);
 
     const selectedComment = await prisma.comment.findUnique({
         where: {
@@ -217,7 +217,7 @@ const getComment = async (req, res) => {
 };
 
 const editComment = async (req, res) => {
-    const id = parseInt(req.params.id, 10);
+    const id = Number(req.params.id);
 
     if (comment.userId !== tokenId || !isModerator) {
         return res.status(SERVER_ERROR.UNAUTHORIZED.CODE).json({ error: SERVER_ERROR.UNAUTHORIZED.MESSAGE });
@@ -236,7 +236,7 @@ const editComment = async (req, res) => {
 };
 
 const deleteComment = async (req, res) => {
-    const id = parseInt(req.params.id, 10);
+    const id = Number(req.params.id);
 
     const isRemoved = { isRemoved: true };
 
@@ -270,7 +270,7 @@ const createLike = async (req, res) => {
 };
 
 const deleteLike = async (req, res) => {
-    const id = parseInt(req.params.id, 10);
+    const id = Number(req.params.id);
 
     await prisma.like.delete({
         where: {
@@ -297,7 +297,7 @@ const createTag = async (req, res) => {
 };
 
 const deleteTag = async (req, res) => {
-    const id = parseInt(req.params.id, 10);
+    const id = Number(req.params.id);
 
     const deletedTag = await prisma.tagsOnPosts.delete({
         where: {
