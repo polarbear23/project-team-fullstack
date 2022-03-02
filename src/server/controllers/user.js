@@ -14,7 +14,7 @@ const { Prisma } = require('@prisma/client');
 const authenticateUser = async (req, res) => {
     let { username, password } = req.body;
 
-    const foundUser = await prisma.user.findUnique({
+    let foundUser = await prisma.user.findUnique({
         where: {
             username: username,
         },
@@ -31,6 +31,8 @@ const authenticateUser = async (req, res) => {
     }
 
     const token = createToken({ id: foundUser.id, role: foundUser.role });
+
+    foundUser = removeKeys(foundUser, KEYS.PASSWORD);
 
     res.status(SERVER_SUCCESS.OK.CODE).json({ data: foundUser, token: token });
 };
