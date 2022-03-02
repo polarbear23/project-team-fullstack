@@ -4,11 +4,11 @@ import PokemonTile from "./components/PokemonTile";
 
 const Leaderboard = () => {
   const [pokemons, setPokemons] = useState([]);
-
+  const [updateLeaderboard, setUpdateLeaderboard] = useState([]);
   const getPokemon = async () => {
     const res = await fetch("http://localhost:4000/pokemon/");
     const pokemon = await res.json();
-    console.log(pokemon.data);
+    console.log("pokemon", pokemon.data);
     setPokemons(pokemon.data);
   };
 
@@ -42,9 +42,10 @@ const Leaderboard = () => {
           <th>Rating</th>
         </thead>
         <tbody>
-          {pokemons.map((pokemon) => {
-            return <LeaderboardItem pokemon={pokemon} />;
-          })}
+          {pokemons &&
+            pokemons.map((pokemon) => {
+              return <LeaderboardItem pokemon={pokemon} />;
+            })}
         </tbody>
       </table>
     </div>
