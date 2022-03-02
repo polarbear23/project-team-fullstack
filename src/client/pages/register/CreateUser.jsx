@@ -1,23 +1,37 @@
 import { useEffect, useState } from 'react';
 
-import { USER_URL } from '../../config';
+import { INT_LINK, USER_URL } from '../../config';
 
 import { doFetch } from '../../utils';
 
-const CreateUser = () => {
-    const signUpInitialData = {
+const CreateUser = props => {
+    const { setUser, setIsLoggedIn } = props;
+
+    const formInitialData = {
         username: '',
         email: '',
         password: '',
         termsAndConditions: false,
     };
 
-    const [signUpData, setSignUpData] = useState(signUpInitialData);
+    const [form, setFormData] = useState(formInitialData);
+    const [error, setError] = useState(null);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        setError(null);
+    }, [form]);
+
+    console.log('state', {
+        form,
+        error,
+    });
 
     const registerUser = async () => {
         const registeredUser = await doFetch(
             USER_URL.REGISTER,
-            signUpData,
+            form,
             'POST'
         );
 
@@ -30,27 +44,24 @@ const CreateUser = () => {
 
         type === 'checkbox' && value === checked;
 
-        setSignUpData({ ...signUpData, [name]: value });
+        setFormData({ ...form, [name]: value });
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        setSignUpData(signUpData);
+        const registeredUser = await registerUser();
 
-        if (signUpData.termsAndConditions) {
-            const registeredUser = await registerUser();
+        if (registeredUser.error) {
+            setError(data.error);
 
-            if (registeredUser) {
-				const registeredUserId = registeredUser.data.id;
-				const userGeneratedToken = registeredUser.token; 
-	
-				localStorage.setItem("userToken", userGeneratedToken);
-				localStorage.setItem("userId", registeredUserId);
-
-                //redirect to profile!!
-            }
+            return;
         }
+
+        setUser(registeredUser);
+        setIsLoggedIn(true);
+
+        navigate(INT_LINK.CREATE_PROFILE);
     };
 
     return (
@@ -98,6 +109,7 @@ const CreateUser = () => {
                     name="termsAndConditions"
                     value={signUpData.termsAndConditions}
                     onChange={handleChange}
+                    required
                 />
                 <span className="terms">
                     I agree to the terms and privacy policy.
