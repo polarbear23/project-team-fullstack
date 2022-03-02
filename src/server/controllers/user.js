@@ -146,7 +146,7 @@ const getUserById = async (req, res) => {
 
 const createProfile = async (req, res) => {
     const userId = parseInt(req.body.userId, 10);
-    console.log(typeof userId);
+
     let { profilePicture, location } = req.body;
 
     if(!profilePicture){
