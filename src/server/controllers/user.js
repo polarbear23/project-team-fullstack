@@ -114,7 +114,12 @@ const editUser = async (req, res) => {
 };
 
 const createProfile = async (req, res) => {
-    const { userId, profilePicture, location } = req.body;
+    const { userId, location } = req.body;
+    let { profilePicture } = req.body;
+
+    if(!profilePicture){
+        profilePicture = 'https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png';
+    }
 
     const createdProfile = await prisma.profile.create({
         data: {
