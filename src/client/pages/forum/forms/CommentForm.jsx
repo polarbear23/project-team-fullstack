@@ -19,7 +19,7 @@ const commentForm = (props) => {
 					content: comment,
 					userId: Number(localStorage.getItem(LOCAL_STORAGE.USER_ID)),
 					postId,
-					parentId: commentId ? commentId : "",
+					parentId: commentId ? commentId : null,
 				}),
 			});
 			const data = await res.json();
