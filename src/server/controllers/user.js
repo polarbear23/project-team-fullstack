@@ -146,23 +146,6 @@ const getUserById = async (req, res) => {
     res.status(SERVER_SUCCESS.OK.CODE).json({ data: selectedUser });
 }
 
-const getAllUserRatings = async (req, res) => {
-    const { profileId } = req.body;
-    const pokemonRatings = await prisma.rating.findMany({
-        where: {
-            profileId: profileId
-        },
-        include: {
-            pokemons: true,
-            profile: true
-        }
-    });
-    if (!pokemonRatings) {
-        return res.status(SERVER_ERROR.NOT_FOUND.CODE).json({ error: SERVER_ERROR.NOT_FOUND.MESSAGE });
-    }
-    res.status(SERVER_SUCCESS.OK.CODE).json({ data: pokemonRatings });
-}
-
 const createProfile = async (req, res) => {
     const userId = Number(req.body.userId);
 
@@ -197,6 +180,5 @@ module.exports = {
     createUser,
     editUser,
     createProfile,
-    getUserById,
-    getAllUserRatings
+    getUserById
 };

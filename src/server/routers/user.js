@@ -8,14 +8,11 @@ const {
     editUser,
     createProfile,
     getUserById,
-    getAllUserRatings,
 } = require('../controllers/user');
 
 const router = express.Router();
 
 router.get("/:id", isLoggedIn, getUserById)
-
-router.get("/user/ratings", isLoggedIn, getAllUserRatings);
 
 router.post('/login', authenticateUser);
 
