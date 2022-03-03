@@ -4,7 +4,7 @@ import Category from "../Category";
 import {FORUM_URL, LOCAL_STORAGE} from '../../../config';
 
 const PostForm = (props) => {
-	const { posts, setPosts } = props;
+	const { posts, setPosts, setShowForm } = props;
 	const [tags, setTags] = useState([]);
 	const [categories, setCategories] = useState([]);
 	const [newPost, setNewPost] = useState({
@@ -31,7 +31,18 @@ const PostForm = (props) => {
 	const submitNewPostHandler = (e) => {
 		e.preventDefault();
 		fetchNewPost();
+		clearForm();
+		setShowForm(false);
 	};
+
+	const clearForm = () => {
+		setNewPost({
+			title: "",
+			content: "",
+		})
+		setCategories([]);
+		setTags([]);
+	}
 
 	const fetchNewPost = async () => {
 		const res = await fetch(FORUM_URL.POST, {
@@ -74,8 +85,8 @@ const PostForm = (props) => {
 			<Tag tags={tags} setTags={setTags} />
 
 			<div className="group-post-btn">
-				<button type="button" className="save-post-btn">
-					Save
+				<button type="button" className="save-post-btn" onClick={() => setShowForm(false)}>
+					Cancel
 				</button>
 				<button type="submit" className="submit-post-btn">
 					Post

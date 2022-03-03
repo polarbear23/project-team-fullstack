@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-import { LOCAL_STORAGE, FORUM_URL } from '../../../config';
-import { SERVER_ERROR } from '../../../../server/config';
+import { LOCAL_STORAGE, FORUM_URL } from "../../../config";
+import { SERVER_ERROR } from "../../../../server/config";
 
 const commentForm = (props) => {
-	const { setShowComment, postId, setNewComment, commentId} = props;
+	const { setShowComment, postId, setNewComment, commentId } = props;
 	const [comment, setcomment] = useState("");
 
 	const postComment = async () => {
@@ -13,7 +13,7 @@ const commentForm = (props) => {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
-					"Authorization": localStorage.getItem(LOCAL_STORAGE.TOKEN),
+					Authorization: localStorage.getItem(LOCAL_STORAGE.TOKEN),
 				},
 				body: JSON.stringify({
 					content: comment,
@@ -32,6 +32,7 @@ const commentForm = (props) => {
 	const submitFormHandler = (e) => {
 		e.preventDefault();
 		postComment();
+		setShowComment(false);
 	};
 
 	return (

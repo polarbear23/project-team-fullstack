@@ -2,7 +2,7 @@ const Category = (props) => {
 	const { changeHandler } = props;
 
 	return (
-		<>
+		<div className="category-container">
 			<div>
 				<label htmlFor="Gaming">Gaming</label>
 				<input
@@ -48,7 +48,7 @@ const Category = (props) => {
 					onChange={changeHandler}
 				/>
 			</div>
-		</>
+		</div>
 	);
 };
 
