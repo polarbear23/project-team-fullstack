@@ -58,9 +58,9 @@ const Leaderboard = (props) => {
             (previousValue, currentValue) => previousValue + currentValue, initialValue
         );
 
-        const avarageRating = (sumOfRatings / ratings.length).toFixed(1);
+        const averageRating = (sumOfRatings / ratings.length).toFixed(1);
 
-        return avarageRating;
+        return averageRating;
     };
 
     const sortPokemon = (pokemon) => {
