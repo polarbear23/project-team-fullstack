@@ -1,90 +1,196 @@
-import { useState } from "react";
+// import { useState } from "react";
 
-import Category from "../Category";
-import Tag from "../Tag";
+// import Category from "../Category";
+// import Tag from "../Tag";
 
-import {FORUM_URL, LOCAL_STORAGE, FETCH_METHOD} from '../../../config';
+// import {FORUM_URL, LOCAL_STORAGE, FETCH_METHOD} from '../../../config';
+
+// const PostForm = (props) => {
+// 	const { posts, setPosts, setShowForm } = props;
+// 	const [tags, setTags] = useState([]);
+// 	const [categories, setCategories] = useState([]);
+// 	const [newPost, setNewPost] = useState({
+// 		title: "",
+// 		content: "",
+// 	});
+
+// 	const changeHandler = (e) => {
+// 		const name = e.target.name;
+// 		const value = e.target.value;
+// 		setNewPost({ ...newPost, [name]: value });
+
+// 		if (
+// 			name === "Gaming" ||
+// 			name === "Fan-Fiction" ||
+// 			name === "Cosplay" ||
+// 			name === "Manga" ||
+// 			name === "Tv/Film"
+// 		) {
+// 			setCategories([...categories, name]);
+// 		}
+// 	};
+
+// 	const submitNewPostHandler = (e) => {
+// 		e.preventDefault();
+// 		fetchNewPost();
+// 		clearForm();
+// 		setShowForm(false);
+// 	};
+
+// 	const clearForm = () => {
+// 		setNewPost({
+// 			title: "",
+// 			content: "",
+// 		})
+// 		setCategories([]);
+// 		setTags([]);
+// 	}
+
+// 	const fetchNewPost = async () => {
+// 		const res = await fetch(FORUM_URL.POST, {
+// 			method: `${FETCH_METHOD.POST}`,
+// 			headers: {
+// 				"Content-Type": "application/json",
+// 				Authorization: localStorage.getItem(LOCAL_STORAGE.TOKEN),
+// 			},
+// 			body: JSON.stringify({
+// 				title: newPost.title,
+// 				content: newPost.content,
+// 				categories,
+// 				tags,
+// 				userId: Number(localStorage.getItem(LOCAL_STORAGE.USER_ID))
+// 			}),
+// 		});
+// 		const data = await res.json();
+// 		setPosts([...posts, data.data]);
+// 	};
+
+// 	return (
+// 		<form className="create-post-form" onSubmit={submitNewPostHandler}>
+// 			<input
+// 				type="text"
+// 				placeholder="Title"
+// 				name="title"
+// 				value={newPost.title}
+// 				onChange={changeHandler}
+// 			/>
+// 			<textarea
+// 				placeholder="Text"
+// 				name="content"
+// 				className="post-form-textarea"
+// 				value={newPost.content}
+// 				onChange={changeHandler}
+// 			></textarea>
+
+// 			<Category changeHandler={changeHandler} />
+
+// 			<Tag tags={tags} setTags={setTags} />
+
+// 			<div className="group-post-btn">
+// 				<button type="button" className="save-post-btn" onClick={() => setShowForm(false)}>
+// 					Cancel
+// 				</button>
+// 				<button type="submit" className="submit-post-btn">
+// 					Post
+// 				</button>
+// 			</div>
+// 		</form>
+// 	);
+import { useState } from 'react';
+
+import Category from '../Category';
+import Tag from '../Tag';
+
+import { HTTP_METHOD, FORUM_URL, LOCAL_STORAGE } from '../../../config';
 
 const PostForm = (props) => {
-	const { posts, setPosts, setShowForm } = props;
-	const [tags, setTags] = useState([]);
-	const [categories, setCategories] = useState([]);
-	const [newPost, setNewPost] = useState({
-		title: "",
-		content: "",
-	});
+    const { posts, setPosts, setShowForm } = props;
 
-	const changeHandler = (e) => {
-		const name = e.target.name;
-		const value = e.target.value;
-		setNewPost({ ...newPost, [name]: value });
+    const initialPost = {
+        title: '',
+        content: '',
+    };
 
-		if (
-			name === "Gaming" ||
-			name === "Fan-Fiction" ||
-			name === "Cosplay" ||
-			name === "Manga" ||
-			name === "Tv/Film"
-		) {
-			setCategories([...categories, name]);
-		}
-	};
-
-	const submitNewPostHandler = (e) => {
-		e.preventDefault();
-		fetchNewPost();
-		clearForm();
-		setShowForm(false);
-	};
+    const [tags, setTags] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [newPost, setNewPost] = useState(initialPost);
 
 	const clearForm = () => {
-		setNewPost({
-			title: "",
-			content: "",
-		})
+		setNewPost(initialPost);
 		setCategories([]);
 		setTags([]);
 	}
 
-	const fetchNewPost = async () => {
-		const res = await fetch(FORUM_URL.POST, {
-			method: `${FETCH_METHOD.POST}`,
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: localStorage.getItem(LOCAL_STORAGE.TOKEN),
-			},
-			body: JSON.stringify({
-				title: newPost.title,
-				content: newPost.content,
-				categories,
-				tags,
-				userId: Number(localStorage.getItem(LOCAL_STORAGE.USER_ID))
-			}),
-		});
-		const data = await res.json();
-		setPosts([...posts, data.data]);
-	};
+    const changeHandler = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
 
-	return (
-		<form className="create-post-form" onSubmit={submitNewPostHandler}>
-			<input
-				type="text"
-				placeholder="Title"
-				name="title"
-				value={newPost.title}
-				onChange={changeHandler}
-			/>
-			<textarea
-				placeholder="Text"
-				name="content"
-				className="post-form-textarea"
-				value={newPost.content}
-				onChange={changeHandler}
-			></textarea>
+        setNewPost({ ...newPost, [name]: value });
 
-			<Category changeHandler={changeHandler} />
+        if (
+            name === 'Gaming' ||
+            name === 'Fan-Fiction' ||
+            name === 'Cosplay' ||
+            name === 'Manga' ||
+            name === 'Tv/Film'
+        ) {
+            setCategories([...categories, name]);
+        }
+    };
 
-			<Tag tags={tags} setTags={setTags} />
+    const submitNewPostHandler = (event) => {
+        event.preventDefault();
+
+        const newPost = {
+            title: newPost.title,
+            content: newPost.content,
+            categories: categories,
+            tags: tags,
+            userId: Number(localStorage.getItem(LOCAL_STORAGE.USER_ID)),
+        };
+
+        fetchNewPost(newPost);
+
+		clearForm();
+
+		setShowForm(false);
+    };
+
+    const fetchNewPost = async (newPost) => {
+        const response = await fetch(FORUM_URL.POST, {
+            method: `${HTTP_METHOD.POST}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: localStorage.getItem(LOCAL_STORAGE.TOKEN),
+            },
+            body: JSON.stringify(newPost),
+        });
+
+        const data = await response.json();
+
+        setPosts([...posts, data.data]);
+    };
+
+    return (
+        <form className="create-post-form" onSubmit={submitNewPostHandler}>
+            <input
+                type="text"
+                placeholder="Title"
+                name="title"
+                value={newPost.title}
+                onChange={changeHandler}
+            />
+            <textarea
+                placeholder="Text"
+                name="content"
+                className="post-form-textarea"
+                value={newPost.content}
+                onChange={changeHandler}
+            ></textarea>
+
+            <Category changeHandler={changeHandler} />
+
+            <Tag tags={tags} setTags={setTags} />
 
 			<div className="group-post-btn">
 				<button type="button" className="save-post-btn" onClick={() => setShowForm(false)}>
@@ -94,8 +200,8 @@ const PostForm = (props) => {
 					Post
 				</button>
 			</div>
-		</form>
-	);
+        </form>
+    );
 };
 
 export default PostForm;

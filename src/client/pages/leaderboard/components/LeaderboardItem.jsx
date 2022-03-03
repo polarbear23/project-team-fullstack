@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Rating } from 'react-simple-star-rating';
 
-import { LOCAL_STORAGE, USER_URL } from '../../../config';
-
 const LeaderboardItem = (props) => {
-    const { pokemonListItem, fetchPokemon, setFetchPokemon, calcAverageRating, profileId } = props;
+    const { calcAverageRating, pokemonListItem, postRating, profileId } = props;
 
     const [rating, setRating] = useState(0);
     const [averageRating, setAverageRating] = useState(0);
@@ -14,26 +12,15 @@ const LeaderboardItem = (props) => {
             return;
         }
 
-        const postRating = async (ratingToPost) => {
-            await fetch(`${USER_URL.POKEMON_RATING}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: localStorage.getItem(LOCAL_STORAGE.TOKEN),
-                },
-                body: JSON.stringify({
-                    profileId: profileId,
-                    rating: ratingToPost,
-                    pokemonId: pokemonListItem.id,
-                }),
-            });
+        const ratingToPost = rating / 20;
 
-            setFetchPokemon(!fetchPokemon);
+        const newRating = {
+            profileId: profileId,
+            rating: ratingToPost,
+            pokemonId: pokemonListItem.id,
         };
 
-        const ratingToPost = rating /20;
-        
-        postRating(ratingToPost);
+        postRating(newRating);
     }, [rating]);
 
     useEffect(() => {
