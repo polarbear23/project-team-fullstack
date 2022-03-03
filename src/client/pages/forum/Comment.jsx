@@ -8,7 +8,7 @@ import CommentForm from "./forms/CommentForm";
 import "../../styles/forum.css";
 
 const Comment = (props) => {
-	const { comment, dateDiffInDays, setNewComment, postId, padding } = props;
+	const { comment, dateDiffInDays, setNewComment, postId} = props;
 	const [showCommentChildForm, setShowCommentChildForm] = useState(false);
 	const today = new Date();
 	const commentDate = new Date(comment.createdAt);

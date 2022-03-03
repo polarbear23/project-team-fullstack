@@ -15,6 +15,7 @@ const PostForm = (props) => {
 		const name = e.target.name;
         const value = e.target.value;
         setNewPost({...newPost, [name]: value});
+
 		if(name === 'Gaming' || name === 'Fan-Fiction' || name === 'Cosplay' || name === 'Manga' || name === 'Tv/Film'){
 			setCategories([...categories, name])
 		}
@@ -44,7 +45,6 @@ const PostForm = (props) => {
 		})
 		const data = await res.json();
 		setPosts([...posts, data.data]);
-		console.log('post',data);
 	}
 
 	return (

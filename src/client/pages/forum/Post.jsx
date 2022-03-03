@@ -13,8 +13,6 @@ const Post = (props) => {
 	const [showCommentParentForm, setShowCommentParentForm] = useState(false);
 	const [showAllComments, setShowAllComments] = useState(false);
 
-	let padding = 0;
-
 	const today = new Date();
 	const postDate = new Date(post.createdAt);
 

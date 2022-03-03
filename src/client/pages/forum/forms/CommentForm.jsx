@@ -1,4 +1,4 @@
-import { useState, useEffect} from 'react';
+import { useState} from 'react';
 // import { LOCAL_STORAGE, USER_URL } from '../../../config';
 
 const commentForm = (props) => {
@@ -30,16 +30,13 @@ const commentForm = (props) => {
 		catch(e){
 			console.log('Unuthorize');
 		}
-		
 	}
-	
 	
 
 	const submitFormHandler = (e) => {
 		e.preventDefault();
 		postComment();
 	}
-
 
 
   	return (
