@@ -16,8 +16,8 @@ const Forum = (props) => {
 	useEffect(() => {
 		const fetchPosts = async () => {
 			const res = await fetch(FORUM_URL.POST);
-			const allData = await res.json();
-			const copyPosts = allData.data.slice(0,10);
+			const jesRes = await res.json();
+			const copyPosts = jesRes.data.slice(0,10);
 			setPosts(copyPosts);
 		};
 		fetchPosts();
