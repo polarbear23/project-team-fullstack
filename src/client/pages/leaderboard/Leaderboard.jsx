@@ -1,54 +1,130 @@
-import { useEffect, useState } from "react";
-import LeaderboardItem from "./components/LeaderboardItem";
-import PokemonTile from "./components/PokemonTile";
+import { useEffect, useState } from 'react';
 
-const Leaderboard = () => {
-  const [pokemons, setPokemons] = useState([]);
+import LeaderboardItem from './components/LeaderboardItem';
+import PokemonTile from './components/PokemonTile';
 
-  const getPokemon = async () => {
-    const res = await fetch("http://localhost:4000/pokemon/");
-    const pokemon = await res.json();
-    console.log(pokemon.data);
-    setPokemons(pokemon.data);
-  };
+import { USER_URL } from '../../config';
 
-  useEffect(() => {
-    getPokemon();
-    console.log(pokemons);
-  }, []);
+const Leaderboard = (props) => {
+    const { user } = props;
 
-  return (
-    <div className="leaderboard">
-      <h2 className="top-3-leaders">Best Rated Pokemon</h2>
-      <div className="top-3-container">
-        <PokemonTile position={0} pokemons={pokemons} />
-        <PokemonTile position={1} pokemons={pokemons} />
-        <PokemonTile position={2} pokemons={pokemons} />
-      </div>
-      <h1 className="leaderboard-title">Leaderboard</h1>
+    const [pokemons, setPokemons] = useState([]);
+    const [topRatedPokemon, setTopRatedPokemon] = useState([]);
+    const [PokemonList, setPokemonList] = useState([]);
+    const [fetchPokemon, setFetchPokemon] = useState(false);
 
-      <table className="leaderboard-list">
-        <thead>
-          <th></th>
-          <th>Name</th>
-          <th>Type</th>
-          <th>HP</th>
-          <th>Attack</th>
-          <th>Defense</th>
-          <th>Special Atk</th>
-          <th>Special Def</th>
-          <th>Speed</th>
-          <th>Average Rating</th>
-          <th>Rating</th>
-        </thead>
-        <tbody>
-          {pokemons.map((pokemon) => {
-            return <LeaderboardItem pokemon={pokemon} />;
-          })}
-        </tbody>
-      </table>
-    </div>
-  );
+    useEffect(() => {
+        const getPokemon = async () => {
+            const response = await fetch(`${USER_URL.POKEMON}`);
+
+            const data = await response.json();
+
+            const fetchedPokemon = data.data;
+
+            const sortedPokemon = sortPokemon(fetchedPokemon);
+
+            setPokemons(sortedPokemon);
+        };
+
+        getPokemon();
+    }, [fetchPokemon]);
+
+    useEffect(() => {
+        if (!pokemons) {
+            return;
+        }
+
+        const numberOfPokemon = 3;
+
+        setTopRatedPokemon(pokemons.slice(0, numberOfPokemon));
+
+        setPokemonList(pokemons.slice(numberOfPokemon));
+    }, [pokemons]);
+
+    let profileId;
+    
+    if (user) {
+        profileId = user.profile.id;
+    }
+
+    const calcAverageRating = (ratings) => {
+        if (!ratings.length) return 0;
+
+        const pokemonRatings = ratings.map((rating) => rating.rating.rating);
+
+        const initialValue = 0;
+
+        let sumOfRatings = pokemonRatings.reduce(
+            (previousValue, currentValue) => previousValue + currentValue, initialValue
+        );
+
+        const averageRating = (sumOfRatings / ratings.length).toFixed(1);
+
+        return averageRating;
+    };
+
+    const sortPokemon = (pokemon) => {
+        return pokemon.sort((firstPokemon, secondPokemon) => {
+            const firstPokemonAvgRating = calcAverageRating(firstPokemon.ratings);
+            const secondPokemonAvgRating = calcAverageRating(secondPokemon.ratings);
+
+            if (firstPokemonAvgRating < secondPokemonAvgRating) {
+                return 1;
+            }
+
+            if (firstPokemonAvgRating > secondPokemonAvgRating) {
+                return -1;
+            }
+
+            return 0;
+        });
+    };
+
+    return (
+        <div className="leaderboard">
+            {topRatedPokemon && (
+                <PokemonTile
+                    topRatedPokemon={topRatedPokemon}
+                    calcAverageRating={calcAverageRating}
+                />
+            )}
+
+            <h1 className="leaderboard-title">Leaderboard</h1>
+
+            <table className="leaderboard-list">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>HP</th>
+                        <th>Attack</th>
+                        <th>Defense</th>
+                        <th>Special Atk</th>
+                        <th>Special Def</th>
+                        <th>Speed</th>
+                        <th>Average Rating</th>
+                        <th>Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {PokemonList &&
+                        PokemonList.map((pokemonListItem) => {
+                            return (
+                                <LeaderboardItem
+                                    profileId={profileId}
+                                    pokemonListItem={pokemonListItem}
+                                    fetchPokemon={fetchPokemon}
+                                    setFetchPokemon={setFetchPokemon}
+                                    calcAverageRating={calcAverageRating}
+                                    key={pokemonListItem.id}
+                                />
+                            );
+                        })}
+                </tbody>
+            </table>
+        </div>
+    );
 };
 
 export default Leaderboard;

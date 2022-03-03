@@ -23,7 +23,7 @@ const getAllPokemon = async (req, res) => {
 };
 
 const getPokemonById = async (req, res) => {
-    const id = parseInt(req.params.id, 10);
+    const id = Number(req.params.id);
 
     const foundPokemon = await prisma.pokemon.findUnique({
         where: {
@@ -75,7 +75,15 @@ const createPokemonRating = async (req, res) => {
         include: {
             pokemons: {
                 include: {
-                    pokemon: true,
+                    pokemon: {
+                        include: {
+                            ratings: {
+                                include: {
+                                    rating: true
+                                }
+                            }
+                        }
+                    },
                 },
             },
         },

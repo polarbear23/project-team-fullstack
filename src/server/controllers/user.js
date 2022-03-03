@@ -8,12 +8,13 @@ const {
 
 const { prisma } = require('../utils/prisma');
 
-const { KEYS, SERVER_ERROR, SERVER_SUCCESS, FORUM_ROLES } = require('../config.js');
+const { KEYS, SERVER_ERROR, SERVER_SUCCESS, FORUM_ROLES, PRISMA_ERROR } = require('../config.js');
+const { Prisma } = require('@prisma/client');
 
 const authenticateUser = async (req, res) => {
     let { username, password } = req.body;
 
-    const foundUser = await prisma.user.findUnique({
+    let foundUser = await prisma.user.findUnique({
         where: {
             username: username,
         },
@@ -29,7 +30,11 @@ const authenticateUser = async (req, res) => {
         return res.status(SERVER_ERROR.UNAUTHORIZED.CODE).json({ error: SERVER_ERROR.UNAUTHORIZED.MESSAGE });
     }
 
-    res.json(createToken({ id: foundUser.id, role: foundUser.role }));
+    const token = createToken({ id: foundUser.id, role: foundUser.role });
+
+    foundUser = removeKeys(foundUser, KEYS.PASSWORD);
+
+    res.status(SERVER_SUCCESS.OK.CODE).json({ data: foundUser, token: token });
 };
 
 const createUser = async (req, res) => {
@@ -43,21 +48,32 @@ const createUser = async (req, res) => {
         email: email,
     };
 
-    let createdUser = await prisma.user.create({
-        data: {
-            ...user,
-        },
-    });
+    try{
+        let createdUser = await prisma.user.create({
+            data: {
+                ...user,
+            },
+        });
 
-    createdUser = removeKeys(createdUser, KEYS.PASSWORD);
+        createdUser = removeKeys(createdUser, KEYS.PASSWORD);
+    
+        const token = createToken({ id: createdUser.id, role: createdUser.role });
 
-    res.status(SERVER_SUCCESS.OK.CODE).json({ data: createdUser });
+        res.status(SERVER_SUCCESS.OK.CODE).json({ data: createdUser, token: token });
+    }
+    catch(error){
+        if(error instanceof Prisma.PrismaClientKnownRequestError){
+            if(error.code === PRISMA_ERROR.UNIQUE_CONSTRAINT_VIOLATION.CODE){
+                res.status(SERVER_ERROR.INTERNAL.CODE).json({ error: PRISMA_ERROR.UNIQUE_CONSTRAINT_VIOLATION.CLIENT_MESSAGE_REGISTER });
+            }
+        }
+    }
 };
 
 const editUser = async (req, res) => {
     let { username, password, email, role, isBanned } = req.body;
 
-    const id = parseInt(req.params.id, 10);
+    const id = Number(req.params.id);
 
     const decodedToken = decodeToken(req);
 
@@ -109,27 +125,60 @@ const editUser = async (req, res) => {
     res.json({ data: updatedUser });
 };
 
-const createProfile = async (req, res) => {
-    const { userId, profilePicture, location } = req.body;
+const getUserById = async (req, res) => {
+    const id = Number(req.params.id);
 
-    const createdProfile = await prisma.profile.create({
-        data: {
-            userId: userId,
-            profilePicture: profilePicture,
-            location: location,
+    let selectedUser = await prisma.user.findUnique({
+        where: { 
+            id: id,
+        }, 
+        include: {
+            profile: true,
         },
-    });
+    })
 
-    if (!createdProfile) {
-        return res.status(SERVER_ERROR.INTERNAL.CODE).json({ error: SERVER_ERROR.INTERNAL.MESSAGE });
+    if (!selectedUser) {
+        return res.status(SERVER_ERROR.NOT_FOUND.CODE).json({ error: SERVER_ERROR.NOT_FOUND.MESSAGE });
     }
 
-    res.status(SERVER_SUCCESS.OK.CODE).json({ data: createdProfile });
+    selectedUser = removeKeys(selectedUser, KEYS.PASSWORD);
+
+    res.status(SERVER_SUCCESS.OK.CODE).json({ data: selectedUser });
+} 
+
+const createProfile = async (req, res) => {
+    const userId = Number(req.body.userId);
+
+    let { profilePicture, location } = req.body;
+
+    if(!profilePicture){
+        profilePicture = "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png";
+    }
+
+    try{
+        const createdProfile = await prisma.profile.create({
+            data: {
+                userId: userId,
+                profilePicture: profilePicture,
+                location: location,
+            },
+        });
+
+        res.status(SERVER_SUCCESS.OK.CODE).json({ data: createdProfile });
+    }
+    catch(error){
+        if(error instanceof Prisma.PrismaClientKnownRequestError){
+            if(error.code === PRISMA_ERROR.UNIQUE_CONSTRAINT_VIOLATION.CODE){
+                res.status(SERVER_ERROR.INTERNAL.CODE).json({ error: PRISMA_ERROR.UNIQUE_CONSTRAINT_VIOLATION.CLIENT_MESSAGE_PROFILE });
+            }
+        }
+    }
 };
 
 module.exports = {
     authenticateUser,
     createUser,
     editUser,
-    createProfile
+    createProfile,
+    getUserById,
 };
