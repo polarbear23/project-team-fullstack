@@ -6,7 +6,7 @@ import { LOCAL_STORAGE, INT_LINK, USER_URL } from '../../config';
 import { fetchFromServer } from '../../utils/fetch';
 
 const CreateUser = props => {
-    const { user, setUser, setIsLoggedIn } = props;
+    const { setUser, setIsLoggedIn } = props;
 
     const formInitialData = {
         username: '',

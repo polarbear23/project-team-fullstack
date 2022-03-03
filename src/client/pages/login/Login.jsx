@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { FETCH_METHOD, LOCAL_STORAGE, INT_LINK, USER_URL } from '../../config';
+import { FETCH_METHOD, INT_LINK, LOCAL_STORAGE, USER_URL } from '../../config';
 
 import { fetchFromServer } from '../../utils/fetch';
 
 const Login = (props) => {
-    const { setUser, setIsLoggedIn } = props;
+    const { setIsLoggedIn } = props;
 
     const intialForm = {
         username: '',

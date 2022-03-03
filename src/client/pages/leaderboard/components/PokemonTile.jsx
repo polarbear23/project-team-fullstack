@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Rating } from 'react-simple-star-rating';
 
 const PokemonTile = (props) => {
-    const { topRatedPokemon, calcAverageRating } = props;
+    const { calcAverageRating, index, pokemonListItem, postRating, profileId } =
+        props;
 
     const [rating, setRating] = useState(0);
 
@@ -19,16 +20,32 @@ const PokemonTile = (props) => {
         }
     };
 
+    useEffect(() => {
+        if (!rating) {
+            return;
+        }
+
+        const ratingToPost = rating / 20;
+
+        const newRating = {
+            profileId: profileId,
+            rating: ratingToPost,
+            pokemonId: pokemonListItem.id,
+        };
+
+        postRating(newRating);
+    }, [rating]);
+
     return (
-        <div className="pokemon-tile" key={pokemon.id}>
+        <div className="pokemon-tile" key={pokemonListItem.id}>
             <img
                 className="top-3-pokemon-image"
-                src={pokemon.largeImageUrl}
-                alt={pokemon.name}
+                src={pokemonListItem.largeImageUrl}
+                alt={pokemonListItem.name}
             />
             <div className="pokemon-text-container">
                 <h3 className="pokemon-text-container-header">
-                    {pokemon.name}
+                    {pokemonListItem.name}
                 </h3>
                 <div className="stats">
                     <div className="stats-head">
@@ -39,11 +56,13 @@ const PokemonTile = (props) => {
                         <span>Avg Rating: </span>
                     </div>
                     <div className="stats-values">
-                        <span>{pokemon.baseHP}</span>
-                        <span>{pokemon.baseAttack}</span>
-                        <span> {pokemon.baseDefense}</span>
-                        <span>{pokemon.speed}</span>
-                        <span>{calcAverageRating(pokemon.ratings)}</span>
+                        <span>{pokemonListItem.baseHP}</span>
+                        <span>{pokemonListItem.baseAttack}</span>
+                        <span> {pokemonListItem.baseDefense}</span>
+                        <span>{pokemonListItem.speed}</span>
+                        <span>
+                            {calcAverageRating(pokemonListItem.ratings)}
+                        </span>
                     </div>
 
                     <Rating onClick={handleRating} ratingValue={rating} />
@@ -52,7 +71,7 @@ const PokemonTile = (props) => {
             <div className="medal-type-container">
                 <img className="medal" src={assignMedals(index)} alt="" />
                 <div className="type-container">
-                    {pokemon.types.map((type, index) => {
+                    {pokemonListItem.types.map((type, index) => {
                         return (
                             <img
                                 className="tile-type"

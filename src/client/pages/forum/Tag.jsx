@@ -1,35 +1,38 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 const Tag = (props) => {
-	const { tags, setTags } = props;
-	const [tag, setTag] = useState([]);
+    const { tags, setTags } = props;
 
-	const addTagHandler = (e) => {
-		e.preventDefault();
-		setTags([...tags, tag]);
-		setTag("");
-	};
+    const [tag, setTag] = useState([]);
 
-	return (
-		<>
-			<div className="tag-container">
-				<input
-					type="text"
-					id="tag"
-					placeholder="Tag"
-					value={tag}
-					onChange={(e) => setTag(e.target.value)}
-				/>
-				<button onClick={addTagHandler}>Add</button>
-			</div>
+    const addTagHandler = (event) => {
+        event.preventDefault();
 
-			<ul className="tag-list">
-				{tags.map((tag, index) => {
-					return <li key={index}>#{tag}</li>;
-				})}
-			</ul>
-		</>
-	);
+        setTags([...tags, tag]);
+
+        setTag('');
+    };
+
+    return (
+        <>
+            <div className="tag-container">
+                <input
+                    type="text"
+                    id="tag"
+                    placeholder="Tag"
+                    value={tag}
+                    onChange={(event) => setTag(event.target.value)}
+                />
+                <button onClick={addTagHandler}>Add</button>
+            </div>
+
+            <ul className="tag-list">
+                {tags.map((tag, index) => {
+                    return <li key={index}>#{tag}</li>;
+                })}
+            </ul>
+        </>
+    );
 };
 
 export default Tag;

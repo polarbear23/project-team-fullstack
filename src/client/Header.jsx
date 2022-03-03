@@ -57,7 +57,7 @@ const Header = (props) => {
                             </li>
                         </>
                     )}
-                    {(!isLoggedIn) && (
+                    {!isLoggedIn && (
                         <>
                             <li className="navbar__lists--item">
                                 <Link to={INT_LINK.LOGIN}>Login</Link>
