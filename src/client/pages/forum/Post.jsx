@@ -51,7 +51,7 @@ const Post = (props) => {
 					<div className="card-footer">
 						<div className="card-user">
 							<img
-								src={!post.user.profile ? './assets/default-user.jpg' : post.user.profile["profilePicture"]}
+								src={post.user.profile.profilePicture}
 								alt="user image"
 								className="card-user-img"
 							/>

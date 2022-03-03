@@ -1,8 +1,6 @@
-import React from 'react'
-
 const Category = (props) => {
-    const {changeHandler} = props;
-    
+	const { changeHandler } = props;
+
 	return (
 		<>
 			<div>
@@ -54,4 +52,4 @@ const Category = (props) => {
 	);
 };
 
-export default Category
+export default Category;

@@ -4,8 +4,14 @@ const USER_URL = {
     LOGIN: 'http://localhost:4000/user/login',
     PROFILE: 'http://localhost:4000/user/profile',
     POKEMON: 'http://localhost:4000/pokemon/',
-    POKEMON_RATING: 'http://localhost:4000/pokemon/rating',
+    POKEMON_RATING: 'http://localhost:4000/pokemon/rating', 
 };
+
+const FORUM_URL = {
+    POST: 'http://localhost:4000/post',
+    COMMENT: 'http://localhost:4000/post/comment'
+
+}
 
 const INT_LINK = {
     HOME: '/',
@@ -36,4 +42,5 @@ module.exports = {
     INT_LINK,
     LOCAL_STORAGE,
     FETCH_METHOD,
+    FORUM_URL
 };

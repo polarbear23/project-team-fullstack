@@ -1,58 +1,53 @@
-import { useState} from 'react';
-// import { LOCAL_STORAGE, USER_URL } from '../../../config';
+import { useState } from "react";
+
+import { LOCAL_STORAGE, FORUM_URL } from '../../../config';
+import { SERVER_ERROR } from '../../../../server/config';
 
 const commentForm = (props) => {
-	const { setShowComment, postId, setNewComment, commentId, user } = props;
-	const [comment, setcomment] = useState('');
-	
-	
-	const postComment = async() => {
-		
-		try{
-			const res = await fetch("http://localhost:4000/post/comment", {
+	const { setShowComment, postId, setNewComment, commentId} = props;
+	const [comment, setcomment] = useState("");
+
+	const postComment = async () => {
+		try {
+			const res = await fetch(FORUM_URL.COMMENT, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
-					// Authorization: localStorage.getItem(LOCAL_STORAGE.TOKEN),
+					"Authorization": localStorage.getItem(LOCAL_STORAGE.TOKEN),
 				},
 				body: JSON.stringify({
 					content: comment,
-					userId: 1,
-					// userId: user.id,
+					userId: Number(localStorage.getItem(LOCAL_STORAGE.USER_ID)),
 					postId,
-					parentId: commentId ? commentId : ''
+					parentId: commentId ? commentId : "",
 				}),
 			});
 			const data = await res.json();
-			console.log(data);
 			setNewComment(data);
+		} catch (e) {
+			console.log(SERVER_ERROR.UNAUTHORIZED);
 		}
-		catch(e){
-			console.log('Unuthorize');
-		}
-	}
-	
+	};
 
 	const submitFormHandler = (e) => {
 		e.preventDefault();
 		postComment();
-	}
+	};
 
-
-  	return (
+	return (
 		<div className="comment-form-container">
 			<form className="comment-form" onSubmit={submitFormHandler}>
-				<textarea 
-					name="reply" 
-					className="textarea" 
-					value={comment} 
+				<textarea
+					name="reply"
+					className="textarea"
+					value={comment}
 					onChange={(e) => setcomment(e.target.value)}
 				>
 					What are your thoughts?
 				</textarea>
 				<div className="group-btn">
-					<button 
-						type="button" 
+					<button
+						type="button"
 						className="group-btn-cancel"
 						onClick={() => setShowComment(false)}
 					>
@@ -65,6 +60,6 @@ const commentForm = (props) => {
 			</form>
 		</div>
 	);
-}
+};
 
-export default commentForm
+export default commentForm;

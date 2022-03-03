@@ -20,7 +20,7 @@ const Comment = (props) => {
 					<div className="comment-card-header">
 						<div className="comment-user">
 							<img
-								src={comment.user.profile ? comment.user.profile.profilePicture : './assets/default-user.jpg'}
+								src={comment.user.profile.profilePicture}
 								alt="user image"
 								className="comment-user-img"
 							/>
