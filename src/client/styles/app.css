@@ -511,7 +511,6 @@ table td {
 .leaderboard-list th {
   border-color: inherit;
   text-align: left;
-  vertical-align: top;
   background-color: #b9c9fe;
   border-color: #aabcfe;
   border-style: solid;
@@ -633,7 +632,6 @@ table td {
 
 .leaderboard td {
   text-align: left;
-  vertical-align: top;
 }
 
 .leaderboard-list-item:nth-child(even) {

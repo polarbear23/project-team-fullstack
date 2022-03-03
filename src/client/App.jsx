@@ -19,11 +19,6 @@ const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
 
-    console.log('state', {
-        user,
-        isLoggedIn,
-    });
-
     useEffect(() => {
         localStorage.getItem(LOCAL_STORAGE.TOKEN) ? setIsLoggedIn(true) : setIsLoggedIn(false);
     }, []);
