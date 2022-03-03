@@ -1,0 +1,163 @@
+/* Leaderboard styling*/
+.leaderboard {
+	grid-area: main;
+	margin-top: 4rem;
+	margin-bottom: 8rem;
+}
+
+table {
+	width: 90%;
+	border-collapse: collapse;
+	border-color: #aabcfe;
+	border-spacing: 0;
+}
+
+table td {
+	border-color: #aabcfe;
+	border-style: solid;
+	border-width: 0px;
+	color: #669;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	overflow: hidden;
+	word-break: normal;
+}
+
+.leaderboard-list th {
+	border-color: inherit;
+	text-align: left;
+	background-color: #b9c9fe;
+	border-color: #aabcfe;
+	border-style: solid;
+	border-width: 0px;
+	color: #039;
+	font-family: Arial, sans-serif;
+	font-size: 1.5rem;
+	font-weight: normal;
+	overflow: hidden;
+	padding: 1rem;
+	word-break: normal;
+}
+
+.leaderboard-title {
+	margin-bottom: 1rem;
+}
+
+.top-3-leaders {
+	margin-bottom: 2rem;
+}
+
+.top-3-container {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 1rem;
+	width: 90%;
+	border-radius: 20px;
+}
+
+.pokemon-container {
+	display: grid;
+}
+
+.pokemon-tile {
+	background-color: #d2e4fc;
+	display: grid;
+	grid-template-columns: 1fr 1fr 50px;
+	border-radius: 10px 10px 10px 10px;
+	margin-bottom: 2rem;
+}
+
+.medal-type-container {
+	display: grid;
+	grid-template-rows: 1fr 0.5fr;
+	padding-bottom: 1rem;
+}
+
+.tile-type {
+	margin-bottom: 0.2rem;
+	height: 35px;
+}
+
+.medal {
+	float: right;
+	padding-top: 1rem;
+	padding-right: 1rem;
+}
+
+.top-3-pokemon-image {
+	height: 220px;
+	padding: 1rem;
+	background-color: #aabcfe;
+	border-radius: 10px 0 0 10px;
+}
+
+.pokemon-text-container {
+	padding: 1rem 0 0 1rem;
+}
+
+.pokemon-text-container-header {
+	margin-bottom: 0.5rem;
+}
+
+.stats {
+	display: grid;
+	grid-template:
+		"left right" 1fr
+		"left right" 1fr
+		"rating rating" 1fr/
+		10rem 4rem;
+	gap: 1rem;
+}
+
+.stats-head {
+	grid-area: left;
+	display: grid;
+	grid-auto-flow: row;
+	color: #669;
+	font-weight: bold;
+}
+
+.stats-values {
+	grid-area: right;
+	display: grid;
+	color: #669;
+	font-weight: bold;
+}
+
+.stats > p {
+	color: #669;
+	font-weight: bold;
+}
+
+.leaderboard-text {
+	line-height: 2;
+	font-size: 1.2rem;
+	padding: 1rem;
+	text-align: right;
+}
+
+.leaderboard td {
+	text-align: left;
+}
+
+.leaderboard-list-item:nth-child(even) {
+	background-color: #d2e4fc;
+}
+
+.leaderboard-list-item:nth-child(odd) {
+	background-color: #e8edff;
+}
+
+.type-icon {
+	height: 40px;
+	padding-right: 0.5rem;
+}
+
+.leaderboard-pokemon-icon {
+	height: 120px;
+	padding: 1rem;
+}
+
+.leaderboard-pokemon-type {
+	padding: 1rem;
+}

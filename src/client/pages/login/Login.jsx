@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { HTTP_METHOD, PAGE_LINK, LOCAL_STORAGE, USER_URL } from '../../config';
 
+import '../../styles/header.css';
+
 import { fetchFromServer } from '../../utils/fetch';
 
 const Login = (props) => {

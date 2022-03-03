@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import { FaMoon, FaComments, FaHome } from 'react-icons/fa';
 import { MdLeaderboard } from 'react-icons/md';
 
+import './styles/leftMenu.css';
+
 const LeftMenu = (props) => {
     // const {darkMode, setDarkMode} = props;
 

@@ -20,7 +20,9 @@ const Forum = (props) => {
 
             const data = await response.json();
 
-            setPosts(data.data);
+			const copyPosts = data.data.slice(0,10);
+			
+			setPosts(copyPosts);
         };
 
         fetchPosts();
@@ -35,7 +37,7 @@ const Forum = (props) => {
                 >
                     Create Post
                 </button>
-                {showForm && <PostForm posts={posts} setPosts={setPosts} />}
+                {showForm && <PostForm posts={posts} setPosts={setPosts} setShowForm={setShowForm}/>}
             </div>
             <div className="forum-list">
                 {posts &&

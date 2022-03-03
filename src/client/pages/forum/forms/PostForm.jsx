@@ -6,7 +6,7 @@ import Tag from '../Tag';
 import { HTTP_METHOD, FORUM_URL, LOCAL_STORAGE } from '../../../config';
 
 const PostForm = (props) => {
-    const { posts, setPosts } = props;
+    const { posts, setPosts, setShowForm } = props;
 
     const initialPost = {
         title: '',
@@ -16,6 +16,12 @@ const PostForm = (props) => {
     const [tags, setTags] = useState([]);
     const [categories, setCategories] = useState([]);
     const [newPost, setNewPost] = useState(initialPost);
+
+	const clearForm = () => {
+		setNewPost(initialPost);
+		setCategories([]);
+		setTags([]);
+	}
 
     const changeHandler = (event) => {
         const name = event.target.name;
@@ -46,6 +52,10 @@ const PostForm = (props) => {
         };
 
         fetchNewPost(newPost);
+
+		clearForm();
+
+		setShowForm(false);
     };
 
     const fetchNewPost = async (newPost) => {
@@ -84,14 +94,14 @@ const PostForm = (props) => {
 
             <Tag tags={tags} setTags={setTags} />
 
-            <div className="group-post-btn">
-                <button type="button" className="save-post-btn">
-                    Save
-                </button>
-                <button type="submit" className="submit-post-btn">
-                    Post
-                </button>
-            </div>
+			<div className="group-post-btn">
+				<button type="button" className="save-post-btn" onClick={() => setShowForm(false)}>
+					Cancel
+				</button>
+				<button type="submit" className="submit-post-btn">
+					Post
+				</button>
+			</div>
         </form>
     );
 };
