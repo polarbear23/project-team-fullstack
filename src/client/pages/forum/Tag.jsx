@@ -1,9 +1,10 @@
 import {useState} from 'react';
 
 
-const Tag = () => {
+const Tag = (props) => {
+    const {tags, setTags} = props;
     const [tag, setTag] = useState([]);
-    const [tags, setTags] = useState([]);
+    
     
     const addTagHandler = (e) => {
         e.preventDefault();

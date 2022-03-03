@@ -29,7 +29,7 @@ const Forum = (props) => {
                 >
                     Create Post
                 </button>
-                {showForm && <PostForm/>}
+                {showForm && <PostForm posts={posts} setPosts={setPosts}/>}
                 
             </div>
             <div className="forum-list">

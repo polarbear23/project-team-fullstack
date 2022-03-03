@@ -5,7 +5,7 @@ const { SERVER_ERROR, SERVER_SUCCESS } = require('../config');
 const { prisma } = require('../utils/prisma');
 
 const createPost = async (req, res) => {
-    const { title, content, tags, userId } = req.body;
+    const { title, content, tags, userId, categories} = req.body;
 
     const createdPost = await prisma.post.create({
         data: {
@@ -46,9 +46,29 @@ const createPost = async (req, res) => {
             },
         },
         include: {
+            like: true,
             tags: {
                 include: {
                     tag: true,
+                },
+            },
+            categories: {
+                include: {
+                    category: true,
+                },
+            },
+            user: {
+                include:{
+                    profile: true
+                },
+            },
+            comment: {
+                include: {
+                    user: {
+                        include: {
+                            profile: true
+                        }
+                    }
                 },
             }
         },

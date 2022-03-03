@@ -8,16 +8,15 @@ import Signup from "./pages/forms/Signup";
 import SignIn from "./pages/forms/SignIn";
 import Forum from "./pages/forum/Forum";
 import { Routes, Route } from 'react-router-dom';
-import {useState} from "react"
+
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
   
 
   return (
-    <div className="app" style={{backgroundColor: darkMode ? '#000' : ''}}>
+    <div className="app">
       <Header/>
-        <LeftMenu setDarkMode={setDarkMode} darkMode={darkMode}/>
+        <LeftMenu />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<Signup />} />

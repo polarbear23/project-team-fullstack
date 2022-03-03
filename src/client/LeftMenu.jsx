@@ -4,7 +4,7 @@ import { FaMoon, FaComments, FaHome } from "react-icons/fa";
 import { MdLeaderboard } from "react-icons/md";
 
 const LeftMenu = (props) => {
-  const {darkMode, setDarkMode} = props;
+  // const {darkMode, setDarkMode} = props;
 
   const changeToDark = () => {
     setDarkMode(true);
