@@ -58,7 +58,7 @@ const PostForm = (props) => {
             body: JSON.stringify(newPost),
         });
 
-        const data = await res.json();
+        const data = await response.json();
 
         setPosts([...posts, data.data]);
     };
