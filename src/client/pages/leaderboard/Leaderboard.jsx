@@ -24,7 +24,6 @@ const Leaderboard = (props) => {
             const sortedPokemon = sortPokemon(fetchedPokemon);
 
             setPokemons(sortedPokemon);
-            
         };
 
         getPokemon();
@@ -39,7 +38,7 @@ const Leaderboard = (props) => {
 
         setTopRatedPokemon(pokemons.slice(0, numberOfPokemon));
 
-        setPokemonList(pokemons.slice(numberOfPokemon))
+        setPokemonList(pokemons.slice(numberOfPokemon));
     }, [pokemons]);
 
     let profileId;
