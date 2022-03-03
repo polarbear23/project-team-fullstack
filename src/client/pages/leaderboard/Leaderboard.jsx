@@ -83,11 +83,24 @@ const Leaderboard = (props) => {
     return (
         <div className="leaderboard">
             {topRatedPokemon && (
+                <>
+        <h2 className="top-3-leaders">Top Rated Pokemon</h2>
+        <div className="top-3-container">
+            {topRatedPokemon.map((pokemon, index) => {
+                return (
                 <PokemonTile
                     topRatedPokemon={topRatedPokemon}
                     calcAverageRating={calcAverageRating}
                 />
+                )
             )}
+         
+        })}
+                )
+            </div>
+        </>
+
+    
 
             <h1 className="leaderboard-title">Leaderboard</h1>
 
@@ -124,7 +137,9 @@ const Leaderboard = (props) => {
                 </tbody>
             </table>
         </div>
+        
     );
+   
 };
 
 export default Leaderboard;
