@@ -50,11 +50,11 @@ const Leaderboard = (props) => {
     const calcAverageRating = (ratings) => {
         if (!ratings.length) return 0;
 
-        const pokemonRatingsArr = ratings.map((rating) => rating.rating.rating);
+        const pokemonRatings = ratings.map((rating) => rating.rating.rating);
 
         const initialValue = 0;
 
-        let sumOfRatings = pokemonRatingsArr.reduce(
+        let sumOfRatings = pokemonRatings.reduce(
             (previousValue, currentValue) => previousValue + currentValue, initialValue
         );
 

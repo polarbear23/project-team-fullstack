@@ -9,16 +9,13 @@ const PokemonTile = (props) => {
     const handleRating = (rate) => setRating(rate);
 
     const assignMedals = (index) => {
-        if (index === 0) {
-            return '/assets/medals/gold.svg';
-        }
-
-        if (index === 1) {
-            return '/assets/medals/silver.svg';
-        }
-
-        if (index === 2) {
-            return '/assets/medals/bronze.svg';
+        switch(index) {
+            case 0:
+                return '/assets/medals/gold.svg'
+            case 1:
+                return '/assets/medals/silver.svg'
+            case 2:
+                return '/assets/medals/bronze.svg'
         }
     };
 
