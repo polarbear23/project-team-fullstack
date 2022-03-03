@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { LOCAL_STORAGE, INT_LINK, USER_URL } from '../../config';
+import { LOCAL_STORAGE, PAGE_LINK, USER_URL } from '../../config';
 
 import { fetchFromServer } from '../../utils/fetch';
 
-const CreateUser = props => {
+const CreateUser = (props) => {
     const { setUser, setIsLoggedIn } = props;
 
     const formInitialData = {
@@ -25,7 +25,11 @@ const CreateUser = props => {
     }, [form]);
 
     const registerUser = async () => {
-        const registeredUser = await fetchFromServer(USER_URL.REGISTER, form, 'POST');
+        const registeredUser = await fetchFromServer(
+            USER_URL.REGISTER,
+            form,
+            'POST'
+        );
 
         return registeredUser;
     };
@@ -55,7 +59,7 @@ const CreateUser = props => {
         setUser(registeredUser.data);
         setIsLoggedIn(true);
 
-        navigate(INT_LINK.CREATE_PROFILE);
+        navigate(PAGE_LINK.CREATE_PROFILE);
     };
 
     return (
@@ -86,12 +90,12 @@ const CreateUser = props => {
                         required
                     />
                 </div>
-                {error &&
+                {error && (
                     <>
                         <p className="error">{error}</p>
                         <br></br>
                     </>
-                }
+                )}
                 <div className="input-groups">
                     <label htmlFor="password">Password:</label>
                     <input

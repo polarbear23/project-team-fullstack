@@ -12,7 +12,7 @@ const FORUM_URL = {
     COMMENT: 'http://localhost:4000/post/comment',
 };
 
-const INT_LINK = {
+const PAGE_LINK = {
     HOME: '/',
     CREATE_PROFILE: '/register/profile',
     CREATE_USER: '/register/user',
@@ -28,7 +28,7 @@ const LOCAL_STORAGE = {
     USER_ID: 'userId',
 };
 
-const FETCH_METHOD = {
+const HTTP_METHOD = {
     GET: 'GET',
     POST: 'POST',
     PATCH: 'PATCH',
@@ -38,8 +38,8 @@ const FETCH_METHOD = {
 
 module.exports = {
     USER_URL,
-    INT_LINK,
+    PAGE_LINK,
     LOCAL_STORAGE,
-    FETCH_METHOD,
+    HTTP_METHOD,
     FORUM_URL,
 };

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { FETCH_METHOD, LOCAL_STORAGE, FORUM_URL } from '../../../config';
+import { HTTP_METHOD, LOCAL_STORAGE, FORUM_URL } from '../../../config';
 
 const commentForm = (props) => {
     const { setShowComment, postId, setNewComment, commentId } = props;
@@ -10,7 +10,7 @@ const commentForm = (props) => {
     const postComment = async (newComment) => {
         try {
             const response = await fetch(FORUM_URL.COMMENT, {
-                method: `${FETCH_METHOD.POST}`,
+                method: `${HTTP_METHOD.POST}`,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: localStorage.getItem(LOCAL_STORAGE.TOKEN),

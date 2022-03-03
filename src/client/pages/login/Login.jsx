@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { FETCH_METHOD, INT_LINK, LOCAL_STORAGE, USER_URL } from '../../config';
+import { HTTP_METHOD, PAGE_LINK, LOCAL_STORAGE, USER_URL } from '../../config';
 
 import { fetchFromServer } from '../../utils/fetch';
 
@@ -31,7 +31,11 @@ const Login = (props) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const fetchedUser = await fetchFromServer(USER_URL.LOGIN, form, FETCH_METHOD.POST);
+        const fetchedUser = await fetchFromServer(
+            USER_URL.LOGIN,
+            form,
+            HTTP_METHOD.POST
+        );
 
         if (fetchedUser.error) {
             setError(fetchedUser.error);
@@ -45,11 +49,11 @@ const Login = (props) => {
 
         setIsLoggedIn(true);
 
-        navigate(INT_LINK.HOME, { replace: true });
+        navigate(PAGE_LINK.HOME, { replace: true });
     };
 
     const handleRedirectToRegister = () => {
-        navigate(INT_LINK.CREATE_USER);
+        navigate(PAGE_LINK.CREATE_USER);
     };
 
     return (

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import LeaderboardItem from './components/LeaderboardItem';
 import PokemonTile from './components/PokemonTile';
 
-import { FETCH_METHOD, LOCAL_STORAGE, USER_URL } from '../../config';
+import { HTTP_METHOD, LOCAL_STORAGE, USER_URL } from '../../config';
 
 const Leaderboard = (props) => {
     const { user } = props;
@@ -66,8 +66,12 @@ const Leaderboard = (props) => {
 
     const sortPokemon = (pokemon) => {
         return pokemon.sort((firstPokemon, secondPokemon) => {
-            const firstPokemonAvgRating = calcAverageRating(firstPokemon.ratings);
-            const secondPokemonAvgRating = calcAverageRating(secondPokemon.ratings);
+            const firstPokemonAvgRating = calcAverageRating(
+                firstPokemon.ratings
+            );
+            const secondPokemonAvgRating = calcAverageRating(
+                secondPokemon.ratings
+            );
 
             if (firstPokemonAvgRating < secondPokemonAvgRating) {
                 return 1;
@@ -83,7 +87,7 @@ const Leaderboard = (props) => {
 
     const postRating = async (newRating) => {
         await fetch(`${USER_URL.POKEMON_RATING}`, {
-            method: `${FETCH_METHOD.POST}` ,
+            method: `${HTTP_METHOD.POST}`,
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: localStorage.getItem(LOCAL_STORAGE.TOKEN),

@@ -11,7 +11,7 @@ import Leaderboard from './pages/leaderboard/Leaderboard';
 import LeftMenu from './LeftMenu';
 import Login from './pages/login/Login';
 
-import { FETCH_METHOD, INT_LINK, LOCAL_STORAGE, USER_URL } from './config';
+import { HTTP_METHOD, PAGE_LINK, LOCAL_STORAGE, USER_URL } from './config';
 
 import './styles/app.css';
 
@@ -20,7 +20,9 @@ const App = () => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        localStorage.getItem(LOCAL_STORAGE.TOKEN) ? setIsLoggedIn(true) : setIsLoggedIn(false);
+        localStorage.getItem(LOCAL_STORAGE.TOKEN)
+            ? setIsLoggedIn(true)
+            : setIsLoggedIn(false);
     }, []);
 
     useEffect(() => {
@@ -33,7 +35,7 @@ const App = () => {
         const fetchedUser = async () => {
             try {
                 const response = await fetch(`${USER_URL.USER_ROOT}${id}`, {
-                    method: `${FETCH_METHOD.GET}`,
+                    method: `${HTTP_METHOD.GET}`,
                     headers: {
                         Authorization: localStorage.getItem(
                             LOCAL_STORAGE.TOKEN
@@ -62,23 +64,13 @@ const App = () => {
             />
             <LeftMenu />
             <Routes>
-                <Route 
-                    path={INT_LINK.HOME} 
-                    element={
-                        <Home />
-                    } 
+                <Route path={PAGE_LINK.HOME} element={<Home />} />
+                <Route
+                    path={PAGE_LINK.CREATE_PROFILE}
+                    element={<CreateProfile user={user} setUser={setUser} />}
                 />
                 <Route
-                    path={INT_LINK.CREATE_PROFILE}
-                    element={
-                        <CreateProfile 
-                            user={user} 
-                            setUser={setUser} 
-                        />
-                    }
-                />
-                <Route
-                    path={INT_LINK.CREATE_USER}
+                    path={PAGE_LINK.CREATE_USER}
                     element={
                         <CreateUser
                             setUser={setUser}
@@ -87,35 +79,15 @@ const App = () => {
                     }
                 />
                 <Route
-                    path={INT_LINK.LOGIN}
-                    element={
-                    <Login 
-                        setIsLoggedIn={setIsLoggedIn} 
-                    />
-                    }
+                    path={PAGE_LINK.LOGIN}
+                    element={<Login setIsLoggedIn={setIsLoggedIn} />}
                 />
-                <Route 
-                    path={INT_LINK.FORUM} 
-                    element={
-                        <Forum 
-                            user={user} 
-                        />
-                    } 
-                />
+                <Route path={PAGE_LINK.FORUM} element={<Forum user={user} />} />
                 <Route
-                    path={INT_LINK.LEADERBOARD}
-                    element={
-                        <Leaderboard 
-                            user={user} 
-                        />
-                    }
+                    path={PAGE_LINK.LEADERBOARD}
+                    element={<Leaderboard user={user} />}
                 />
-                <Route 
-                    path={INT_LINK.NOT_FOUND} 
-                    element={
-                        <Home />
-                    } 
-                />
+                <Route path={PAGE_LINK.NOT_FOUND} element={<Home />} />
             </Routes>
             <Footer />
         </div>

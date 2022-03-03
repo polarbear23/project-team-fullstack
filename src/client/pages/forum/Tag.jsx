@@ -10,7 +10,7 @@ const Tag = (props) => {
 
         setTags([...tags, tag]);
 
-        setTag('');
+        setTag([]);
     };
 
     return (

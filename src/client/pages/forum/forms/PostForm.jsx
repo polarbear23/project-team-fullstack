@@ -3,15 +3,15 @@ import { useState } from 'react';
 import Category from '../Category';
 import Tag from '../Tag';
 
-import { FETCH_METHOD, FORUM_URL, LOCAL_STORAGE } from '../../../config';
+import { HTTP_METHOD, FORUM_URL, LOCAL_STORAGE } from '../../../config';
 
 const PostForm = (props) => {
     const { posts, setPosts } = props;
 
-	const initialPost = {
-		title: '',
+    const initialPost = {
+        title: '',
         content: '',
-	}
+    };
 
     const [tags, setTags] = useState([]);
     const [categories, setCategories] = useState([]);
@@ -37,20 +37,20 @@ const PostForm = (props) => {
     const submitNewPostHandler = (event) => {
         event.preventDefault();
 
-		const newPost = {
-			title: newPost.title,
-			content: newPost.content,
-			categories: categories,
-			tags: tags,
-			userId: Number(localStorage.getItem(LOCAL_STORAGE.USER_ID)),
-		}
+        const newPost = {
+            title: newPost.title,
+            content: newPost.content,
+            categories: categories,
+            tags: tags,
+            userId: Number(localStorage.getItem(LOCAL_STORAGE.USER_ID)),
+        };
 
         fetchNewPost(newPost);
     };
 
     const fetchNewPost = async (newPost) => {
         const response = await fetch(FORUM_URL.POST, {
-            method: `${FETCH_METHOD.POST}`,
+            method: `${HTTP_METHOD.POST}`,
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: localStorage.getItem(LOCAL_STORAGE.TOKEN),
