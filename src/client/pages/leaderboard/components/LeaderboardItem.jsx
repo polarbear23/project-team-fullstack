@@ -4,7 +4,7 @@ import { Rating } from 'react-simple-star-rating';
 import { LOCAL_STORAGE, USER_URL } from '../../../config';
 
 const LeaderboardItem = (props) => {
-    const { pokemon, fetchPokemon, setFetchPokemon, calcAverageRating, profileId } = props;
+    const { pokemonListItem, fetchPokemon, setFetchPokemon, calcAverageRating, profileId } = props;
 
     const [rating, setRating] = useState(0);
     const [averageRating, setAverageRating] = useState(0);
@@ -24,7 +24,7 @@ const LeaderboardItem = (props) => {
                 body: JSON.stringify({
                     profileId: profileId,
                     rating: ratingToPost,
-                    pokemonId: pokemon.id,
+                    pokemonId: pokemonListItem.id,
                 }),
             });
 
@@ -37,31 +37,31 @@ const LeaderboardItem = (props) => {
     }, [rating]);
 
     useEffect(() => {
-        setAverageRating(calcAverageRating(pokemon.ratings));
-    }, [pokemon]);
+        setAverageRating(calcAverageRating(pokemonListItem.ratings));
+    }, [pokemonListItem]);
 
     const handleRating = (rate) => setRating(rate);
 
     return (
-        <tr className="leaderboard-list-item" key={pokemon.id}>
+        <tr className="leaderboard-list-item" key={pokemonListItem.id}>
             <td
                 data-column="pokemon-image"
                 className="pokemon-leaderboard-icon-image"
             >
                 <img
                     className="leaderboard-pokemon-icon"
-                    src={pokemon.largeImageUrl}
-                    alt={`${pokemon.name}`}
+                    src={pokemonListItem.largeImageUrl}
+                    alt={`${pokemonListItem.name}`}
                 />
             </td>
             <td
                 data-column="pokemon-name"
                 className="leaderboard-pokemon-name leaderboard-text"
             >
-                {pokemon.name}
+                {pokemonListItem.name}
             </td>
             <td data-column="pokemon-type" className="leaderboard-pokemon-type">
-                {pokemon.types.map((typeObj, index) => {
+                {pokemonListItem.types.map((typeObj, index) => {
                     return (
                         <img
                             className="type-icon"
@@ -76,39 +76,39 @@ const LeaderboardItem = (props) => {
                 data-column="health"
                 className="leaderboard-average-rating leaderboard-text"
             >
-                {pokemon.baseHP}
+                {pokemonListItem.baseHP}
             </td>
             <td
                 data-column="attack"
                 className="leaderboard-average-rating leaderboard-text"
             >
-                {pokemon.baseAttack}
+                {pokemonListItem.baseAttack}
             </td>
             <td
                 data-column="defense"
                 className="leaderboard-average-rating leaderboard-text"
             >
-                {pokemon.baseDefense}
+                {pokemonListItem.baseDefense}
             </td>
 
             <td
                 data-column="special-attack"
                 className="leaderboard-average-rating leaderboard-text"
             >
-                {pokemon.specialAttack}
+                {pokemonListItem.specialAttack}
             </td>
 
             <td
                 data-column="special-defense"
                 className="leaderboard-average-rating leaderboard-text"
             >
-                {pokemon.specialDefense}
+                {pokemonListItem.specialDefense}
             </td>
             <td
                 data-column="speed"
                 className="leaderboard-average-rating leaderboard-text"
             >
-                {pokemon.speed}
+                {pokemonListItem.speed}
             </td>
             <td
                 data-column="average-rating"

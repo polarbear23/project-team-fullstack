@@ -10,6 +10,7 @@ const Leaderboard = (props) => {
 
     const [pokemons, setPokemons] = useState([]);
     const [topRatedPokemon, setTopRatedPokemon] = useState([]);
+    const [PokemonList, setPokemonList] = useState([]);
     const [fetchPokemon, setFetchPokemon] = useState(false);
 
     useEffect(() => {
@@ -23,6 +24,7 @@ const Leaderboard = (props) => {
             const sortedPokemon = sortPokemon(fetchedPokemon);
 
             setPokemons(sortedPokemon);
+            
         };
 
         getPokemon();
@@ -35,9 +37,9 @@ const Leaderboard = (props) => {
 
         const numberOfPokemon = 3;
 
-        const slicedArray = pokemons.slice(0, numberOfPokemon);
+        setTopRatedPokemon(pokemons.slice(0, numberOfPokemon));
 
-        setTopRatedPokemon(slicedArray);
+        setPokemonList(pokemons.slice(numberOfPokemon))
     }, [pokemons]);
 
     let profileId;
@@ -107,16 +109,16 @@ const Leaderboard = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {pokemons &&
-                        pokemons.map((pokemon) => {
+                    {PokemonList &&
+                        PokemonList.map((pokemonListItem) => {
                             return (
                                 <LeaderboardItem
                                     profileId={profileId}
-                                    pokemon={pokemon}
+                                    pokemonListItem={pokemonListItem}
                                     fetchPokemon={fetchPokemon}
                                     setFetchPokemon={setFetchPokemon}
                                     calcAverageRating={calcAverageRating}
-                                    key={pokemon.id}
+                                    key={pokemonListItem.id}
                                 />
                             );
                         })}
