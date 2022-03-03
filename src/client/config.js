@@ -4,16 +4,15 @@ const USER_URL = {
     LOGIN: 'http://localhost:4000/user/login',
     PROFILE: 'http://localhost:4000/user/profile',
     POKEMON: 'http://localhost:4000/pokemon/',
-    POKEMON_RATING: 'http://localhost:4000/pokemon/rating', 
+    POKEMON_RATING: 'http://localhost:4000/pokemon/rating',
 };
 
 const FORUM_URL = {
     POST: 'http://localhost:4000/post',
-    COMMENT: 'http://localhost:4000/post/comment'
+    COMMENT: 'http://localhost:4000/post/comment',
+};
 
-}
-
-const INT_LINK = {
+const PAGE_LINK = {
     HOME: '/',
     CREATE_PROFILE: '/register/profile',
     CREATE_USER: '/register/user',
@@ -29,7 +28,7 @@ const LOCAL_STORAGE = {
     USER_ID: 'userId',
 };
 
-const FETCH_METHOD = {
+const HTTP_METHOD = {
     GET: 'GET',
     POST: 'POST',
     PATCH: 'PATCH',
@@ -39,8 +38,8 @@ const FETCH_METHOD = {
 
 module.exports = {
     USER_URL,
-    INT_LINK,
+    PAGE_LINK,
     LOCAL_STORAGE,
-    FETCH_METHOD,
-    FORUM_URL
+    HTTP_METHOD,
+    FORUM_URL,
 };

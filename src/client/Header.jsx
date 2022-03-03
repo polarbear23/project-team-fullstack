@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 
-import { LOCAL_STORAGE, INT_LINK } from './config';
+import { LOCAL_STORAGE, PAGE_LINK } from './config';
 
 import { capitaliseFirstLetter } from './utils/format';
 
@@ -18,7 +18,7 @@ const Header = (props) => {
 
         setUser(null);
 
-        navigate(INT_LINK.HOME);
+        navigate(PAGE_LINK.HOME);
     };
 
     const formatUserName = (user) => {
@@ -32,7 +32,7 @@ const Header = (props) => {
     return (
         <header>
             <nav className="navbar-container">
-                <Link to={INT_LINK.HOME} className="navbar__logo">
+                <Link to={PAGE_LINK.HOME} className="navbar__logo">
                     <img
                         className="logo"
                         src="/assets/pokemon/pokeball.png"
@@ -45,7 +45,7 @@ const Header = (props) => {
                     {isLoggedIn && user && (
                         <>
                             <li className="navbar__lists--item">
-                                <Link to={INT_LINK.PROFILE}>
+                                <Link to={PAGE_LINK.PROFILE}>
                                     Hi {formatUserName(user)}
                                 </Link>
                             </li>
@@ -53,17 +53,17 @@ const Header = (props) => {
                                 className="navbar__lists--item"
                                 onClick={handleClick}
                             >
-                                <Link to={INT_LINK.HOME}>Logout</Link>
+                                <Link to={PAGE_LINK.HOME}>Logout</Link>
                             </li>
                         </>
                     )}
-                    {(!isLoggedIn) && (
+                    {!isLoggedIn && (
                         <>
                             <li className="navbar__lists--item">
-                                <Link to={INT_LINK.LOGIN}>Login</Link>
+                                <Link to={PAGE_LINK.LOGIN}>Login</Link>
                             </li>
                             <li className="navbar__lists--item">
-                                <Link to={INT_LINK.CREATE_USER}>Register</Link>
+                                <Link to={PAGE_LINK.CREATE_USER}>Register</Link>
                             </li>
                         </>
                     )}
