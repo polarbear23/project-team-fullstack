@@ -281,3 +281,13 @@
 .tag-list{
 	list-style: none;
 }
+
+.category-container{
+	display: flex;
+	gap: 8px;
+	margin-top: 1rem;
+}
+
+.category-container label{
+	padding-right: 5px;
+}

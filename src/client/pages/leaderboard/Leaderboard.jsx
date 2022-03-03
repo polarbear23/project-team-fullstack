@@ -5,6 +5,8 @@ import PokemonTile from './components/PokemonTile';
 
 import { HTTP_METHOD, LOCAL_STORAGE, USER_URL } from '../../config';
 
+import '../../styles/leaderborad.css';
+
 const Leaderboard = (props) => {
     const { user } = props;
 

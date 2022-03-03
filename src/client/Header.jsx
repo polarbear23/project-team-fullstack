@@ -1,8 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { capitaliseFirstLetter } from './utils/format';
 
 import { LOCAL_STORAGE, PAGE_LINK } from './config';
 
-import { capitaliseFirstLetter } from './utils/format';
+import './styles/header.css';
 
 const Header = (props) => {
     const { isLoggedIn, setIsLoggedIn, user, setUser } = props;
