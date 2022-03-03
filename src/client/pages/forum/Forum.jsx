@@ -1,8 +1,11 @@
 import Post from "./Post";
-import { useState, useEffect } from "react";
-import "../../styles/forum.css";
 import PostForm from "./forms/PostForm";
+
+import { useState, useEffect } from "react";
+
 import { FORUM_URL } from "../../config";
+
+import "../../styles/forum.css";
 
 const Forum = (props) => {
 	const { user } = props;

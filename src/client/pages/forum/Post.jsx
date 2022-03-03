@@ -1,10 +1,11 @@
 import { FaArrowUp, FaArrowDown} from "react-icons/fa";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import {BiCommentDetail } from "react-icons/bi";
+
 import Comment from "./Comment";
 import CommentForm from "./forms/CommentForm";
-import {GoReport} from "react-icons/go";
-import {BiCommentDetail } from "react-icons/bi";
+
 import "../../styles/forum.css";
 
 

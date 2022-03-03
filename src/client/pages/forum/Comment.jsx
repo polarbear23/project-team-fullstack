@@ -4,7 +4,9 @@ import {GoReport} from "react-icons/go";
 import { FaArrowUp, FaArrowDown, FaShare} from "react-icons/fa";
 import {BiCommentDetail } from "react-icons/bi";
 import { Link } from "react-router-dom";
+
 import CommentForm from "./forms/CommentForm";
+
 import "../../styles/forum.css";
 
 const Comment = (props) => {

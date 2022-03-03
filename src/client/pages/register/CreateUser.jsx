@@ -5,6 +5,8 @@ import { LOCAL_STORAGE, INT_LINK, USER_URL } from '../../config';
 
 import { fetchFromServer } from '../../utils/fetch';
 
+import '../../styles/header.css';
+
 const CreateUser = props => {
     const { user, setUser, setIsLoggedIn } = props;
 

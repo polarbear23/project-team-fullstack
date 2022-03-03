@@ -1,7 +1,9 @@
-import Tag from "../Tag";
 import { useState } from "react";
+
 import Category from "../Category";
-import {FORUM_URL, LOCAL_STORAGE} from '../../../config';
+import Tag from "../Tag";
+
+import {FORUM_URL, LOCAL_STORAGE, FETCH_METHOD} from '../../../config';
 
 const PostForm = (props) => {
 	const { posts, setPosts, setShowForm } = props;
@@ -46,7 +48,7 @@ const PostForm = (props) => {
 
 	const fetchNewPost = async () => {
 		const res = await fetch(FORUM_URL.POST, {
-			method: "POST",
+			method: `${FETCH_METHOD.POST}`,
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: localStorage.getItem(LOCAL_STORAGE.TOKEN),
