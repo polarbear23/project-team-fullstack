@@ -94,7 +94,6 @@ const Post = (props) => {
 					postId={post.id}
 					dateDiffInDays={dateDiffInDays}
 					setNewComment={setNewComment}
-					padding={padding}
 				/>
 			})}
 		</div>
