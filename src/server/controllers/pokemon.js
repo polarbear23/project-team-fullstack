@@ -45,6 +45,23 @@ const getPokemonById = async (req, res) => {
     res.status(SERVER_SUCCESS.OK.CODE).json({ data: foundPokemon });
 };
 
+const getAllUserRatings = async (req, res) => {
+    const { profileId } = req.body;
+    const pokemonRatings = await prisma.rating.findMany({
+        where: {
+            profileId: profileId
+        },
+        include: {
+            pokemons: true,
+            profile: true
+        }
+    });
+    if (!pokemonRatings) {
+        return res.status(SERVER_ERROR.NOT_FOUND.CODE).json({ error: SERVER_ERROR.NOT_FOUND.MESSAGE });
+    }
+    res.status(SERVER_SUCCESS.OK.CODE).json({ data: pokemonRatings });
+}
+
 const getAllPokemonRatings = async (req, res) => {
     const fetchedRatings = await prisma.rating.findMany();
 
@@ -57,6 +74,29 @@ const getAllPokemonRatings = async (req, res) => {
 
 const createPokemonRating = async (req, res) => {
     const { profileId, rating, pokemonId } = req.body;
+
+    const profileRatings = await prisma.rating.findMany({
+        where: {
+            profileId: profileId
+        },
+        include: {
+            pokemons: true
+        }
+    });
+    const filteredRatings = profileRatings.filter((rating) => rating.pokemons[0].pokemonId === pokemonId); //if pokemon rating exists
+
+    if (filteredRatings.length > 0) {
+        const updatedRating = await prisma.rating.update({
+            where: {
+                id: filteredRatings[0].id
+            },
+            data: {
+                rating: rating,
+            }
+        });
+        return res.status(SERVER_SUCCESS.OK.CODE).json({ data: updatedRating });
+    }
+
 
     const createdRating = await prisma.rating.create({
         data: {
@@ -92,12 +132,15 @@ const createPokemonRating = async (req, res) => {
     if (!createdRating) {
         return res.status(SERVER_ERROR.INTERNAL.CODE).json({ error: SERVER_ERROR.INTERNAL.MESSAGE });
     }
+
     return res.status(SERVER_SUCCESS.OK.CODE).json({ data: createdRating });
+
 };
 
 module.exports = {
     getAllPokemon,
     getPokemonById,
     getAllPokemonRatings,
-    createPokemonRating
+    createPokemonRating,
+    getAllUserRatings
 };
