@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import LeaderboardItem from './components/LeaderboardItem';
 import PokemonTile from './components/PokemonTile';
 
-import { USER_URL } from '../../config';
+import { HTTP_METHOD, LOCAL_STORAGE, USER_URL } from '../../config';
 
 const Leaderboard = (props) => {
     const { user } = props;
@@ -42,7 +42,7 @@ const Leaderboard = (props) => {
     }, [pokemons]);
 
     let profileId;
-    
+
     if (user) {
         profileId = user.profile.id;
     }
@@ -55,7 +55,8 @@ const Leaderboard = (props) => {
         const initialValue = 0;
 
         let sumOfRatings = pokemonRatings.reduce(
-            (previousValue, currentValue) => previousValue + currentValue, initialValue
+            (previousValue, currentValue) => previousValue + currentValue,
+            initialValue
         );
 
         const averageRating = (sumOfRatings / ratings.length).toFixed(1);
@@ -65,8 +66,12 @@ const Leaderboard = (props) => {
 
     const sortPokemon = (pokemon) => {
         return pokemon.sort((firstPokemon, secondPokemon) => {
-            const firstPokemonAvgRating = calcAverageRating(firstPokemon.ratings);
-            const secondPokemonAvgRating = calcAverageRating(secondPokemon.ratings);
+            const firstPokemonAvgRating = calcAverageRating(
+                firstPokemon.ratings
+            );
+            const secondPokemonAvgRating = calcAverageRating(
+                secondPokemon.ratings
+            );
 
             if (firstPokemonAvgRating < secondPokemonAvgRating) {
                 return 1;
@@ -80,15 +85,40 @@ const Leaderboard = (props) => {
         });
     };
 
+    const postRating = async (newRating) => {
+        await fetch(`${USER_URL.POKEMON_RATING}`, {
+            method: `${HTTP_METHOD.POST}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: localStorage.getItem(LOCAL_STORAGE.TOKEN),
+            },
+            body: JSON.stringify(newRating),
+        });
+
+        setFetchPokemon(!fetchPokemon);
+    };
+
     return (
         <div className="leaderboard">
             {topRatedPokemon && (
-                <PokemonTile
-                    topRatedPokemon={topRatedPokemon}
-                    calcAverageRating={calcAverageRating}
-                />
+                <>
+                    <h2 className="top-3-leaders">Top Rated Pokemon</h2>
+                    <div className="top-3-container">
+                        {topRatedPokemon.map((pokemonListItem, index) => {
+                            return (
+                                <PokemonTile
+                                    calcAverageRating={calcAverageRating}
+                                    key={pokemonListItem.id}
+                                    index={index}
+                                    pokemonListItem={pokemonListItem}
+                                    postRating={postRating}
+                                    profileId={profileId}
+                                />
+                            );
+                        })}
+                    </div>
+                </>
             )}
-
             <h1 className="leaderboard-title">Leaderboard</h1>
 
             <table className="leaderboard-list">
@@ -112,12 +142,11 @@ const Leaderboard = (props) => {
                         PokemonList.map((pokemonListItem) => {
                             return (
                                 <LeaderboardItem
-                                    profileId={profileId}
-                                    pokemonListItem={pokemonListItem}
-                                    fetchPokemon={fetchPokemon}
-                                    setFetchPokemon={setFetchPokemon}
                                     calcAverageRating={calcAverageRating}
                                     key={pokemonListItem.id}
+                                    pokemonListItem={pokemonListItem}
+                                    postRating={postRating}
+                                    profileId={profileId}
                                 />
                             );
                         })}
