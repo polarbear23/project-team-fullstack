@@ -48,7 +48,7 @@ const createUser = async (req, res) => {
         email: email,
     };
 
-    try{
+    try {
         let createdUser = await prisma.user.create({
             data: {
                 ...user,
@@ -56,14 +56,14 @@ const createUser = async (req, res) => {
         });
 
         createdUser = removeKeys(createdUser, KEYS.PASSWORD);
-    
+
         const token = createToken({ id: createdUser.id, role: createdUser.role });
 
         res.status(SERVER_SUCCESS.OK.CODE).json({ data: createdUser, token: token });
     }
-    catch(error){
-        if(error instanceof Prisma.PrismaClientKnownRequestError){
-            if(error.code === PRISMA_ERROR.UNIQUE_CONSTRAINT_VIOLATION.CODE){
+    catch (error) {
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            if (error.code === PRISMA_ERROR.UNIQUE_CONSTRAINT_VIOLATION.CODE) {
                 res.status(SERVER_ERROR.INTERNAL.CODE).json({ error: PRISMA_ERROR.UNIQUE_CONSTRAINT_VIOLATION.CLIENT_MESSAGE_REGISTER });
             }
         }
@@ -85,7 +85,7 @@ const editUser = async (req, res) => {
 
     if (password) {
         password = await hashedPassword(password);
-        
+
         user = { ...user, password };
     }
 
@@ -129,9 +129,9 @@ const getUserById = async (req, res) => {
     const id = Number(req.params.id);
 
     let selectedUser = await prisma.user.findUnique({
-        where: { 
+        where: {
             id: id,
-        }, 
+        },
         include: {
             profile: true,
         },
@@ -144,18 +144,35 @@ const getUserById = async (req, res) => {
     selectedUser = removeKeys(selectedUser, KEYS.PASSWORD);
 
     res.status(SERVER_SUCCESS.OK.CODE).json({ data: selectedUser });
-} 
+}
+
+const getAllUserRatings = async (req, res) => {
+    const { profileId } = req.body;
+    const pokemonRatings = await prisma.rating.findMany({
+        where: {
+            profileId: profileId
+        },
+        include: {
+            pokemons: true,
+            profile: true
+        }
+    });
+    if (!pokemonRatings) {
+        return res.status(SERVER_ERROR.NOT_FOUND.CODE).json({ error: SERVER_ERROR.NOT_FOUND.MESSAGE });
+    }
+    res.status(SERVER_SUCCESS.OK.CODE).json({ data: pokemonRatings });
+}
 
 const createProfile = async (req, res) => {
     const userId = Number(req.body.userId);
 
     let { profilePicture, location } = req.body;
 
-    if(!profilePicture){
+    if (!profilePicture) {
         profilePicture = "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png";
     }
 
-    try{
+    try {
         const createdProfile = await prisma.profile.create({
             data: {
                 userId: userId,
@@ -166,9 +183,9 @@ const createProfile = async (req, res) => {
 
         res.status(SERVER_SUCCESS.OK.CODE).json({ data: createdProfile });
     }
-    catch(error){
-        if(error instanceof Prisma.PrismaClientKnownRequestError){
-            if(error.code === PRISMA_ERROR.UNIQUE_CONSTRAINT_VIOLATION.CODE){
+    catch (error) {
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            if (error.code === PRISMA_ERROR.UNIQUE_CONSTRAINT_VIOLATION.CODE) {
                 res.status(SERVER_ERROR.INTERNAL.CODE).json({ error: PRISMA_ERROR.UNIQUE_CONSTRAINT_VIOLATION.CLIENT_MESSAGE_PROFILE });
             }
         }
@@ -181,4 +198,5 @@ module.exports = {
     editUser,
     createProfile,
     getUserById,
+    getAllUserRatings
 };
