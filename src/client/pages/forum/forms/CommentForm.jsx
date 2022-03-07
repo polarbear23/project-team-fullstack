@@ -37,6 +37,8 @@ const commentForm = (props) => {
         };
 
         postComment(newComment);
+
+        setShowComment(false);
     };
 
     return (
