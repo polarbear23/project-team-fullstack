@@ -3,9 +3,9 @@
 
 Clone repository and then create ```.env``` file and add a database using elephantSQL for example:
 
-### ```DATABASE_URL = "addyourdbhere?schema=prisma"
-### DATABASE_SHADOW = "addyourshadowdbhere?schema=shadow"
-### SECRET="yoursecretkey"```
+### ``` DATABASE_URL = "addyourdbhere?schema=prisma" ```
+### ``` DATABASE_SHADOW = "addyourshadowdbhere?schema=shadow" ```
+### ``` SECRET="yoursecretkey" ```
 
 ### ```npm ci ```
 
