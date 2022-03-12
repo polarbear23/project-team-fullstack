@@ -1,7 +1,12 @@
 # Pokemon Forum
 ### Full stack pokemon forum app using REACT, PostgreSQL, Prisma ORM, Express.
 
-Clone repository and then
+Clone repository and then create ```.env``` file and add a database using elephantSQL for example:
+
+### ```DATABASE_URL = "addyourdbhere?schema=prisma"
+### DATABASE_SHADOW = "addyourshadowdbhere?schema=shadow"
+### SECRET="yoursecretkey"```
+
 ### ```npm ci ```
 
 
