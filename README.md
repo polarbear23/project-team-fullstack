@@ -1,4 +1,8 @@
 # Pokemon Forum
 ### Full stack pokemon forum app using REACT, PostgreSQL, Prisma ORM, Express.
 
+Clone repository and then:
+```npm run start```
+
+![alt text](./readmeImages/e4919d770ee44a314bd5bb584f6d05d9.jpg)
 
