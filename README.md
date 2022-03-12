@@ -7,10 +7,9 @@ Clone repository and then create ```.env``` file and add a database using elepha
 ### ``` DATABASE_SHADOW = "addyourshadowdbhere?schema=shadow" ```
 ### ``` SECRET="yoursecretkey" ```
 
+Then run commands below:
+
 ### ```npm ci ```
-
-
-
 ### ```npm run start```
 
 ![alt text](./readmeImages/e4919d770ee44a314bd5bb584f6d05d9.jpg)
